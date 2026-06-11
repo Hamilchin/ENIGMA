@@ -1,0 +1,56 @@
+{
+  "id": "2025-roni-and-kira",
+  "slug": "roni-and-kira",
+  "title": "Roni and Kira",
+  "year": 2025,
+  "rank": 26,
+  "overall_score": 21.07,
+  "criteria": {
+    "theme": {
+      "rank": 125,
+      "score": 2.65,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 28,
+      "score": 3.43,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 8,
+      "score": 3.87,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 29,
+      "score": 3.91,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 38,
+      "score": 3.35,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 10,
+      "score": 3.85,
+      "top": 4.45
+    }
+  },
+  "author": "Jorge Rubiano",
+  "devices": [
+    "Desktop",
+    "Mobile"
+  ],
+  "desc_full": "🐾 Roni and Kira 🎯 Help Kira collect all the coins across 40 challenging levels, with the support of her friend Roni. But beware! The path is full of tricky obstacles: 🧱 Walls: Block the cats’ movement. ⚔️ Spikes: Destroy careless cats (unless you grab the last coin first!). 🔑🚪 Keys & Doors: Only Roni can pick up keys to open doors for Kira. 📦 Boxes: Can’t be pushed, if you run with too much impulse, you’ll smash them! Be careful, spikes may be hidden underneath. 🎮 How to play: Control the cats using swipe gestures, available on both desktop and mobile. 🐱 Two cats, 40 levels, endless fun. Will you help Roni and Kira collect them all?",
+  "description": "🐾 Roni and Kira 🎯 Help Kira collect all the coins across 40 challenging levels, with the support of her friend Roni. But beware! The path is full of tricky obstacles: 🧱 Walls: Block the cats’ movement. ⚔️ Spikes: Destroy careless cats (unless you grab the last coin first!). 🔑🚪 Keys & Doors: Only Roni can pick up keys to open doors for Kira. 📦 Boxes: Can’t be pushed, if you run with too much impulse, you’ll smash them! Be careful, spikes may be hidden underneath. 🎮 How to play: Control the cats using swipe gestures, available on both desktop and mobile. 🐱 Two cats, 40 levels, endless fun. Will you help Roni and Kira collect them all?",
+  "controls": "",
+  "github_url": "https://github.com/js13kGames/roni-and-kira",
+  "play_url": "https://js13kgames.com/2025/games/roni-and-kira",
+  "play_zip": "https://play.js13kgames.com/roni-and-kira.zip",
+  "thumb_url": "https://play.js13kgames.com/roni-and-kira/.ts.png",
+  "local_path": "games/2025-roni-and-kira",
+  "entry": "index.html",
+  "commit_sha": "ebcd80c7e38ded27b6f0accf64c4b373fc2e1abf",
+  "build_status": "prebuilt"
+}

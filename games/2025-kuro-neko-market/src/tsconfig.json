@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"target": "es2022",
+		"strict": true,
+		"strictPropertyInitialization": false,
+		"noEmit": true,
+		"isolatedModules": true,
+		"noUncheckedIndexedAccess": true,
+		"allowJs": true,
+	},
+	"include": ["src"]
+}

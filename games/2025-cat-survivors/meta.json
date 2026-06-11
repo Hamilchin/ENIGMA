@@ -1,0 +1,56 @@
+{
+  "id": "2025-cat-survivors",
+  "slug": "cat-survivors",
+  "title": "Cat Survivors",
+  "year": 2025,
+  "rank": 2,
+  "overall_score": 24.67,
+  "criteria": {
+    "theme": {
+      "rank": 3,
+      "score": 4,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 48,
+      "score": 3.14,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 1,
+      "score": 4.37,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 2,
+      "score": 4.55,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 4,
+      "score": 4.16,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 1,
+      "score": 4.45,
+      "top": 4.45
+    }
+  },
+  "author": "Elias Ku and Alexandra Al",
+  "devices": [
+    "Desktop",
+    "Mobile"
+  ],
+  "desc_full": "An exciting story about a hunter cat inspired by Vampire Survivors game. We added a personal touch — we have a black cat ourselves, and watching her hunt made us really excited about this theme. That’s why we decided to make a game about a hunter cat. To complete the game, you need to survive for 10 minutes, during which you’ll face battles, level up, collect boxes, and finally reach a romantic ending 💕 We wish you a fun and enjoyable game! Controls Mobile Use touch screen virtual pad to move, and just tap upgrades Desktop Move with Mouse or Keyboard W A S D or ↑ ← ↓ → Choose Upgrade with Mouse or Keyboard 1 2 3 From the authors This was our first time trying out this genre. We studied many similar games and really enjoyed working on our own project. We plan to continue developing it, add monetization, and release it. Throughout the entire development process, we shared updates in our Telegram channel.",
+  "description": "An exciting story about a hunter cat inspired by Vampire Survivors game. We added a personal touch — we have a black cat ourselves, and watching her hunt made us really excited about this theme. That’s why we decided to make a game about a hunter cat. To complete the game, you need to survive for 10 minutes, during which you’ll face battles, level up, collect boxes, and finally reach a romantic ending 💕 We wish you a fun and enjoyable game!",
+  "controls": "Mobile Use touch screen virtual pad to move, and just tap upgrades Desktop Move with Mouse or Keyboard W A S D or ↑ ← ↓ → Choose Upgrade with Mouse or Keyboard 1 2 3 From the authors This was our first time trying out this genre. We studied many similar games and really enjoyed working on our own project. We plan to continue developing it, add monetization, and release it. Throughout the entire development process, we shared updates in our Telegram channel.",
+  "github_url": "https://github.com/js13kGames/cat-survivors",
+  "play_url": "https://js13kgames.com/2025/games/cat-survivors",
+  "play_zip": "https://play.js13kgames.com/cat-survivors.zip",
+  "thumb_url": "https://play.js13kgames.com/cat-survivors/.ts.png",
+  "local_path": "games/2025-cat-survivors",
+  "entry": "index.html",
+  "commit_sha": "a819117dbc174c1fa13511f14209e3d92d4cb9c3",
+  "build_status": "prebuilt"
+}

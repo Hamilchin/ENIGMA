@@ -1,0 +1,36 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: Bahnschrift;
+    font-size: 3vh;
+}
+
+body {
+        background: #bc0048;
+}
+
+#c * {
+    position: absolute;
+}
+#s, #t, #m, #i {
+    position: fixed;
+    z-index: 100;
+    color: #fff;
+    padding: 3vh;
+    text-shadow: 2px 2px #000;
+}
+#t {
+    right: 3vh;
+}
+#m {
+    left: 0;
+    right: 0;
+    top: 20vh;
+    text-align: center;
+    font-size: 10vh;
+}
+b {
+    font-size: 6vh;
+}

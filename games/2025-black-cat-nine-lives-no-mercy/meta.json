@@ -1,0 +1,55 @@
+{
+  "id": "2025-black-cat-nine-lives-no-mercy",
+  "slug": "black-cat-nine-lives-no-mercy",
+  "title": "Black Cat - Nine Lives, No Mercy",
+  "year": 2025,
+  "rank": 51,
+  "overall_score": 19.26,
+  "criteria": {
+    "theme": {
+      "rank": 145,
+      "score": 2.35,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 29,
+      "score": 3.41,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 35,
+      "score": 3.35,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 9,
+      "score": 4.26,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 69,
+      "score": 2.91,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 103,
+      "score": 2.97,
+      "top": 4.45
+    }
+  },
+  "author": "Cliff Earl",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "BLACK CAT - NINE LIVES NO MERCY STORY You are special operator, codename Black-Cat. You have been assigned by high command to proceed with all possible haste (stopping only to fiddle with catnip-mice and balls of wool) to the Pyrasian system, where the native Pyra’s claim they are being harrassed by the forces of some bad guy that we can’t even remember the name of. Liberate the Pyra’s special operator Black-Cat, and destroy your enemies, although they may just be innocent space explorers. We don’t know for sure but let’s err on the side of caution and crush them with paws of steel. CONTROLS Move the mouse to look around and aim. Forward thrust using the W key. Reverse thrust forward using the S key. Strafe left using the A key. Strafe right using the D key. Land and dust-off using the E key. Press Left mouse button to shoot. Press Right mouse button to bomb. All keyboard controls can be reconfigured in the options menu and will be persisted between games. HOW TO PLAY The main goals of the game are to fly about procedurally generated landscapes, rescuing Pyra, destroying enemy units, and collecting cargo. You can just checkout the ingame tutorial if you’ve already grown tired of reading this giant wall of text. ABOUT BLACK CAT - NINE LIVES, NO MERCY is an ambitious feature-rich 3rd-person, 3D vector-graphics shoot-em-up (shmup). The player pilots a futuristic combat craft across procedurally generated alien landscapes. The visual aesthetic is built on wireframe models rendered in WebGL for a retro-futuristic feel. There was a lot more to add here but I did not realize that it is limited to only 2Kb of text :(",
+  "description": "BLACK CAT - NINE LIVES NO MERCY STORY You are special operator, codename Black-Cat. You have been assigned by high command to proceed with all possible haste (stopping only to fiddle with catnip-mice and balls of wool) to the Pyrasian system, where the native Pyra’s claim they are being harrassed by the forces of some bad guy that we can’t even remember the name of. Liberate the Pyra’s special operator Black-Cat, and destroy your enemies, although they may just be innocent space explorers. We don’t know for sure but let’s err on the side of caution and crush them with paws of steel. CONTROLS Move the mouse to look around and aim. Forward thrust using the W key. Reverse thrust forward using the S key. Strafe left using the A key. Strafe right using the D key. Land and dust-off using the E key. Press Left mouse button to shoot. Press Right mouse button to bomb. All keyboard controls can be reconfigured in the options menu and will be persisted between games. HOW TO PLAY The main goals of the game are to fly about procedurally generated landscapes, rescuing Pyra, destroying enemy units, and collecting cargo. You can just checkout the ingame tutorial if you’ve already grown tired of reading this giant wall of text. ABOUT BLACK CAT - NINE LIVES, NO MERCY is an ambitious feature-rich 3rd-person, 3D vector-graphics shoot-em-up (shmup). The player pilots a futuristic combat craft across procedurally generated alien landscapes. The visual aesthetic is built on wireframe models rendered in WebGL for a retro-futuristic feel. There was a lot more to add here but I did not realize that it is limited to only 2Kb of text :(",
+  "controls": "",
+  "github_url": "https://github.com/js13kGames/black-cat-nine-lives-no-mercy",
+  "play_url": "https://js13kgames.com/2025/games/black-cat-nine-lives-no-mercy",
+  "play_zip": "https://play.js13kgames.com/black-cat-nine-lives-no-mercy.zip",
+  "thumb_url": "https://play.js13kgames.com/black-cat-nine-lives-no-mercy/.ts.png",
+  "local_path": "games/2025-black-cat-nine-lives-no-mercy",
+  "entry": "index.html",
+  "commit_sha": "3f3793cc7b3965a02d1beb7906fc1a478fe36201",
+  "build_status": "prebuilt"
+}

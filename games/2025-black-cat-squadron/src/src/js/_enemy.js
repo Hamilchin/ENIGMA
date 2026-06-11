@@ -1,0 +1,58 @@
+/** @format */
+
+class Enemy extends EngineObject {
+
+	constructor(pos, size, sprite) {
+		super(pos, size, sprite);
+		this.setCollision(true, true, false);
+		this.gravityScale = 0;
+		this.hp = 3;
+		this.deathGravity = .25;
+		this.deathTimeSecs = 2;
+		this.framesToShoot = 0;
+	}
+
+	shootOk() {
+		if (!player || !player.alive || gameState == GameState.TRANSITION || gameState == GameState.WON) return false;
+
+		return this.pos.x - player.pos.x > 15; // only shoot when to the right of the player (and not too close)
+	}
+
+	update() {
+		if (this.pos.x < cameraPos.x - cameraSize.x/2 - 12 || this.pos.y < -2 ) {
+			this.destroy();
+		}
+
+		this.angle = 3*this.velocity.y;
+		super.update();
+	}
+
+	hit(damage=1, noExplosion=false) {
+		if(this.hp <= 0) return;
+
+		this.hp -= damage;
+		if (this.hp <= 0) {
+			addScore(50);
+			
+			this.setCollision(false, false, false);
+
+			this.gravityScale = this.deathGravity;
+
+			setTimeout(() => this.destroy(), this.deathTimeSecs * 1000);
+
+			if (!noExplosion) makeExplosion(this.pos, 1);
+		}
+	}
+
+	collideWithObject(o) {		
+		if(this.hp <= 0) return;
+
+		if (o == player) {
+			o.hit();
+			this.hit(this.hp)
+			return;
+		}
+
+		return false;
+	}
+}

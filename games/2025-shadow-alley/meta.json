@@ -1,0 +1,55 @@
+{
+  "id": "2025-shadow-alley",
+  "slug": "shadow-alley",
+  "title": "Shadow Alley",
+  "year": 2025,
+  "rank": 66,
+  "overall_score": 18.35,
+  "criteria": {
+    "theme": {
+      "rank": 10,
+      "score": 3.85,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 88,
+      "score": 2.75,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 82,
+      "score": 2.85,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 87,
+      "score": 3.05,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 95,
+      "score": 2.5,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 59,
+      "score": 3.35,
+      "top": 4.45
+    }
+  },
+  "author": "Kisimedia.de",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "Shadow Alley 🐾🌙 You are a stray black cat wandering the rainy backstreets of the city. Hungry and alone, you sneak through the night in search of fish — but the alleys are guarded by lamps and watch dogs. Only stealth and patience will keep you safe. 🎮 Controls Arrow Keys / WASD → Move Enter Door → Escape to the next level 🐟 Goal Collect all the fish in each alley and reach the glowing door to progress. ⚡ Challenge Avoid the light of street lamps — once caught, there’s no way back. Stay out of sight from the guard dogs and their patrols. Use hiding spots to wait for the right moment to slip by. 🌧️ Story The rain never ends, the lamps burn cold, and the streets are filled with danger. Yet hope drives you forward — every fish brings you closer to surviving another night in the Shadow Alley.",
+  "description": "Shadow Alley 🐾🌙 You are a stray black cat wandering the rainy backstreets of the city. Hungry and alone, you sneak through the night in search of fish — but the alleys are guarded by lamps and watch dogs. Only stealth and patience will keep you safe. 🎮",
+  "controls": "Arrow Keys / WASD → Move Enter Door → Escape to the next level 🐟 Goal Collect all the fish in each alley and reach the glowing door to progress. ⚡ Challenge Avoid the light of street lamps — once caught, there’s no way back. Stay out of sight from the guard dogs and their patrols. Use hiding spots to wait for the right moment to slip by. 🌧️ Story The rain never ends, the lamps burn cold, and the streets are filled with danger. Yet hope drives you forward — every fish brings you closer to surviving another night in the Shadow Alley.",
+  "github_url": "https://github.com/js13kGames/shadow-alley",
+  "play_url": "https://js13kgames.com/2025/games/shadow-alley",
+  "play_zip": "https://play.js13kgames.com/shadow-alley.zip",
+  "thumb_url": "https://play.js13kgames.com/shadow-alley/.ts.png",
+  "local_path": "games/2025-shadow-alley",
+  "entry": "index.html",
+  "commit_sha": "6129afbb389ce330def8d104ae6a076affca40a6",
+  "build_status": "prebuilt"
+}

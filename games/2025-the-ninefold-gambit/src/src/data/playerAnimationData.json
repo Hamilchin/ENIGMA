@@ -1,0 +1,47 @@
+[
+    {
+      "animationName": "idle",
+      "props": {
+        "frameCount": 2,
+        "frameBuffer": 15,
+        "loop": true,
+        "src": "mouse_run_horz.png"
+      }
+    },
+    {
+      "animationName": "run",
+      "props": {
+        "frameCount": 2,
+        "frameBuffer": 5,
+        "loop": true,
+        "src": "mouse_run_horz.png"
+      }
+    },
+    {
+      "animationName": "digdash",
+      "props": {
+        "frameCount": 1,
+        "frameBuffer": 5,
+        "loop": true,
+        "src": "mouse_digdash.png"
+      }
+    },
+    {
+      "animationName": "melee",
+      "props": {
+        "frameCount": 1,
+        "frameBuffer": 5,
+        "loop": false,
+        "src": "mouse_melee.png"
+      }
+    },
+    {
+      "animationName": "melee_down",
+      "props": {
+        "frameCount": 1,
+        "frameBuffer": 5,
+        "loop": false,
+        "src": "mouse_melee_down.png"
+      }
+    }
+  ]

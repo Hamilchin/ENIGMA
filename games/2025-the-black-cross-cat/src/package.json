@@ -1,0 +1,25 @@
+{
+  "name": "the-black-crosscat-js13k",
+  "version": "1.0.0",
+  "description": "JS13K 2025 Game Jam entry",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "zip": "npm run build && node scripts/zip.js"
+  },
+  "keywords": [
+    "js13k",
+    "game",
+    "gamejam"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "archiver": "^6.0.1",
+    "prettier": "3.6.2",
+    "terser": "^5.43.1",
+    "vite": "^4.5.0"
+  }
+}

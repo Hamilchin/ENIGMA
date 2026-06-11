@@ -1,0 +1,56 @@
+{
+  "id": "2025-miss-fortune",
+  "slug": "miss-fortune",
+  "title": "Miss Fortune",
+  "year": 2025,
+  "rank": 55,
+  "overall_score": 19.1,
+  "criteria": {
+    "theme": {
+      "rank": 18,
+      "score": 3.75,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 91,
+      "score": 2.7,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 59,
+      "score": 3.05,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 82,
+      "score": 3.1,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 42,
+      "score": 3.3,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 74,
+      "score": 3.2,
+      "top": 4.45
+    }
+  },
+  "author": "Daniel Jeffery",
+  "devices": [
+    "Desktop",
+    "Mobile"
+  ],
+  "desc_full": "Miss Fortune has been locked outside her apartment after a night on the town. Help Miss Fortune climb the building, dodge the angry tenants and cause a little chaos along the way. Use all those 9 lives to reach the penthouse, or play in endless mode and see how high you can climb. Important: This game is intended to be challenging, and takes practice to master. The intro level is designed to teach you the platforming skills needed to navigate the game. It is strongly suggested you complete the intro level before jumping into endless mode. Controls: Left & Right (or A & D) - move left and right Up (or W) - jump Jumping twice will perform a “double jump” which will allow Miss Fortune to reach the next windowsill. Touch Controls: Use the left joystick to move left & right. All buttons on the right hand side will jump, and pressing twice in succession will “double jump”. Gamepad: Gamepads are supported; use the left joystick to move left & right. All buttons will jump, and pressing twice in succession will “double jump”. Credits: Music by Raindrop",
+  "description": "Miss Fortune has been locked outside her apartment after a night on the town. Help Miss Fortune climb the building, dodge the angry tenants and cause a little chaos along the way. Use all those 9 lives to reach the penthouse, or play in endless mode and see how high you can climb. Important: This game is intended to be challenging, and takes practice to master. The intro level is designed to teach you the platforming skills needed to navigate the game. It is strongly suggested you complete the intro level before jumping into endless mode.",
+  "controls": ": Left & Right (or A & D) - move left and right Up (or W) - jump Jumping twice will perform a “double jump” which will allow Miss Fortune to reach the next windowsill. Touch Controls: Use the left joystick to move left & right. All buttons on the right hand side will jump, and pressing twice in succession will “double jump”. Gamepad: Gamepads are supported; use the left joystick to move left & right. All buttons will jump, and pressing twice in succession will “double jump”. Credits: Music by Raindrop",
+  "github_url": "https://github.com/js13kGames/miss-fortune",
+  "play_url": "https://js13kgames.com/2025/games/miss-fortune",
+  "play_zip": "https://play.js13kgames.com/miss-fortune.zip",
+  "thumb_url": "https://play.js13kgames.com/miss-fortune/.ts.png",
+  "local_path": "games/2025-miss-fortune",
+  "entry": "index.html",
+  "commit_sha": "6ecc47d722c37763e81d137042d1b4b863840568",
+  "build_status": "prebuilt"
+}

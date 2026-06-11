@@ -1,0 +1,30 @@
+{
+  "name": "@eliasku/js13k-2025",
+  "description": "game compo template",
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "build": "cross-env BUILD_FOR=production vite build",
+    "zip": "cross-env BUILD_FOR=production ZIP=1 vite build",
+    "check": "tsc -p src --noEmit"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "vite": "^7.1.2",
+    "typescript": "^5.9.2",
+    "rollup": "^4.46.2",
+    "@types/node": "^24.2.1",
+    "@rollup/plugin-typescript": "^12.1.4",
+    "tslib": "^2.8.1",
+    "terser": "^5.43.1",
+    "advzip-bin": "^2.0.0",
+    "clean-css": "^5.3.3",
+    "ect-bin": "^1.4.1",
+    "html-minifier-terser": "^7.2.0",
+    "roadroller": "^2.1.0",
+    "@types/clean-css": "^4.2.11",
+    "@types/html-minifier-terser": "^7.0.2",
+    "glob": "^11.0.3",
+    "cross-env": "^10.0.0"
+  }
+}

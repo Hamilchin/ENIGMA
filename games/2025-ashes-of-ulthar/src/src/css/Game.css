@@ -1,0 +1,37 @@
+/*
+  There may be prettier ways to do this, but this is reliable:
+    - Force entire page to 100% width and height with no padding
+    - Include a container to center the canvas
+    - Include a second container to force aspect ratio
+    - Set canvas to width and height 100%
+
+  This setup ensures that asking the canvas what size it is (client width and height)
+  returns the actual number of pixels it is.
+*/
+
+html, body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0px;
+    padding: 0px;
+    background-color: #0a1a2f;
+}
+
+#d1 {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#d2 {
+    max-width: 100vw;
+    max-height: 100vh;
+    aspect-ratio: 48/27;
+}
+
+#canvas {
+    width: 100%;
+    height: 100%;
+}

@@ -1,0 +1,56 @@
+{
+  "id": "2025-catculus",
+  "slug": "catculus",
+  "title": "Catculus",
+  "year": 2025,
+  "rank": 6,
+  "overall_score": 23.17,
+  "criteria": {
+    "theme": {
+      "rank": 44,
+      "score": 3.5,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 6,
+      "score": 3.75,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 28,
+      "score": 3.42,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 7,
+      "score": 4.33,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 3,
+      "score": 4.17,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 4,
+      "score": 4,
+      "top": 4.45
+    }
+  },
+  "author": "Antti Haavikko",
+  "devices": [
+    "Desktop",
+    "Mobile"
+  ],
+  "desc_full": "Catculus puts your maths skills and memory to the test! In simplicity, it’s a game where you pick tiles that sum up to the shown target number. You get penalized if you go over the target and the game will end if you do that too many times. So it wouldn’t be too simple, these black cats keep on appearing and covering parts of the board meaning you also need to keep better track of what was where or just guess and live with the consequences. Every now and then you get to pick some bonus effects which can radically change the way to score big!",
+  "description": "Catculus puts your maths skills and memory to the test! In simplicity, it’s a game where you pick tiles that sum up to the shown target number. You get penalized if you go over the target and the game will end if you do that too many times. So it wouldn’t be too simple, these black cats keep on appearing and covering parts of the board meaning you also need to keep better track of what was where or just guess and live with the consequences. Every now and then you get to pick some bonus effects which can radically change the way to score big!",
+  "controls": "",
+  "github_url": "https://github.com/js13kGames/catculus",
+  "play_url": "https://js13kgames.com/2025/games/catculus",
+  "play_zip": "https://play.js13kgames.com/catculus.zip",
+  "thumb_url": "https://play.js13kgames.com/catculus/.ts.png",
+  "local_path": "games/2025-catculus",
+  "entry": "index.html",
+  "commit_sha": "dd60d9ea410577409d19ad9cbdee1a14320171ab",
+  "build_status": "prebuilt"
+}

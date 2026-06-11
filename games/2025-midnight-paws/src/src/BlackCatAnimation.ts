@@ -1,0 +1,308 @@
+/*
+ * Copyright (c) 2025 Tero Jäntti, Sami Heikkinen
+ *
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use, copy,
+ * modify, merge, publish, distribute, sublicense, and/or sell copies
+ * of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+ * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+// Tuple type for renderBlackCat arguments (excluding cx)
+export type BlackCatRenderProps = [
+    x: number,
+    y: number,
+    width: number,
+    facing: BlackCatFacing,
+    eyesOpen: boolean,
+    dir: number,
+    step: number,
+    lastSpeed: number,
+    time: TimeStep,
+    riseLevel?: 0 | 1 | 2,
+];
+
+export type BlackCatFacing =
+    | "side"
+    | "up"
+    | "down"
+    | "up-left"
+    | "up-right"
+    | "down-left"
+    | "down-right";
+
+import type { TimeStep } from "./core/time/TimeStep";
+import { cx } from "./graphics";
+
+const CAT_ASPECT_RATIO = 3 / 4;
+
+// Draws a cat eye at (x, y) with open/closed state
+export function renderCatEye(
+    x: number,
+    y: number,
+    width: number,
+    open: boolean | number,
+) {
+    // open: true/false or 0..1 (0 = shut, 1 = open, 0.2 = almost shut)
+    let eo = 1;
+    if (typeof open === "number") eo = open;
+    else eo = open ? 1 : 0.1;
+    [
+        [width * 0.06, width * 0.03 * eo, "green"],
+        [width * 0.025, width * 0.018 * eo, "#181818"],
+    ].forEach((item) => {
+        const [rx, ry, fill] = item as [number, number, string];
+        cx.beginPath();
+        cx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
+        cx.fillStyle = fill;
+        cx.fill();
+    });
+    // Eye highlight only if eye is open enough
+    if (eo > 0.5) {
+        cx.beginPath();
+        cx.arc(
+            x - width * 0.02,
+            y - width * 0.01,
+            width * 0.01,
+            0,
+            Math.PI * 2,
+        );
+        cx.fillStyle = "#fff";
+        cx.fill();
+    }
+}
+
+// riseLevel: 0 = low, 1 = mid, 2 = high to jump next
+export function renderBlackCat(
+    x: number,
+    y: number,
+    width: number,
+    facing: BlackCatFacing,
+    eyesOpen: boolean,
+    dir: number,
+    step: number,
+    lastSpeed: number,
+    time: TimeStep,
+    riseLevel: 0 | 1 | 2 = 0,
+) {
+    cx.save();
+
+    const t = time.t,
+        h = width / CAT_ASPECT_RATIO;
+
+    // Shadow
+    cx.fillStyle = "rgba(0,0,0,0.20)";
+    cx.beginPath();
+    cx.ellipse(
+        x + width / 2,
+        y + h / 2 + h * 0.5 - h,
+        width * 0.45,
+        h * 0.24,
+        0,
+        0,
+        Math.PI * 2,
+    );
+    cx.fill();
+
+    // Animate cat eyes: flash (blink) like mouse
+    // Cat blink: less frequent, eyes shut for a short period
+    // eyesOpen: boolean, if false, max open-ness is half-shut (0.2)
+    // During blink, eyes are almost fully shut (0.05)
+    let catEyesOpen = eyesOpen ? 1 : 0.6;
+    if (eyesOpen) {
+        // Blink every ~3 seconds, eyes closed for 120ms
+        const blinkCycle = 3000; // ms
+        const blinkDuration = 120; // ms
+        const blinkTime = time.t % blinkCycle;
+        if (blinkTime < blinkDuration) {
+            catEyesOpen = 0.1;
+        }
+    }
+
+    // Rising to fence
+    const amp = h * 0.005;
+    let riseY = 0;
+    if (riseLevel === 0) {
+        riseY = Math.min(Math.sin(t / 400) * (h * 0.0002), 0); // only allow nearly invisible downward movement
+    } else if (riseLevel === 1) {
+        riseY = -h * 0.25 + Math.sin(t / 400) * amp;
+        riseY = Math.max(riseY, -h * 0.248);
+    } else if (riseLevel === 2) {
+        // Jump up quickly (0.3s), then stay above the screen
+        const jumpDuration = 150; // ms
+        // You must provide a reference time for when riseLevel became 2 for a true one-shot jump.
+        // For now, if time.t is reset on riseLevel change, this works:
+        if (time.t > jumpDuration) {
+            riseY = -h * 2;
+        } else {
+            const progress = Math.min(time.t / jumpDuration, 1);
+            // Ease out: fast at first, slow at end
+            const ease = 1 - Math.pow(1 - progress, 2);
+            riseY = -h * 0.45 - ease * (h * 1.55);
+        }
+    }
+    const baseYOffset = -h * 0.5;
+    cx.translate(0, baseYOffset + riseY);
+    cx.translate(x + width / 2, y + h * 0.1);
+    cx.scale(facing === "side" ? dir : 1, 1);
+    cx.translate(
+        0,
+        Math.sin(t / 220 + step * 2.0) *
+            (h * 0.05 * (0.4 + Math.min(1, lastSpeed * 0.8))),
+    );
+    // Body
+    cx.beginPath();
+    cx.ellipse(0, h * 0.2, width * 0.35, h * 0.28, 0, 0, Math.PI * 2);
+    cx.fillStyle = "#000";
+    cx.fill();
+    // Head
+    cx.beginPath();
+    cx.ellipse(0, -h * 0.18, width * 0.28, h * 0.22, 0, 0, Math.PI * 2);
+    cx.fill();
+    // Ears
+    const earY = -h * 0.5,
+        earW = width * 0.16,
+        earH = h * 0.18;
+    if (facing === "side") {
+        // Eye (profile)
+        renderCatEye(width * 0.19, -h * 0.18, width, catEyesOpen);
+        [
+            [width * 0.03, earW * 0.7, earH * 0.7, 0.1],
+            [width * 0.13, earW, earH, 0],
+        ].forEach(([ex, ew, eh, yoff]) => {
+            cx.beginPath();
+            cx.moveTo(ex, earY + earH * yoff);
+            cx.lineTo(ex + ew / 2, earY + eh + earH * yoff);
+            cx.lineTo(ex - ew / 2, earY + eh + earH * yoff);
+            cx.closePath();
+            cx.fillStyle = "#000";
+            cx.fill();
+        });
+
+        // Nose
+        cx.fillStyle = "#e68686";
+        cx.beginPath();
+        cx.ellipse(
+            width * 0.28,
+            -h * 0.11,
+            width * 0.018,
+            h * 0.012,
+            0,
+            0,
+            Math.PI * 2,
+        );
+        cx.fill();
+
+        // Whiskers (right only)
+        cx.strokeStyle = "#e6d6e6";
+        cx.lineWidth = Math.max(0.1, width * 0.012);
+        const wy = -h * 0.1,
+            wl = width * 0.18,
+            ws = width * 0.04;
+        [-1, 0, 1].forEach((row) => {
+            cx.beginPath();
+            cx.moveTo(width * 0.13, wy + row * ws);
+            cx.bezierCurveTo(
+                width * 0.22,
+                wy + row * ws + wl * 0.1,
+                width * 0.32,
+                wy + row * ws + wl * 0.3,
+                width * 0.38,
+                wy + row * ws + wl * 0.2,
+            );
+            cx.stroke();
+        });
+    } else {
+        [
+            [-width * 0.13, -1],
+            [width * 0.13, 1],
+        ].forEach(([ex, sign]) => {
+            cx.beginPath();
+            cx.moveTo(ex, earY);
+            cx.lineTo(ex - (sign * earW) / 2, earY + earH);
+            cx.lineTo(ex + (sign * earW) / 2, earY + earH);
+            cx.closePath();
+            cx.fillStyle = "#000";
+            cx.fill();
+        });
+    }
+    // Tail
+    const tailStartX = -width * 0.33,
+        tailStartY = h * 0.2,
+        tailThickness = width * 0.07,
+        tailEndX = tailStartX + width * 0.22,
+        tailEndY = tailStartY + h * 0.32,
+        ctrl1X = tailStartX - width * 0.2,
+        ctrl1Y = tailStartY - h * 0.1,
+        ctrl2X = tailStartX - width * 0.1,
+        ctrl2Y = tailStartY + h * 0.25;
+    cx.beginPath();
+    cx.moveTo(tailStartX, tailStartY);
+    cx.bezierCurveTo(ctrl1X, ctrl1Y, ctrl2X, ctrl2Y, tailEndX, tailEndY);
+    cx.strokeStyle = "#000";
+    cx.lineWidth = tailThickness;
+    cx.stroke();
+    cx.beginPath();
+    cx.arc(tailEndX, tailEndY, tailThickness / 2, 0, Math.PI * 2);
+    cx.fillStyle = "#000";
+    cx.fill();
+    if (facing.includes("down")) {
+        cx.save();
+        cx.translate(0, -h * 0.18);
+        [-width * 0.09, width * 0.09].forEach((dx) =>
+            renderCatEye(dx, 0, width, catEyesOpen),
+        );
+        cx.restore();
+        // Nose
+        cx.beginPath();
+        cx.ellipse(0, -h * 0.11, width * 0.018, h * 0.012, 0, 0, Math.PI * 2);
+        cx.fillStyle = "#e68686";
+        cx.fill();
+        // Whiskers
+        cx.strokeStyle = "#e6d6e6";
+        cx.lineWidth = Math.max(0.1, width * 0.012);
+        const wy = -h * 0.1,
+            wl = width * 0.18,
+            ws = width * 0.04;
+        [-1, 0, 1].forEach((row) => {
+            cx.beginPath();
+            cx.moveTo(-width * 0.13, wy + row * ws);
+            cx.bezierCurveTo(
+                -width * 0.22,
+                wy + row * ws + wl * 0.1,
+                -width * 0.32,
+                wy + row * ws + wl * 0.3,
+                -width * 0.38,
+                wy + row * ws + wl * 0.2,
+            );
+            cx.stroke();
+            cx.beginPath();
+            cx.moveTo(width * 0.13, wy + row * ws);
+            cx.bezierCurveTo(
+                width * 0.22,
+                wy + row * ws + wl * 0.1,
+                width * 0.32,
+                wy + row * ws + wl * 0.3,
+                width * 0.38,
+                wy + row * ws + wl * 0.2,
+            );
+            cx.stroke();
+        });
+    }
+
+    cx.restore();
+}

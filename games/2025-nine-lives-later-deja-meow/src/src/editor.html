@@ -1,0 +1,167 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Room Editor (5px snap)</title>
+<style>
+  body {
+    margin: 0;
+    background: #111;
+    color: #ddd;
+    font: 14px system-ui;
+    display: grid;
+    place-items: center;
+    height: 100vh
+  }
+
+  #ui {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 6px;
+    flex-wrap: wrap;
+    justify-content: center
+  }
+
+  canvas {
+    background: #222;
+    box-shadow: 0 0 0 2px #333;
+    touch-action: none
+  }
+
+  textarea {
+    width: 640px;
+    height: 90px;
+    background: #111;
+    color: #9f9;
+    border: 1px solid #444
+  }
+
+  label {
+    user-select: none
+  }
+
+  input[type=number] {
+    width: 70px;
+    background: #111;
+    color: #ddd;
+    border: 1px solid #444
+  }
+</style>
+<main>
+  <canvas id=c width=640 height=400></canvas>
+  <div id=ui>
+    <label><input type=checkbox id=n> N</label>
+    <label><input type=checkbox id=e> E</label>
+    <label><input type=checkbox id=s> S</label>
+    <label><input type=checkbox id=w> W</label>
+    <span> | </span>
+    <label>x <input id=ix type=number></label>
+    <label>y <input id=iy type=number></label>
+    <label>w <input id=iw type=number></label>
+    <label>h <input id=ih type=number></label>
+    <button id=ex>Export</button>
+  </div>
+  <textarea id=o spellcheck=false></textarea>
+</main>
+<script>
+  const C = c.getContext('2d'), W = 640, H = 400, G = 10, SNAP = n => Math.round(n / G) * G;
+  let R = [], drag = null, S = -1; // rects, current drag, selected index
+
+  function draw(tmp) {
+    C.clearRect(0, 0, W, H);
+    C.strokeStyle = "#555"; C.strokeRect(.5, .5, W - 1, H - 1);
+    C.fillStyle = "#89f";
+    for (let i = 0; i < R.length; i++) {
+      const r = R[i]; C.fillRect(r.x, r.y, r.w, r.h);
+      if (i === S) { C.strokeStyle = "#ff0"; C.lineWidth = 2; C.strokeRect(r.x + .5, r.y + .5, r.w, r.h); C.lineWidth = 1; }
+    }
+    if (tmp) { C.globalAlpha = .35; C.fillRect(tmp.x, tmp.y, tmp.w, tmp.h); C.globalAlpha = 1; C.strokeStyle = "#9f9"; C.strokeRect(tmp.x + .5, tmp.y + .5, tmp.w, tmp.h); }
+    C.fillStyle = "#9f9";
+    if (n.checked) C.fillRect(W / 2 - 20, 0, 40, 4);
+    if (s.checked) C.fillRect(W / 2 - 20, H - 4, 40, 4);
+    if (w.checked) C.fillRect(0, H / 2 - 20, 4, 40);
+    if (e.checked) C.fillRect(W - 4, H / 2 - 20, 4, 40);
+  }
+
+  function rectUnder(x, y) {
+    for (let i = R.length; i--;) { let r = R[i]; if (x >= r.x && y >= r.y && x < r.x + r.w && y < r.y + r.h) return i; }
+    return -1;
+  }
+
+  function syncInputs() {
+    const r = R[S] || {};
+    ix.value = r.x ?? ''; iy.value = r.y ?? ''; iw.value = r.w ?? ''; ih.value = r.h ?? '';
+    const en = S > -1;[ix, iy, iw, ih].forEach(i => i.disabled = !en);
+  }
+
+  function clampSnap(r) {
+    // snap start, keep inside (at least 1 grid cell available)
+    r.x = Math.max(0, Math.min(W - G, SNAP(r.x)));
+    r.y = Math.max(0, Math.min(H - G, SNAP(r.y)));
+    // snap end and enforce >=1 cell
+    let x2 = Math.max(r.x + G, Math.min(W, SNAP(r.x + r.w)));
+    let y2 = Math.max(r.y + G, Math.min(H, SNAP(r.y + r.h)));
+    r.w = x2 - r.x; r.h = y2 - r.y;
+  }
+
+  c.oncontextmenu = e => e.preventDefault();
+  c.onmousedown = e => {
+    const x = e.offsetX | 0, y = e.offsetY | 0;
+    if (e.button === 2) { const i = rectUnder(x, y); if (i > -1) { R.splice(i, 1); if (S === i) S = -1; if (S > i) S--; syncInputs(); draw(); } return; }
+    const i = rectUnder(x, y);
+    if (i > -1) { S = i; syncInputs(); draw(); }
+    else { S = -1; syncInputs(); drag = { x0: x, y0: y }; }
+  };
+  c.onmousemove = e => {
+    if (!drag) return;
+    const x = SNAP(e.offsetX | 0), y = SNAP(e.offsetY | 0);
+    const sx = SNAP(drag.x0), sy = SNAP(drag.y0);
+    const x0 = Math.min(sx, x), y0 = Math.min(sy, y), w = Math.abs(x - sx), h = Math.abs(y - sy);
+    draw(w && h ? { x: x0, y: y0, w, h } : null);
+  };
+  c.onmouseup = e => {
+    if (!drag) return;
+    const x = SNAP(e.offsetX | 0), y = SNAP(e.offsetY | 0);
+    const sx = SNAP(drag.x0), sy = SNAP(drag.y0);
+    let r = { x: Math.min(sx, x), y: Math.min(sy, y), w: Math.abs(x - sx), h: Math.abs(y - sy) };
+    if (r.w && r.h) { clampSnap(r); R.push(r); S = R.length - 1; syncInputs(); }
+    drag = null; draw();
+  };
+
+  [ix, iy, iw, ih].forEach(inp => {
+    inp.oninput = () => {
+      if (S < 0) return;
+      const r = R[S];
+      r.x = +ix.value || 0; r.y = +iy.value || 0; r.w = +iw.value || G; r.h = +ih.value || G;
+      clampSnap(r); syncInputs(); draw();
+    };
+  });
+
+  // delete only the selected rect with Backspace
+  addEventListener('keydown', e => {
+    if (e.key !== 'Backspace') return;
+
+    const t = e.target, inField =
+      (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA') && !t.readOnly && !t.disabled) ||
+      (t && t.isContentEditable);
+
+    if (inField) return; // let Backspace edit the field normally
+
+    if (S > -1) {               // delete selected rect only
+      R.splice(S, 1);
+      S = Math.min(S, R.length - 1);
+      syncInputs();
+      draw();
+    }
+    e.preventDefault();
+  });
+
+
+  ex.onclick = () => {
+    const ds = (n.checked ? 'n' : '') + (e.checked ? 'e' : '') + (s.checked ? 's' : '') + (w.checked ? 'w' : '');
+    const rects = R.map(r => `fw(${r.x}, ${r.y}, ${r.w}, ${r.h})`).join(', ');
+    o.value = `const roomsBase = [\n  { rects: [${rects}], doors: "${ds}", x: 0, y: 0 },\n]`;
+  };
+
+  [n, e, s, w].forEach(cb => cb.onchange = draw);
+  syncInputs(); draw();
+</script>

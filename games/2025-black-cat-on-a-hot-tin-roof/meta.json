@@ -1,0 +1,56 @@
+{
+  "id": "2025-black-cat-on-a-hot-tin-roof",
+  "slug": "black-cat-on-a-hot-tin-roof",
+  "title": "Black Cat on a Hot Tin Roof",
+  "year": 2025,
+  "rank": 24,
+  "overall_score": 21.11,
+  "criteria": {
+    "theme": {
+      "rank": 8,
+      "score": 3.86,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 108,
+      "score": 2.55,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 38,
+      "score": 3.32,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 25,
+      "score": 3.95,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 27,
+      "score": 3.55,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 9,
+      "score": 3.89,
+      "top": 4.45
+    }
+  },
+  "author": "Csaba Csecskedi",
+  "devices": [
+    "Desktop",
+    "Mobile"
+  ],
+  "desc_full": "Black Bird and his gang captured Kitty. Black Cat has only one minute left to save her. The roof is full of dangers and getting hot. Run till the end and catch Black Bird! TIPS Clear obstacles and earn points. You can clear the spikes from the side. Attack the birds from above. Unlock Black Cat’s super power. CONTROLS CLICK or press SPACE to jump. Hold the button for bigger jumps. Press the button in mid air to double jump.",
+  "description": "Black Bird and his gang captured Kitty. Black Cat has only one minute left to save her. The roof is full of dangers and getting hot. Run till the end and catch Black Bird! TIPS Clear obstacles and earn points. You can clear the spikes from the side. Attack the birds from above. Unlock Black Cat’s super power. CONTROLS CLICK or press SPACE to jump. Hold the button for bigger jumps. Press the button in mid air to double jump.",
+  "controls": "",
+  "github_url": "https://github.com/js13kGames/black-cat-on-a-hot-tin-roof",
+  "play_url": "https://js13kgames.com/2025/games/black-cat-on-a-hot-tin-roof",
+  "play_zip": "https://play.js13kgames.com/black-cat-on-a-hot-tin-roof.zip",
+  "thumb_url": "https://play.js13kgames.com/black-cat-on-a-hot-tin-roof/.ts.png",
+  "local_path": "games/2025-black-cat-on-a-hot-tin-roof",
+  "entry": "index.html",
+  "commit_sha": "bf72733e65e8827eec6e4bf99fe965ca371ec8c3",
+  "build_status": "prebuilt"
+}

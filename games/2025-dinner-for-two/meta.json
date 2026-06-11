@@ -1,0 +1,56 @@
+{
+  "id": "2025-dinner-for-two",
+  "slug": "dinner-for-two",
+  "title": "Dinner for Two",
+  "year": 2025,
+  "rank": 42,
+  "overall_score": 19.75,
+  "criteria": {
+    "theme": {
+      "rank": 5,
+      "score": 4,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 37,
+      "score": 3.3,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 116,
+      "score": 2.5,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 44,
+      "score": 3.7,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 32,
+      "score": 3.45,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 123,
+      "score": 2.8,
+      "top": 4.45
+    }
+  },
+  "author": "Feenposhleen",
+  "devices": [
+    "Desktop",
+    "Mobile"
+  ],
+  "desc_full": "Time to set the table! Easy enough, right? Unfortunately you have a guest already. Use the wand to distract him. Use the fly swatter to remove flies that makes him go nuts.",
+  "description": "Time to set the table! Easy enough, right? Unfortunately you have a guest already. Use the wand to distract him. Use the fly swatter to remove flies that makes him go nuts.",
+  "controls": "",
+  "github_url": "https://github.com/js13kGames/dinner-for-two",
+  "play_url": "https://js13kgames.com/2025/games/dinner-for-two",
+  "play_zip": "https://play.js13kgames.com/dinner-for-two.zip",
+  "thumb_url": "https://play.js13kgames.com/dinner-for-two/.ts.png",
+  "local_path": "games/2025-dinner-for-two",
+  "entry": "dist/index.html",
+  "commit_sha": "deb9c18addae796bbda696af17ed16daeca1eb27",
+  "build_status": "prebuilt"
+}

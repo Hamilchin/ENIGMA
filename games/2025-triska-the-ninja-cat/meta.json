@@ -1,0 +1,56 @@
+{
+  "id": "2025-triska-the-ninja-cat",
+  "slug": "triska-the-ninja-cat",
+  "title": "Triska the Ninja Cat",
+  "year": 2025,
+  "rank": 4,
+  "overall_score": 23.91,
+  "criteria": {
+    "theme": {
+      "rank": 6,
+      "score": 3.92,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 5,
+      "score": 3.84,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 4,
+      "score": 4.16,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 24,
+      "score": 3.97,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 10,
+      "score": 3.95,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 3,
+      "score": 4.07,
+      "top": 4.45
+    }
+  },
+  "author": "John Edvard",
+  "devices": [
+    "Desktop",
+    "Mobile"
+  ],
+  "desc_full": "Controls Tap and hold anywhere to attach and swing from the red dots. (We all know cats love red dots) Collect the 3 clovers in every stage and reach the goal",
+  "description": "",
+  "controls": "Tap and hold anywhere to attach and swing from the red dots. (We all know cats love red dots) Collect the 3 clovers in every stage and reach the goal",
+  "github_url": "https://github.com/js13kGames/triska-the-ninja-cat",
+  "play_url": "https://js13kgames.com/2025/games/triska-the-ninja-cat",
+  "play_zip": "https://play.js13kgames.com/triska-the-ninja-cat.zip",
+  "thumb_url": "https://play.js13kgames.com/triska-the-ninja-cat/.ts.png",
+  "local_path": "games/2025-triska-the-ninja-cat",
+  "entry": "index.html",
+  "commit_sha": "13624fa0265f746b55691f1e016d96450303a2e5",
+  "build_status": "prebuilt"
+}

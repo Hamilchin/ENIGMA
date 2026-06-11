@@ -1,0 +1,55 @@
+{
+  "id": "2025-order-of-the-crimson-dot",
+  "slug": "order-of-the-crimson-dot",
+  "title": "Order of the Crimson Dot",
+  "year": 2025,
+  "rank": 67,
+  "overall_score": 18.35,
+  "criteria": {
+    "theme": {
+      "rank": 22,
+      "score": 3.7,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 73,
+      "score": 2.91,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 130,
+      "score": 2.39,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 120,
+      "score": 2.7,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 31,
+      "score": 3.48,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 79,
+      "score": 3.17,
+      "top": 4.45
+    }
+  },
+  "author": "Randall Lee Spence, Charissa Day et al",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "A quest to capture the im-paws-ible… For eons, no cat has managed to grasp the elusive Crimson Dot. Now a wise elder challenges you: do you have what it takes to join the Order? Guide your laser pointer as an eager kitten gives chase, but strategy is key. Watch your cat’s stamina—push too hard and they’ll collapse from exhaustion. Rest too long and boredom will lull them to sleep. Feed them, let them nap, and find the perfect balance between happiness and endurance. As your kitten grows into a swift-eyed hunter, the challenge intensifies. The race against time begins. Ascension awaits. Controls: Mouse to move laser Enter to play/pause M to mute",
+  "description": "A quest to capture the im-paws-ible… For eons, no cat has managed to grasp the elusive Crimson Dot. Now a wise elder challenges you: do you have what it takes to join the Order? Guide your laser pointer as an eager kitten gives chase, but strategy is key. Watch your cat’s stamina—push too hard and they’ll collapse from exhaustion. Rest too long and boredom will lull them to sleep. Feed them, let them nap, and find the perfect balance between happiness and endurance. As your kitten grows into a swift-eyed hunter, the challenge intensifies. The race against time begins. Ascension awaits.",
+  "controls": ": Mouse to move laser Enter to play/pause M to mute",
+  "github_url": "https://github.com/js13kGames/order-of-the-crimson-dot",
+  "play_url": "https://js13kgames.com/2025/games/order-of-the-crimson-dot",
+  "play_zip": "https://play.js13kgames.com/order-of-the-crimson-dot.zip",
+  "thumb_url": "https://play.js13kgames.com/order-of-the-crimson-dot/.ts.png",
+  "local_path": "games/2025-order-of-the-crimson-dot",
+  "entry": "index.html",
+  "commit_sha": "35598d0299980e19082c1c9506c43a128ba8ab00",
+  "build_status": "prebuilt"
+}

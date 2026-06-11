@@ -1,0 +1,55 @@
+{
+  "id": "2025-nine-lives",
+  "slug": "nine-lives",
+  "title": "Nine Lives",
+  "year": 2025,
+  "rank": 41,
+  "overall_score": 19.75,
+  "criteria": {
+    "theme": {
+      "rank": 59,
+      "score": 3.38,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 35,
+      "score": 3.38,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 39,
+      "score": 3.31,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 77,
+      "score": 3.16,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 57,
+      "score": 3.13,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 55,
+      "score": 3.41,
+      "top": 4.45
+    }
+  },
+  "author": "Andy Sommerville",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "If you can’t reach the goal yourself, lay an egg and maybe the next You can make it. MotionKeyboardAlt keyboardGamepad Walk← →A DDpad JumpZSpaceSouth Lay eggXEWest ResetRREast",
+  "description": "If you can’t reach the goal yourself, lay an egg and maybe the next You can make it. MotionKeyboardAlt keyboardGamepad Walk← →A DDpad JumpZSpaceSouth Lay eggXEWest ResetRREast",
+  "controls": "",
+  "github_url": "https://github.com/js13kGames/nine-lives",
+  "play_url": "https://js13kgames.com/2025/games/nine-lives",
+  "play_zip": "https://play.js13kgames.com/nine-lives.zip",
+  "thumb_url": "https://play.js13kgames.com/nine-lives/.ts.png",
+  "local_path": "games/2025-nine-lives",
+  "entry": "index.html",
+  "commit_sha": "def00d4204b29c4c970337de1db460fafad9c793",
+  "build_status": "prebuilt"
+}

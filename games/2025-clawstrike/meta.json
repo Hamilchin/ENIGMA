@@ -1,0 +1,56 @@
+{
+  "id": "2025-clawstrike",
+  "slug": "clawstrike",
+  "title": "CLAWSTRIKE",
+  "year": 2025,
+  "rank": 1,
+  "overall_score": 24.89,
+  "criteria": {
+    "theme": {
+      "rank": 1,
+      "score": 4.24,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 16,
+      "score": 3.59,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 2,
+      "score": 4.37,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 1,
+      "score": 4.56,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 1,
+      "score": 4.22,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 8,
+      "score": 3.91,
+      "top": 4.45
+    }
+  },
+  "author": "Rémi Vansteelandt",
+  "devices": [
+    "Desktop",
+    "Mobile"
+  ],
+  "desc_full": "Avenge your fallen human and cut through waves of enemies across fast-paced, punishingly fun levels. CLAWSTRIKE is a die-and-retry action game: you’ll fall often, but each retry is instant, keeping the momentum alive. Prove your skill and unlock 9 Lives Mode by completing the game. Controls Move: ↑ ← ↓ → or W A S D Attack: Space Roll: ↓ Meow: E Optimized for both mobile and desktop so you can avenge your human anywhere.",
+  "description": "Avenge your fallen human and cut through waves of enemies across fast-paced, punishingly fun levels. CLAWSTRIKE is a die-and-retry action game: you’ll fall often, but each retry is instant, keeping the momentum alive. Prove your skill and unlock 9 Lives Mode by completing the game.",
+  "controls": "Move: ↑ ← ↓ → or W A S D Attack: Space Roll: ↓ Meow: E Optimized for both mobile and desktop so you can avenge your human anywhere.",
+  "github_url": "https://github.com/js13kGames/clawstrike",
+  "play_url": "https://js13kgames.com/2025/games/clawstrike",
+  "play_zip": "https://play.js13kgames.com/clawstrike.zip",
+  "thumb_url": "https://play.js13kgames.com/clawstrike/.ts.png",
+  "local_path": "games/2025-clawstrike",
+  "entry": "index.html",
+  "commit_sha": "704ceb1607ae606f6d6a645d9b3ef8dcbd3efd4d",
+  "build_status": "prebuilt"
+}

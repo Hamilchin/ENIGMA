@@ -1,0 +1,56 @@
+{
+  "id": "2025-happy-birthday-jerry",
+  "slug": "happy-birthday-jerry",
+  "title": "Happy Birthday, Jerry!",
+  "year": 2025,
+  "rank": 56,
+  "overall_score": 19,
+  "criteria": {
+    "theme": {
+      "rank": 72,
+      "score": 3.26,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 82,
+      "score": 2.83,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 48,
+      "score": 3.22,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 90,
+      "score": 3.04,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 60,
+      "score": 3.09,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 34,
+      "score": 3.57,
+      "top": 4.45
+    }
+  },
+  "author": "Matt McKenna",
+  "devices": [
+    "Desktop",
+    "Mobile"
+  ],
+  "desc_full": "Pop the balloons to celebrate Jerry’s birthday! Press space, tap, or click to jump Hold jump to dive Press jump twice to double jump (once per jump) If you hit the ground, you lose a cupcake!",
+  "description": "Pop the balloons to celebrate Jerry’s birthday! Press space, tap, or click to jump Hold jump to dive Press jump twice to double jump (once per jump) If you hit the ground, you lose a cupcake!",
+  "controls": "",
+  "github_url": "https://github.com/js13kGames/happy-birthday-jerry",
+  "play_url": "https://js13kgames.com/2025/games/happy-birthday-jerry",
+  "play_zip": "https://play.js13kgames.com/happy-birthday-jerry.zip",
+  "thumb_url": "https://play.js13kgames.com/happy-birthday-jerry/.ts.png",
+  "local_path": "games/2025-happy-birthday-jerry",
+  "entry": "index.html",
+  "commit_sha": "940b9e26b5496152eda233d932baa8b5eac4c30e",
+  "build_status": "prebuilt"
+}

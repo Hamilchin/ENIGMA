@@ -1,0 +1,21 @@
+# build
+app
+dist
+
+# binaries
+gifs
+
+# ide
+.idea
+.vscode
+
+# development
+node_modules
+.DS_Store
+
+# deployment
+terraform/.terraform.lock.hcl
+terraform/.terraform
+
+# other
+coverage

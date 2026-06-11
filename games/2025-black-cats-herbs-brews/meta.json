@@ -1,0 +1,55 @@
+{
+  "id": "2025-black-cats-herbs-brews",
+  "slug": "black-cats-herbs-brews",
+  "title": "Black Cat's Herbs & Brews",
+  "year": 2025,
+  "rank": 48,
+  "overall_score": 19.48,
+  "criteria": {
+    "theme": {
+      "rank": 89,
+      "score": 3.09,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 43,
+      "score": 3.22,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 70,
+      "score": 2.91,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 30,
+      "score": 3.87,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 59,
+      "score": 3.09,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 65,
+      "score": 3.3,
+      "top": 4.45
+    }
+  },
+  "author": "Tiago Correia",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "You and your familiar just arrived to a small village. Your new home, away from the bustling city. Brew and sell your potions to the villagers so you can pay rent, upgrade your shop and, more importantly, feed your familiar, otherwise she’ll knock your potions and ingredients off the shelves. Controls Click the cupboard to see your inventory Click the cauldron to brew Drag items from the cupboard to your cauldron to select ingredients Drag animal products to your familiar to feed her Drag items to the villagers to sell them (if they want them) Tips Shop prices change every day. If something’s too expensive, maybe wait until tomorrow… or maybe it’ll be even worse! You can try to guess the potion recipes, if you don’t want to buy it. Don’t accrue too much debt",
+  "description": "You and your familiar just arrived to a small village. Your new home, away from the bustling city. Brew and sell your potions to the villagers so you can pay rent, upgrade your shop and, more importantly, feed your familiar, otherwise she’ll knock your potions and ingredients off the shelves.",
+  "controls": "Click the cupboard to see your inventory Click the cauldron to brew Drag items from the cupboard to your cauldron to select ingredients Drag animal products to your familiar to feed her Drag items to the villagers to sell them (if they want them) Tips Shop prices change every day. If something’s too expensive, maybe wait until tomorrow… or maybe it’ll be even worse! You can try to guess the potion recipes, if you don’t want to buy it. Don’t accrue too much debt",
+  "github_url": "https://github.com/js13kGames/black-cats-herbs-brews",
+  "play_url": "https://js13kgames.com/2025/games/black-cats-herbs-brews",
+  "play_zip": "https://play.js13kgames.com/black-cats-herbs-brews.zip",
+  "thumb_url": "https://play.js13kgames.com/black-cats-herbs-brews/.ts.png",
+  "local_path": "games/2025-black-cats-herbs-brews",
+  "entry": "index.html",
+  "commit_sha": "de0e7dbc8ae244d09194a77fa07c17e7404e2418",
+  "build_status": "prebuilt"
+}

@@ -1,0 +1,41 @@
+TODO: 
+
+ - How much is the intro story ? ~260 bytes !!
+
+ - Add credits counter ?
+
+ - Should continue restart level - 1 ?
+
+
+
+
+MAYBE:
+ - For every second level completed ... that can be chosen from start screen
+ - Add smoldering wreckage of destroyed aa guns (and ePlanes ?)
+ - Player HP ?  And health bar ?
+ - Water splash effect (things falling into water, wake after ship, etc.)
+ - Title screen: select level
+ - Title screen: toggle music
+
+
+ - How to handle the difficulty ?  Most gamers should be able to finish the game in about 10 minutes.
+  - Count planes lost instead of lives remaining.   And give a bonus div by this (+1) at the end :) 
+  - Multiple difficulties ?  Hard.  Needs UI on title screen.
+  - Adaptive difficulty ?  Harder the more lives you have left ?  
+    What can be tweaked ?  Enemy shooting pause.  Eplane spawn pause.  Eplane spawn numbers.  Ship hp - aa hp - plane hp - balloon hp.  
+  - Bonus for lives left after each sinking ?
+  - Get bonus life after each sinking ?
+
+WONT:
+
+ - Removing all semi colons did nothing for zip size
+
+ - Limit player bullets on screen (prevent fast tappers from having it too easy)
+   NAH .... doesn't work !
+ 
+
+
+
+Is served at:
+
+https://repsej.github.io/OneButtonShooter/

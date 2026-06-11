@@ -1,0 +1,20 @@
+[
+    {
+      "animationName": "run",
+      "props": {
+        "frameCount": 1,
+        "frameBuffer": 5,
+        "loop": true,
+        "src": "boss_cat_run.png"
+      }
+    },
+    {
+      "animationName": "walk",
+      "props": {
+        "frameCount": 1,
+        "frameBuffer": 15,
+        "loop": true,
+        "src": "boss_cat_run.png"
+      }
+    }    
+  ]

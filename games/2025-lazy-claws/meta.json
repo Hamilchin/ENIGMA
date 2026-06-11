@@ -1,0 +1,55 @@
+{
+  "id": "2025-lazy-claws",
+  "slug": "lazy-claws",
+  "title": "Lazy Claws",
+  "year": 2025,
+  "rank": 44,
+  "overall_score": 19.71,
+  "criteria": {
+    "theme": {
+      "rank": 16,
+      "score": 3.76,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 65,
+      "score": 2.95,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 74,
+      "score": 2.9,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 52,
+      "score": 3.48,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 21,
+      "score": 3.62,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 97,
+      "score": 3,
+      "top": 4.45
+    }
+  },
+  "author": "Alexandr Yushkov",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "You used to be a predator, but years of living at home have dulled your skills. Your owner will be back any minute, and the house is full of pests. Take care of them if you want to keep enjoying your cozy home life!",
+  "description": "You used to be a predator, but years of living at home have dulled your skills. Your owner will be back any minute, and the house is full of pests. Take care of them if you want to keep enjoying your cozy home life!",
+  "controls": "",
+  "github_url": "https://github.com/js13kGames/lazy-claws",
+  "play_url": "https://js13kgames.com/2025/games/lazy-claws",
+  "play_zip": "https://play.js13kgames.com/lazy-claws.zip",
+  "thumb_url": "https://play.js13kgames.com/lazy-claws/.ts.png",
+  "local_path": "games/2025-lazy-claws",
+  "entry": "index.html",
+  "commit_sha": "be315242eec7cf2ce2168c01c195cee89e70f2a1",
+  "build_status": "prebuilt"
+}

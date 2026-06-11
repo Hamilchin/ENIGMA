@@ -1,0 +1,5 @@
+src/*.js
+src/*.js.map
+*.zip
+**/.#*
+misc/

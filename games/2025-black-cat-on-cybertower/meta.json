@@ -1,0 +1,56 @@
+{
+  "id": "2025-black-cat-on-cybertower",
+  "slug": "black-cat-on-cybertower",
+  "title": "Black Cat on Cybertower",
+  "year": 2025,
+  "rank": 22,
+  "overall_score": 21.15,
+  "criteria": {
+    "theme": {
+      "rank": 64,
+      "score": 3.32,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 20,
+      "score": 3.53,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 18,
+      "score": 3.62,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 3,
+      "score": 4.53,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 81,
+      "score": 2.82,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 62,
+      "score": 3.32,
+      "top": 4.45
+    }
+  },
+  "author": "mooookar",
+  "devices": [
+    "Desktop",
+    "Mobile"
+  ],
+  "desc_full": "Help Black cat survive in a cruel cyberpunk world of steel, concrete and silicon. Roll and climb up the dark Cybertower, gather the food packs on your way in pursue of elusive hope to survive. Controls: <– or A to roll left Space or W to jump –> or D to roll right Mobile controls: Tap and hold to roll 2nd tap to jump",
+  "description": "Help Black cat survive in a cruel cyberpunk world of steel, concrete and silicon. Roll and climb up the dark Cybertower, gather the food packs on your way in pursue of elusive hope to survive.",
+  "controls": ": <– or A to roll left Space or W to jump –> or D to roll right Mobile controls: Tap and hold to roll 2nd tap to jump",
+  "github_url": "https://github.com/js13kGames/black-cat-on-cybertower",
+  "play_url": "https://js13kgames.com/2025/games/black-cat-on-cybertower",
+  "play_zip": "https://play.js13kgames.com/black-cat-on-cybertower.zip",
+  "thumb_url": "https://play.js13kgames.com/black-cat-on-cybertower/.ts.png",
+  "local_path": "games/2025-black-cat-on-cybertower",
+  "entry": "index.html",
+  "commit_sha": "0e7b6beb4a8fb7a52b9cb594f848a650604f8c7f",
+  "build_status": "prebuilt"
+}

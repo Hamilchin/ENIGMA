@@ -1,0 +1,149 @@
+/** @format */
+
+///////////////////////////////////////////////////////////////////////////////
+// sound effects
+
+
+
+const sound_wind = new Sound([,.01,500,.1,.3,,,0,,,,,,2,,,,,,,1e3]); // Random 6 - Mutation 3
+const sound_engine =new Sound([2.1,,1e3,.1,.3,.03,1,.5,,,,.03,.06,.9,33,,,.54,,.37]); // Random 8
+
+//const sound_score = new Sound([1.04, 0, 2e3, , 0.02, 0.01, , 2.2, , , 50, , , , , , , 0.5, 0.01]); // Loaded Sound 1197
+const sound_shoot =new Sound([2,,438,,,.08,3,1.2,-11,,,,,,,.5,.2,.55,.07,,208]); // Shoot 43
+
+// const sound_hit = new Sound([2.1,,1000,,.01,.02,1,1.2,,,,,,.5,,.1,,.43,.02]);
+// const sound_hit = new Sound([1,,1000,,.01,.01,2,0,,,,,,.2,,.2,,.43,.01])
+const sound_hit =new Sound([1,,1500,,.08,,,1.7,,,,,,.1,12,.4,,.1,.02]); 
+
+// prettier-ignore
+const sound_explosion = new Sound([4,.5,802,.1,.05,.5,4,4.59,,,,,,1.2,,2,.21,.31,.1,.1]);
+
+
+function makeDebris(pos, color = hsl(), amount = 50, size = 0.2, elasticity = 0.3, speed = 0.1) {
+	const color2 = color.lerp(hsl(), 0.5);
+	const fadeColor = color.copy();
+	fadeColor.a = 0;
+
+	const emitter = new ParticleEmitter(
+		pos,
+		0,
+		1,
+		0.1,
+		amount / 0.1,
+		PI,
+		undefined,
+		color,
+		color2,
+		fadeColor,
+		fadeColor,
+		3,
+		size,
+		size,
+		speed / 10,
+		0.05,
+		1,
+		0.95,
+		0.5,
+		PI,
+		0, // random
+		0.1,
+		true
+	);
+	emitter.elasticity = elasticity;
+	return emitter;
+}
+
+function makeSparks(pos, count = 5)
+{
+	makeDebris(pos, new Color(1, rand(1), 0), count, rand(0.05, 0.15), 0, rand(0.2));
+}
+
+function makeSmoke(pos, force = 1) {
+	if (force < .5) return; // prevent too many small particles ... slows down Safari ... and maybe iPhones ...
+
+	// smoke
+	new ParticleEmitter(
+		pos, // pos
+		0, // angle
+		0, // 0.1 * force, // radius / 2, // emitSize
+		rand(0.2, 0.4), // emitTime
+		rand(1, 1.5) * (force + 0.2), // emitRate
+		PI / 2, // emiteCone
+		spriteAtlas.blob,
+		rgb(1, 1, 1, .2),
+		rgb(0.5, 0.5, 0.5, 0.5),
+		rgb(1, 1, 1, 0),
+		rgb(1, 1, 1, 0),
+		rand(0.3, 1), // time
+		0.4 + 0.4 * force, // sizeStart
+		0.01, // sizeEnd
+		force * 0.001, // speed
+		0.1, // angleSpeed
+		0.8, // damp
+		0.9, // angleDamp
+		-0.2, // gravity
+		PI, // particle cone
+		0.5, // fade
+		0, // randomness
+		false, // collide
+		false, // additive
+		false, // colorLinear
+		0 // renderOrder
+	);
+}
+
+
+function makeFire(pos, size=1, durationMS=250)
+{
+	let flash = new EngineObject(pos.copy(), vec2(size), spriteAtlas.explosion);
+	flash.gravityScale = 0;
+	flash.renderOrder = 2000;
+	flash.color = rgb(1, 1, 1, 1);
+
+	flash.update = () => {
+		flash.size = flash.size.lerp(vec2(0), 0.05);
+	};
+
+	setTimeout(() => {
+		flash.destroy();
+	}, durationMS);
+}
+
+function makeHitEffect(pos, force=1)
+{
+	sound_hit.play(pos, force);
+	sound_shoot.play(pos, .5, .3);
+	makeFire(pos, force);
+	makeSmoke(pos, rand(5,10)*force);
+	makeSparks(pos, force);
+}
+
+let explosionCount = 0;
+
+function makeExplosion(pos, force=1)
+{
+	sound_explosion.play(pos, force);
+
+	blinkScreenWhite(4 + force * 4);
+	makeFire(pos);
+
+	if (explosionCount > 3) return; // limit simultaneous explosions
+
+	explosionCount++;
+	// console.log(`Explosion count: ${explosionCount}`);
+
+	for (let i = 0; i < 2 + 4*force; i++) {
+		setTimeout( () => {
+			let p = pos.add(randInCircle(force*.5));
+
+			if (i % 2 == 0) makeFire(p, rand(force, force*2));
+			makeSmoke(p, rand(1,10)*force);
+			makeSparks(p, force);
+		}, i * 30);
+	}
+
+	setTimeout(() => {
+		explosionCount--;
+		// console.log(`Explosion count: ${explosionCount}`);
+	}, 1500);
+}

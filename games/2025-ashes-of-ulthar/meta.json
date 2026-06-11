@@ -1,0 +1,55 @@
+{
+  "id": "2025-ashes-of-ulthar",
+  "slug": "ashes-of-ulthar",
+  "title": "Ashes of Ulthar",
+  "year": 2025,
+  "rank": 10,
+  "overall_score": 22.3,
+  "criteria": {
+    "theme": {
+      "rank": 60,
+      "score": 3.37,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 26,
+      "score": 3.44,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 13,
+      "score": 3.67,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 10,
+      "score": 4.26,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 6,
+      "score": 4.07,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 48,
+      "score": 3.48,
+      "top": 4.45
+    }
+  },
+  "author": "Elliot Nelson",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "Unguided and seeking, you find yourself drawn to the village of Ulthar. Your sudden presence is a reminder of the incident with their cats decades ago, but your influence soon drowns out the villagers’ alarm. As otherworldly ashes fall from the sky, you begin preparations. Play with your keyboard and race against the clock in this eerie pixel-art resource simulation game.",
+  "description": "Unguided and seeking, you find yourself drawn to the village of Ulthar. Your sudden presence is a reminder of the incident with their cats decades ago, but your influence soon drowns out the villagers’ alarm. As otherworldly ashes fall from the sky, you begin preparations. Play with your keyboard and race against the clock in this eerie pixel-art resource simulation game.",
+  "controls": "",
+  "github_url": "https://github.com/js13kGames/ashes-of-ulthar",
+  "play_url": "https://js13kgames.com/2025/games/ashes-of-ulthar",
+  "play_zip": "https://play.js13kgames.com/ashes-of-ulthar.zip",
+  "thumb_url": "https://play.js13kgames.com/ashes-of-ulthar/.ts.png",
+  "local_path": "games/2025-ashes-of-ulthar",
+  "entry": "index.html",
+  "commit_sha": "ebfeaa4137c8e4aa76d3d14ce812b5018bd7b090",
+  "build_status": "prebuilt"
+}

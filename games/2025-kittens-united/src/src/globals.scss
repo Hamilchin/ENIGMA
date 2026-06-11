@@ -1,0 +1,111 @@
+@use "theme" as *;
+@use "names" as *;
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  font-size: 18px;
+
+  @media (min-width: 600px) {
+    font-size: 22px;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background: $bg-primary;
+  color: $text-primary;
+  font-family: $font-family;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  hyphens: auto;
+  text-wrap: balance;
+  display: grid;
+  grid-template-rows: min-content 1fr;
+  overflow: hidden; // to hide dialogs
+}
+
+button {
+  // font-family: $font-family;
+  font-size: 1em;
+  cursor: pointer;
+  color: $text-primary;
+  border: none;
+  background: $bg-alpha-05;
+  padding: 0.5rem 1rem;
+  border-radius: $border-radius;
+  hyphens: none;
+
+  @include hover {
+    background: $bg-alpha-10;
+  }
+
+  &.#{$PRIMARY}:not([disabled]) {
+    background: $main-color;
+
+    @include hover {
+      background: rgba($main-color, 0.7);
+    }
+  }
+
+  &.#{$SECONDARY} {
+    font-size: 0.8em;
+    color: $text-tertiary;
+    padding: 0.25rem 1rem;
+  }
+
+  &.#{$TERTIARY} {
+    background: none;
+    padding: 0;
+    font-size: 0.8em;
+    color: $main-color-tertiary;
+    text-decoration: underline;
+    cursor: pointer;
+    border-radius: 0;
+    width: fit-content;
+  }
+
+  &[disabled] {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+}
+
+button.#{$ICON_BTN} {
+  width: 2rem;
+  height: 2rem;
+  //display: grid;
+  //place-items: center;
+  border-radius: 50%;
+  padding: 0.5rem;
+  font-size: 0.9em;
+  line-height: 1;
+
+  &.#{$SECONDARY} {
+    background: none;
+
+    @include hover {
+      background-color: $bg-alpha-05;
+    }
+  }
+}
+
+.#{$HIDDEN} {
+  display: none !important;
+}
+
+.#{$OPACITY_HIDDEN} {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

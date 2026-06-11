@@ -1,0 +1,56 @@
+{
+  "id": "2025-i-am-the-night",
+  "slug": "i-am-the-night",
+  "title": "I am the Night",
+  "year": 2025,
+  "rank": 58,
+  "overall_score": 18.92,
+  "criteria": {
+    "theme": {
+      "rank": 41,
+      "score": 3.52,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 126,
+      "score": 2.4,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 46,
+      "score": 3.24,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 75,
+      "score": 3.2,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 50,
+      "score": 3.16,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 56,
+      "score": 3.4,
+      "top": 4.45
+    }
+  },
+  "author": "David Brad",
+  "devices": [
+    "Desktop",
+    "Mobile"
+  ],
+  "desc_full": "I am the Night You are darkness. You are fear. You are strength. You are… the Night It’s 8 minutes until the curtain of darkness falls around you. Hunt and destroy the pitiful rodents that dare oppose you. Once night falls, topple their leader as a show of dominance. When the morning comes everyone will know that you are… the Night About the Game A bullet heaven / survivor-like inspired action game, you play as a fearless black ball of fur set on conquering the night. Make use of 13 different cat themed ability to strike down 100s of rodents looking to ursurp your throne as ruler of the night. Survive until darkness falls, and fight one of 3 overgrown rats to bring the long night to an end. Controls Keyboard Arrow keys: Movement X Key: Accept / Dash C Key: Cancel / Pause Mobile On-Screen D-pad: Movement On-Screen A Button: Accept / Dash On-Screen B Button: Cancel / Pause Controller Left analog stick / D-pad: Movement A Button: Accept / Dash B Button: Cancel / Pause js13k Community Shoutouts KilledByAPixel’s ZZFX sound generator lifthrasiir’s Roadroller compression tool SalvatorePreviti’s spglsl shader minifier",
+  "description": "I am the Night You are darkness. You are fear. You are strength. You are… the Night It’s 8 minutes until the curtain of darkness falls around you. Hunt and destroy the pitiful rodents that dare oppose you. Once night falls, topple their leader as a show of dominance. When the morning comes everyone will know that you are… the Night About the Game A bullet heaven / survivor-like inspired action game, you play as a fearless black ball of fur set on conquering the night. Make use of 13 different cat themed ability to strike down 100s of rodents looking to ursurp your throne as ruler of the night. Survive until darkness falls, and fight one of 3 overgrown rats to bring the long night to an end.",
+  "controls": "Keyboard Arrow keys: Movement X Key: Accept / Dash C Key: Cancel / Pause Mobile On-Screen D-pad: Movement On-Screen A Button: Accept / Dash On-Screen B Button: Cancel / Pause Controller Left analog stick / D-pad: Movement A Button: Accept / Dash B Button: Cancel / Pause js13k Community Shoutouts KilledByAPixel’s ZZFX sound generator lifthrasiir’s Roadroller compression tool SalvatorePreviti’s spglsl shader minifier",
+  "github_url": "https://github.com/js13kGames/i-am-the-night",
+  "play_url": "https://js13kgames.com/2025/games/i-am-the-night",
+  "play_zip": "https://play.js13kgames.com/i-am-the-night.zip",
+  "thumb_url": "https://play.js13kgames.com/i-am-the-night/.ts.png",
+  "local_path": "games/2025-i-am-the-night",
+  "entry": "dist/src/index.html",
+  "commit_sha": "0cd3260f843a265220d29395bc7650b0134a71f6",
+  "build_status": "prebuilt"
+}

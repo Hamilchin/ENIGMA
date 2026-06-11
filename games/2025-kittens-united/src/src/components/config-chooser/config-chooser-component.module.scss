@@ -1,0 +1,57 @@
+@use "../../names" as *;
+@use "../../theme" as *;
+
+.container,
+.choices {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.container {
+  flex-direction: column;
+}
+
+.configItem {
+  @extend %gridCentered;
+  height: min(30vh, 40vw);
+  width: min(30vh, 40vw);
+  color: $main-color-secondary;
+  padding: 0.25rem;
+  hyphens: auto;
+  transition:
+    transform 0.3s,
+    opacity 0.3s;
+
+  @media (min-height: 750px) {
+    font-size: 1.5em;
+  }
+
+  &.selected {
+    transform: translateX(var(--t-x, 0)) scale(1.2);
+    pointer-events: none;
+  }
+
+  :global(.#{$CAT_BOX}) {
+    width: 60%;
+    pointer-events: none;
+  }
+}
+
+.explanation {
+  max-width: 90vw;
+  font-size: 1.2em;
+  transition:
+    transform 0.3s,
+    opacity 0.3s;
+
+  &:not(.active) {
+    transform: scale(0.6);
+    opacity: 0.7;
+  }
+
+  &::before {
+    content: "💡 ";
+  }
+}

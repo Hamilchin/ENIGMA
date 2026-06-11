@@ -1,0 +1,55 @@
+{
+  "id": "2025-black-cat-potions",
+  "slug": "black-cat-potions",
+  "title": "Black Cat Potions",
+  "year": 2025,
+  "rank": 34,
+  "overall_score": 20.14,
+  "criteria": {
+    "theme": {
+      "rank": 33,
+      "score": 3.59,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 42,
+      "score": 3.23,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 55,
+      "score": 3.14,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 37,
+      "score": 3.77,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 75,
+      "score": 2.86,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 40,
+      "score": 3.55,
+      "top": 4.45
+    }
+  },
+  "author": "Sebastian Dorn",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "The Black Cat Potions store just opened Figure out how to brew potions to fulfill the incoming orders. Do well and you unlock new ingredients resulting in new kinds of orders. But don’t make too many mistakes or you can close your store. Controls Mouse to point & click ESC to pause Resources “Kitten meow” audio by AlexMurphy53 ZzFX – Zuper Zmall Zound Zynth",
+  "description": "The Black Cat Potions store just opened Figure out how to brew potions to fulfill the incoming orders. Do well and you unlock new ingredients resulting in new kinds of orders. But don’t make too many mistakes or you can close your store.",
+  "controls": "Mouse to point & click ESC to pause Resources “Kitten meow” audio by AlexMurphy53 ZzFX – Zuper Zmall Zound Zynth",
+  "github_url": "https://github.com/js13kGames/black-cat-potions",
+  "play_url": "https://js13kgames.com/2025/games/black-cat-potions",
+  "play_zip": "https://play.js13kgames.com/black-cat-potions.zip",
+  "thumb_url": "https://play.js13kgames.com/black-cat-potions/.ts.png",
+  "local_path": "games/2025-black-cat-potions",
+  "entry": "index.html",
+  "commit_sha": "65cd187883421dfe60d0414259f907cf37bfd431",
+  "build_status": "prebuilt"
+}

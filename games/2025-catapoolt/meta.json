@@ -1,0 +1,56 @@
+{
+  "id": "2025-catapoolt",
+  "slug": "catapoolt",
+  "title": "Catapoolt",
+  "year": 2025,
+  "rank": 14,
+  "overall_score": 21.73,
+  "criteria": {
+    "theme": {
+      "rank": 11,
+      "score": 3.83,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 18,
+      "score": 3.54,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 37,
+      "score": 3.34,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 62,
+      "score": 3.37,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 8,
+      "score": 4.03,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 29,
+      "score": 3.61,
+      "top": 4.45
+    }
+  },
+  "author": "Gleb Volkov",
+  "devices": [
+    "Desktop",
+    "Mobile"
+  ],
+  "desc_full": "“Launch. Lunch. Litter.” A game about a black cat that bounces like a slingshot, eating mice to regain stamina while every jump drains it - with a twist. How to play Drag and release the cat like a slingshot to launch it across the field and catch mice. Jumping consumes stamina based on distance traveled, each mouse you eat restores it. Survive waves of increasingly clever mice that flee faster and farther from you as the game progresses. Credits Cover art by Alisiy @tangreee Sound design by Katie Spogreeva @Spogr",
+  "description": "“Launch. Lunch. Litter.” A game about a black cat that bounces like a slingshot, eating mice to regain stamina while every jump drains it - with a twist. How to play Drag and release the cat like a slingshot to launch it across the field and catch mice. Jumping consumes stamina based on distance traveled, each mouse you eat restores it. Survive waves of increasingly clever mice that flee faster and farther from you as the game progresses. Credits Cover art by Alisiy @tangreee Sound design by Katie Spogreeva @Spogr",
+  "controls": "",
+  "github_url": "https://github.com/js13kGames/catapoolt",
+  "play_url": "https://js13kgames.com/2025/games/catapoolt",
+  "play_zip": "https://play.js13kgames.com/catapoolt.zip",
+  "thumb_url": "https://play.js13kgames.com/catapoolt/.ts.png",
+  "local_path": "games/2025-catapoolt",
+  "entry": "index.html",
+  "commit_sha": "a573e0a27001850fa49bd9a3db363a074fa80c60",
+  "build_status": "prebuilt"
+}

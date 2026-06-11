@@ -1,0 +1,647 @@
+/* ================= */
+/* ================= */
+/* Global */
+/* ================= */
+/* ================= */
+
+body {
+  --sw: 64px;
+  --sh: 208px;
+
+  font-family: monospace;
+  background-color: #feebc9;
+  image-rendering: pixelated;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  margin: 8px;
+  min-width: 768px;
+  min-height: 700px;
+}
+
+main {
+  width: 768px;
+  height: 700px;
+  box-sizing: border-box;
+  border: 4px solid #331c1a;
+  background-color: #f0e4d7;
+  display: flex;
+  flex-shrink: 0;
+  align-items: stretch;
+  justify-content: stretch;
+  overflow: hidden;
+  border-radius: 3px;
+  user-select: none;
+}
+
+main > section {
+  width: 100%;
+  position: relative;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+body:not([data-current-section]) #gameOptions,
+[data-current-section="home"] #gameOptions {
+  display: none;
+}
+
+#gameOptions {
+  font-size: 1rem;
+  font-weight: bold;
+  color: inherit;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+#gameOptions label {
+  cursor: pointer;
+}
+
+#gameOptions input {
+  cursor: pointer;
+  margin: 0;
+  position: relative;
+  top: 2px;
+}
+
+/* ================= */
+/* ================= */
+/* Home */
+/* ================= */
+/* ================= */
+#home h1,
+#home h2 {
+  color: transparent;
+  user-select: none;
+  width: 335px;
+  height: 210px;
+  overflow: hidden;
+  background-image: url("./images/logo.webp");
+  background-size: contain;
+  margin: auto;
+}
+
+#home h2 {
+  width: 360px;
+  height: 75px;
+  background-image: url("./images/logo-order.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-top: 4px;
+  transform: translateX(200%);
+  border: 4px solid #331c1a;
+  background-color: #331c1a;
+  border-radius: 25px;
+  animation: slideRight 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes slideRight {
+  0% {
+    transform: translateX(200%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+#home .logos {
+  margin-top: 90px;
+}
+
+#home .p {
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 96px;
+}
+
+#home a {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 150px;
+}
+
+#home a,
+#home a:hover,
+#endButtonNext,
+.scenarioDialog a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: transform 0.2s ease;
+}
+
+a:hover,
+#endButtonNext:hover {
+  transform: scale(1.05);
+}
+
+.scenarioDialog a {
+  color: #fff;
+  text-decoration: underline;
+}
+.scenarioDialog a:hover {
+  text-decoration: none;
+}
+
+#endButtonNext {
+  border: 0;
+  color: inherit;
+  background: transparent;
+  font-size: 1.2rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.skip,
+.skip:visited {
+  font-weight: bold;
+  text-decoration: none;
+  color: #feebc9;
+  font-size: 1rem;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.skip:hover {
+  text-decoration: underline;
+}
+
+/* ================= */
+/* ================= */
+/* Scenario */
+/* ================= */
+/* ================= */
+
+.scenario {
+  border: 16px solid #000;
+}
+
+#scenarioScene {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  padding: 64px;
+  justify-content: space-around;
+  background-color: #3a2520;
+  background-image: conic-gradient(
+    from 135deg,
+    #ffffff0d 0 25%,
+    transparent 0 50%,
+    #0000000d 0 75%,
+    transparent 0
+  );
+  background-size: 190px 192px;
+}
+
+.scenarioDialog {
+  background: #000;
+  color: #feebc9;
+  width: 100%;
+  flex: 1;
+  margin-top: auto;
+  border: 8px solid #feebc9;
+  box-sizing: border-box;
+  font-size: 2.3rem;
+  padding: 64px;
+  cursor: pointer;
+  position: relative;
+  z-index: 101;
+}
+
+.scenarioDialog:not(.tend)::after {
+  content: "";
+  display: block;
+  position: absolute;
+  right: 16px;
+  bottom: 24px;
+  border: 24px solid transparent;
+  border-left-color: #feebc9;
+  pointer-events: none;
+  animation: blinkArrow 1s steps(1) infinite;
+}
+
+.scenarioDialog.end::after {
+  border-color: #feebc9;
+  right: 40px;
+}
+
+.scenarioDialog.tend {
+  cursor: default;
+}
+
+@keyframes blinkArrow {
+  0%,
+  60% {
+    opacity: 1;
+  }
+  61%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.c {
+  animation: spriteAnimation 1s steps(2) infinite;
+}
+
+@keyframes spriteAnimation {
+  from {
+    background-position: var(--x) var(--y);
+  }
+
+  to {
+    background-position: var(--target-x) var(--target-y);
+  }
+}
+
+.scenarioMaster,
+.scenarioMelusine,
+.scenarioCat {
+  width: 128px;
+  height: 128px;
+  background-size: calc(var(--sw) * 8) calc(var(--sh) * 8);
+}
+
+.scenarioMaster,
+.scenarioMelusine,
+.scenarioCat,
+#gameTable > div.brick,
+div.s {
+  background-image: url("./images/sprites.png");
+}
+
+.scenarioMaster.left,
+.scenarioMelusine.left,
+.scenarioCat.left {
+  transform: scaleX(-1);
+}
+
+.scenarioMelusine {
+  --x: -0;
+  --y: -1152px;
+  --target-x: -256px;
+  --target-y: -1152px;
+}
+
+#gameStats .scenarioMelusine {
+  transform: scale(0.75);
+  position: absolute;
+  bottom: 0;
+}
+
+.scenarioMaster {
+  --x: -0;
+  --y: -1408px;
+  --target-x: -256px;
+  --target-y: -1408px;
+}
+
+.scenarioCat {
+  z-index: 110;
+  --x: -256px;
+  --y: -1408px;
+  --target-x: -512px;
+  --target-y: -1408px;
+}
+
+.scenarioCat.walk {
+  --x: -256px;
+  --y: -1536px;
+  --target-x: -512px;
+  --target-y: -1536px;
+}
+
+.c.speaking {
+  --target-x: var(--x);
+  --target-y: calc(var(--y) - 256px);
+}
+
+.c.iddlePause {
+  --target-x: var(--x);
+  --target-y: var(--y);
+}
+
+.scenarioMelusine.shocked {
+  --x: -128px;
+  --y: -1280px;
+}
+
+.scenarioMaster.r {
+  animation: spriteAnimation 1s steps(2) infinite,
+    wubble 2s ease-in-out infinite alternate,
+    glow 2.4s ease-in-out infinite alternate;
+  transform-origin: 50% 70%;
+  z-index: 105;
+  position: relative;
+}
+
+@keyframes wubble {
+  0%,
+  50%,
+  100% {
+    bottom: 0;
+  }
+  25% {
+    bottom: 4px;
+  }
+  75% {
+    bottom: -3px;
+  }
+}
+
+@keyframes glow {
+  from {
+    filter: drop-shadow(0 0 0 transparent);
+  }
+  to {
+    filter: drop-shadow(0 0 12px #feebc9);
+  }
+}
+
+/* ================= */
+/* ================= */
+/* Game */
+/* ================= */
+/* ================= */
+
+#mainGame,
+.scenario {
+  background: #331c1a;
+}
+
+#mainGame .scenarioDialog {
+  font-size: 1rem;
+  padding: 0 24px;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+#helpContainer {
+  width: 50%;
+  border-right: 8px solid #feebc9;
+  padding-right: 8px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.noshop #helpContainer {
+  width: 100%;
+  border-right: none;
+}
+
+#mainGame .scenarioDialog.noshop:not(.nocursor)::after {
+  display: block;
+  right: 8px;
+  bottom: 12px;
+  border-width: 12px;
+}
+
+.noshop #helpContainer + #shop {
+  display: none;
+}
+
+#shop {
+  flex: 1;
+  padding-left: 8px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  position: relative;
+  align-self: stretch;
+}
+
+#shop canvas {
+  cursor: pointer;
+  padding: 2px;
+  border: 1px dashed transparent;
+}
+
+#shop canvas:hover {
+  border-color: #feebc9;
+}
+
+#shop span {
+  position: absolute;
+  left: 2px;
+  top: 0px;
+  background: #000;
+}
+
+#mainGame .scenarioDialog::after {
+  display: none;
+}
+
+#walls {
+  margin: 0 auto;
+  padding: 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+#gameTable {
+  position: relative;
+  border-collapse: collapse;
+  background: #331c1a;
+  display: grid;
+  margin: auto;
+  grid-template-columns: repeat(10, 48px);
+  grid-template-rows: repeat(10, 48px);
+  column-gap: 0;
+  row-gap: 0;
+}
+
+#walls .cat {
+  z-index: 0;
+}
+
+#levelDisplay {
+  position: absolute;
+  top: 12px;
+  left: 0;
+  z-index: 10;
+  right: 0;
+  text-align: center;
+  font-size: 1rem;
+}
+
+#levelDisplay b {
+  background-color: #613531;
+  color: #feebc9;
+}
+
+#walls > canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+}
+
+#wallsCanvas {
+  z-index: 0 !important;
+}
+
+#walls.dragging > canvas {
+  pointer-events: none;
+}
+
+#gameTable > div {
+  border: 1px solid #feebc933;
+  position: relative;
+  overflow: hidden;
+}
+
+#gameTable > div.brick,
+div.s {
+  background-color: #331c1a;
+  border-color: #331c1a;
+  background-size: calc(var(--sw) * 3) calc(var(--sh) * 3);
+  background-position: var(--bx, 0) var(--by, -240px);
+}
+
+div.brick.v1 {
+  --bx: -48px;
+  --by: -240px;
+}
+
+#actionsMenu,
+#gameStats {
+  position: absolute;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  top: 16px;
+  color: #feebc9;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+#gameStats {
+  right: auto;
+  left: 16px;
+  justify-content: flex-start;
+  height: 560px;
+  min-width: 63px;
+}
+
+dl {
+  font-size: 0.9rem;
+}
+
+dt {
+  font-weight: bold;
+}
+
+dd {
+  font-weight: normal;
+  margin-left: 16px;
+  margin-bottom: 24px;
+}
+
+div.s {
+  width: 48px;
+  height: 48px;
+  border: 1px dashed #feebc9;
+  cursor: pointer;
+  position: relative;
+}
+
+div.s.actionDisabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+#walls div.s {
+  position: fixed;
+  left: 0;
+  top: 0;
+  border-style: solid;
+  pointer-events: none;
+  z-index: 100;
+}
+
+#actionsMenu > div:hover,
+#actionsMenu > div.casting {
+  border-style: solid;
+}
+
+#actionsMenu > div.casting {
+  background-image: none;
+}
+
+#actionsMenu > div.casting:before {
+  content: "X";
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 2rem;
+  top: 3px;
+}
+
+#actionsMenu > div:after {
+  content: attr(data-cost);
+  width: 16px;
+  height: 16px;
+  display: block;
+  position: absolute;
+  right: -20px;
+  line-height: 16px;
+  padding: 1px;
+}
+
+div.Rotaleftus:after {
+  transform: scaleX(-1);
+  right: 50px !important;
+}
+
+#gameEnd {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  color: #feebc9;
+  font-size: 2rem;
+  text-align: center;
+  z-index: 1000;
+  display: none;
+}
+
+#gameEnd > div {
+  background-color: #331c1a;
+  border-style: solid;
+  border-width: 4px 0;
+  padding: 16px 0;
+}
+
+#gameEnd > div * {
+  margin: 8px;
+  padding: 0;
+}
+
+#gameEnd.v {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

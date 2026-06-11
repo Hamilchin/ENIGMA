@@ -1,0 +1,55 @@
+{
+  "id": "2025-edgars-mission",
+  "slug": "edgars-mission",
+  "title": "Edgar's Mission",
+  "year": 2025,
+  "rank": 63,
+  "overall_score": 18.42,
+  "criteria": {
+    "theme": {
+      "rank": 25,
+      "score": 3.65,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 61,
+      "score": 3,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 69,
+      "score": 2.94,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 91,
+      "score": 3.03,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 74,
+      "score": 2.87,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 113,
+      "score": 2.94,
+      "top": 4.45
+    }
+  },
+  "author": "Michael M.",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "Edgar’s Mission is a platformer game. Unlike most such games there are two points of contact. While you are on the ground or a platform, you have complete control over your movements. But when you only partially touch them you have less control, and while you are in the air you can control your movements only slightly. For controls you can use the arrow keys or WASD/ZQSD, for jumping you can alternatively also use the spacebar. Press M to mute/unmute the music and sounds. Help Edgar on his mission to find his kidnapped owner and guide the black cat through 13 levels filled with diverse challenges (the first five levels will introduce you into the different elements of the game). Don’t worry, you have more than nine lives, actually, you have as many as you need to finish the game. Your progress is automatically saved, allowing you to return later and pick up at the level where you left off. The README file in the GitHub repository has some hints on how to solve the levels in the case you need some help. In the rare event that you experience performance issues (this should only happen on old hardware) try resizing your browser window to a smaller size.",
+  "description": "Edgar’s Mission is a platformer game. Unlike most such games there are two points of contact. While you are on the ground or a platform, you have complete control over your movements. But when you only partially touch them you have less control, and while you are in the air you can control your movements only slightly. For controls you can use the arrow keys or WASD/ZQSD, for jumping you can alternatively also use the spacebar. Press M to mute/unmute the music and sounds. Help Edgar on his mission to find his kidnapped owner and guide the black cat through 13 levels filled with diverse challenges (the first five levels will introduce you into the different elements of the game). Don’t worry, you have more than nine lives, actually, you have as many as you need to finish the game. Your progress is automatically saved, allowing you to return later and pick up at the level where you left off. The README file in the GitHub repository has some hints on how to solve the levels in the case you need some help. In the rare event that you experience performance issues (this should only happen on old hardware) try resizing your browser window to a smaller size.",
+  "controls": "",
+  "github_url": "https://github.com/js13kGames/edgars-mission",
+  "play_url": "https://js13kgames.com/2025/games/edgars-mission",
+  "play_zip": "https://play.js13kgames.com/edgars-mission.zip",
+  "thumb_url": "https://play.js13kgames.com/edgars-mission/.ts.png",
+  "local_path": "games/2025-edgars-mission",
+  "entry": "index.html",
+  "commit_sha": "ae79a9165477f53ae48a62c8fcc323d6a91215cd",
+  "build_status": "prebuilt"
+}

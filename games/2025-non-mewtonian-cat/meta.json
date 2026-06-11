@@ -1,0 +1,55 @@
+{
+  "id": "2025-non-mewtonian-cat",
+  "slug": "non-mewtonian-cat",
+  "title": "Non-Mewtonian Cat",
+  "year": 2025,
+  "rank": 7,
+  "overall_score": 23.02,
+  "criteria": {
+    "theme": {
+      "rank": 47,
+      "score": 3.49,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 8,
+      "score": 3.72,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 5,
+      "score": 4.14,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 45,
+      "score": 3.67,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 16,
+      "score": 3.77,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 2,
+      "score": 4.23,
+      "top": 4.45
+    }
+  },
+  "author": "Mohammed Saud",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "Is that a solid? Is it a liquid? No! It’s a cat! Solve increasingly difficult puzzles as a non-mewtonian cat that defies laws of physics. Controls Move: W A S D or ↑ ← ↓ → Undo: Z Restart level: R Touch controls automatically enabled on supported devices. The game also supports controllers! Thank you for playing!",
+  "description": "Is that a solid? Is it a liquid? No! It’s a cat! Solve increasingly difficult puzzles as a non-mewtonian cat that defies laws of physics.",
+  "controls": "Move: W A S D or ↑ ← ↓ → Undo: Z Restart level: R Touch controls automatically enabled on supported devices. The game also supports controllers! Thank you for playing!",
+  "github_url": "https://github.com/js13kGames/non-mewtonian-cat",
+  "play_url": "https://js13kgames.com/2025/games/non-mewtonian-cat",
+  "play_zip": "https://play.js13kgames.com/non-mewtonian-cat.zip",
+  "thumb_url": "https://play.js13kgames.com/non-mewtonian-cat/.ts.png",
+  "local_path": "games/2025-non-mewtonian-cat",
+  "entry": "index.html",
+  "commit_sha": "99e2e8f194f838afb97473c7a1abcc58701cefbf",
+  "build_status": "prebuilt"
+}

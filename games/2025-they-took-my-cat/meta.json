@@ -1,0 +1,55 @@
+{
+  "id": "2025-they-took-my-cat",
+  "slug": "they-took-my-cat",
+  "title": "They took my cat",
+  "year": 2025,
+  "rank": 28,
+  "overall_score": 21.03,
+  "criteria": {
+    "theme": {
+      "rank": 102,
+      "score": 2.9,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 46,
+      "score": 3.17,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 54,
+      "score": 3.14,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 5,
+      "score": 4.45,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 5,
+      "score": 4.1,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 69,
+      "score": 3.28,
+      "top": 4.45
+    }
+  },
+  "author": "one grumpy dude",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "An evil society of animal snatchers stole your cat! Search their headquarters for Manny the cat and fight animal thieves along the way. Inspired by the classic arcade game Elevator Action. A complete playthrough takes ~15-20 minutes. Desktop browsers only. Tested to work in Firefox, Chromium, and WebKitGTK. Performs best in Firefox. Safari and other browsers are untested. Controls Move around using arrow keys/WASD: Left/right to walk Down to crouch Up/down to control elevators and use doors and stairs Space/X to shoot",
+  "description": "An evil society of animal snatchers stole your cat! Search their headquarters for Manny the cat and fight animal thieves along the way. Inspired by the classic arcade game Elevator Action. A complete playthrough takes ~15-20 minutes. Desktop browsers only. Tested to work in Firefox, Chromium, and WebKitGTK. Performs best in Firefox. Safari and other browsers are untested.",
+  "controls": "Move around using arrow keys/WASD: Left/right to walk Down to crouch Up/down to control elevators and use doors and stairs Space/X to shoot",
+  "github_url": "https://github.com/js13kGames/they-took-my-cat",
+  "play_url": "https://js13kgames.com/2025/games/they-took-my-cat",
+  "play_zip": "https://play.js13kgames.com/they-took-my-cat.zip",
+  "thumb_url": "https://play.js13kgames.com/they-took-my-cat/.ts.png",
+  "local_path": "games/2025-they-took-my-cat",
+  "entry": "index.html",
+  "commit_sha": "050dbeb874136ff869cc89cacebd9f73a8ee7b0a",
+  "build_status": "prebuilt"
+}

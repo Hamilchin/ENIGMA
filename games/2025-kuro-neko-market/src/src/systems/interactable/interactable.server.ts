@@ -1,0 +1,96 @@
+import { GameObjectData } from "../../core/game-object-data";
+import { diContainer } from "../../core/di-container";
+import { Game, GAME_TICK_EVENT } from "../../core/game";
+import { INPUT_MOUSEDOWN_EVENT, InputServer } from "../../core/input.server";
+import { Observable } from "../../core/observable";
+import { Vector, ZERO } from "../../core/vector";
+import { immutableReverse } from "../../utils/immutable-reverse";
+import { walk } from "../../utils/walk";
+import {
+	DropTargetInterface,
+	PickupableInterface,
+	PressableInterface,
+} from "./interactable.types";
+import { unique } from "../../core/unique";
+
+export type MoveEvent = {
+	hoveredItem: PressableInterface | PickupableInterface | null;
+	point: Vector;
+};
+
+export type ClickEvent = {
+	item: PressableInterface | PickupableInterface | null;
+	dropTargets: DropTargetInterface[];
+	point: Vector;
+};
+
+export const isPressable = (obj: object): obj is PressableInterface =>
+	(obj as any).canBePressed !== void 0;
+export const isPickupable = (obj: object): obj is PickupableInterface =>
+	(obj as any).canBePickedUp !== void 0;
+export const isDropTarget = (obj: object): obj is DropTargetInterface =>
+	(obj as any).canHost !== void 0;
+
+export const INTERACTABLE_CLICK_EVENT = unique();
+export const INTERACTABLE_MOVE_EVENT = unique();
+
+export class InteractableServer extends Observable {
+	game: Game;
+	input: InputServer;
+
+	hoveredItem: PressableInterface | PickupableInterface | null = null;
+	hoveredDropTargets: DropTargetInterface[] = [];
+
+	constructor() {
+		super();
+		this.game = diContainer.get(Game);
+		this.input = diContainer.get(InputServer);
+		this.game.on(GAME_TICK_EVENT, () => this.move());
+		this.input.on(INPUT_MOUSEDOWN_EVENT, () => this.click());
+	}
+
+	click() {
+		this.trigger(INTERACTABLE_CLICK_EVENT, {
+			item: this.hoveredItem,
+			dropTargets: this.hoveredDropTargets,
+			point: this.input.mousePos,
+		} satisfies ClickEvent);
+	}
+
+	move() {
+		if (
+			!this.input.mousePos.gt(ZERO) ||
+			!this.input.mousePos.lt(this.game.root.size)
+		) {
+			this.hoveredItem = null;
+			this.hoveredDropTargets = [];
+		} else {
+			const activeItems: (PressableInterface | PickupableInterface)[] = [];
+			const passiveItems: DropTargetInterface[] = [];
+
+			walk<GameObjectData>(this.game.root, (obj) => {
+				if (isPressable(obj) || (isPickupable(obj) && obj.canBePickedUp)) {
+					activeItems.push(obj);
+				}
+				if (isDropTarget(obj) && obj.canHost) {
+					passiveItems.push(obj);
+				}
+				return obj.heirs;
+			});
+
+			this.hoveredItem =
+				immutableReverse(activeItems).find((item) =>
+					item.isPointWithinObject(this.input.mousePos)
+				) ?? null;
+
+			this.hoveredDropTargets = immutableReverse(passiveItems).filter((item) =>
+				item.isPointWithinObject(this.input.mousePos)
+			);
+		}
+
+		this.trigger(INTERACTABLE_MOVE_EVENT, {
+			hoveredItem: this.hoveredItem,
+			point: this.input.mousePos,
+		} satisfies MoveEvent);
+	}
+}

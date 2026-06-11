@@ -1,0 +1,166 @@
+* {
+  padding: 0;
+  margin: 0;
+  --sg: 13px;
+  --g: conic-gradient(at 90% 40%, #0000 75%, var(--c1) 0);
+}
+
+body,
+html {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+body,
+html {
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  background: #503c6f;
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  height: 100%;
+  position: fixed;
+  user-select: none;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bri {
+  --c1: #9a7bed;
+  --c2: #5f4a95;
+  background: var(--g), var(--g) var(--sg) var(--sg) var(--c2);
+  background-size: calc(2 * var(--sg)) calc(2 * var(--sg));
+}
+
+.df {
+  display: flex;
+}
+
+.jc {
+  justify-content: center;
+}
+
+.jcs {
+  justify-content: space-around;
+}
+
+.ai {
+  align-items: center;
+}
+
+.wi {
+  width: 100%;
+}
+
+.he {
+  height: 100%;
+}
+
+app-router {
+  width: var(--bw);
+  height: var(--bh);
+  position: relative;
+}
+
+.cat {
+  height: var(--si, 70px);
+  position: absolute;
+  width: var(--si, 70px);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  border: none;
+  /* Moverlo a una variable */
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+
+  --b-cat: black;
+  --o-cat: #f6ba00;
+  --ey-cat: #ffff91;
+  --p-cat: #ffa4e1;
+  --w-cat: white;
+  --y-cat: #ffe901;
+
+  --left-eye: linear-gradient(var(--b-cat), var(--b-cat));
+  --right-eye: linear-gradient(var(--b-cat), var(--b-cat));
+
+  --eye-size: 10% 25%;
+  --eyelid-size: 37% 0;
+
+  --left-eye-position: 15% 67%;
+  --right-eye-position: 85% 67%;
+  --left-eyelid-position: 0px 67%;
+  --right-eyelid-position: 100% 67%;
+
+  --cat-face: 
+  /* Bloque izquierdo */ linear-gradient(
+      var(--o-cat),
+      var(--o-cat)
+    ),
+    /* Bloque Derecho */ linear-gradient(var(--o-cat), var(--o-cat)),
+    /* Nariz */ linear-gradient(var(--y-cat), var(--y-cat)),
+    /* Ojo izquerdo */ var(--left-eye),
+    /* parpado izquierdo */ linear-gradient(var(--ey-cat), var(--ey-cat)),
+    /* Ojo Derecho */ var(--right-eye),
+    /* parpado derecho */ linear-gradient(var(--ey-cat), var(--ey-cat)),
+    /* Boca */ linear-gradient(var(--p-cat), var(--p-cat)),
+    /* Base blanca  */ linear-gradient(var(--w-cat), var(--w-cat));
+
+  --cat-size: 25% 25%, 25% 25%, 25% 25%, var(--eye-size), var(--eyelid-size),
+    var(--eye-size), var(--eyelid-size), 25% 17%, 100% 50%;
+
+  --cat-position: 15% 15%, 85% 15%, 50% 55%, var(--left-eye-position),
+    var(--left-eyelid-position), var(--right-eye-position),
+    var(--right-eyelid-position), center 71%, 0 100%;
+
+  background-color: var(--y-cat);
+  background-image: var(--cat-face);
+  background-repeat: no-repeat;
+  background-size: var(--cat-size);
+  background-position: var(--cat-position);
+}
+
+.cat-black {
+  --y-cat: rgb(53, 51, 51);
+  --o-cat: black;
+}
+
+.button {
+  background: #246ff9;
+  /* min-width: 150px; */
+  color: white;
+  padding: 20px 30px;
+  font-size: 35px;
+  font-weight: bold;
+  border: 5px solid #000101;
+  text-shadow: 1px 5px 1px #00000063;
+  cursor: pointer;
+  /* Ponerlo en una variable de css */
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.pag {
+  --sg: 25px;
+  flex-direction: column;
+}
+
+.pag-c {
+  width: calc(var(--bw) - 100px);
+  height: calc(var(--bh) - 100px);
+  background: #503c6f;
+  box-shadow: inset -12px 9px 3.2px rgba(0, 0, 0, 0.15);
+  flex-direction: column;
+}
+
+app-lobby,
+app-level-select {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}

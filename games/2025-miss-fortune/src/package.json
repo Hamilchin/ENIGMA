@@ -1,0 +1,28 @@
+{
+  "name": "js13k2025",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src/**/*.ts --fix"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.33.0",
+    "eslint": "^9.33.0",
+    "js13k-vite-plugins": "^0.4.0",
+    "minimatch": "^10.0.3",
+    "roadroller": "^2.1.0",
+    "terser": "^5.43.1",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.39.1",
+    "vite": "^7.1.0",
+    "vite-bundle-analyzer": "^1.2.1",
+    "vite-plugin-compression2": "^2.2.0"
+  },
+  "dependencies": {
+    "littlejsengine": "^1.11.10"
+  }
+}

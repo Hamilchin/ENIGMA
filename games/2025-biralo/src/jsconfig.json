@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"baseUrl": "./",
+		"paths": {
+			"@game/*": ["./src/*"],
+			"@lib/*": ["./lib/*"]
+		},
+		"target": "esnext",
+		"module": "esnext",
+		"moduleResolution": "node",
+		"checkJs": true,
+		"allowSyntheticDefaultImports": true
+	},
+	"exclude": ["node_modules"]
+}

@@ -1,0 +1,56 @@
+{
+  "id": "2025-the-ninefold-gambit",
+  "slug": "the-ninefold-gambit",
+  "title": "The Ninefold Gambit",
+  "year": 2025,
+  "rank": 35,
+  "overall_score": 20.13,
+  "criteria": {
+    "theme": {
+      "rank": 48,
+      "score": 3.46,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 71,
+      "score": 2.93,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 43,
+      "score": 3.25,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 36,
+      "score": 3.79,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 19,
+      "score": 3.64,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 89,
+      "score": 3.05,
+      "top": 4.45
+    }
+  },
+  "author": "Himanshu Bisht",
+  "devices": [
+    "Desktop",
+    "Mobile"
+  ],
+  "desc_full": "😼About Game: 📜The Ninefold Gambit is a top-down adventure game where you take on the role of a courageous white mouse on a daring quest to rescue his beloved from the clutches of a devious black cat. Outsmart and overcome nine cunning feline foes. It’s a tale of love, courage, and cleverness—only the bravest mouse can triumph in the Ninefold Gambit. 📋Note: The Game will work on 60Hz monitors/mobile display. 🕹️Controls: ⌨️Keyboard : Movement: [ W, A, S, D ] Melee Attack: [ Space ] or [ J ] DigDash: [ Left Shift ] [K] Fire: [Right Shift] or [ L ] Start Game: [ Space ] or [ Enter ] Pause: [ P ] 📱Mobile : Movement: Onscreen Joystick Melee Attack: ( A ) DigDash: ( B ) Fire: ( X ) Start Game: ( A )",
+  "description": "😼About Game: 📜The Ninefold Gambit is a top-down adventure game where you take on the role of a courageous white mouse on a daring quest to rescue his beloved from the clutches of a devious black cat. Outsmart and overcome nine cunning feline foes. It’s a tale of love, courage, and cleverness—only the bravest mouse can triumph in the Ninefold Gambit. 📋Note: The Game will work on 60Hz monitors/mobile display. 🕹️",
+  "controls": ": ⌨️Keyboard : Movement: [ W, A, S, D ] Melee Attack: [ Space ] or [ J ] DigDash: [ Left Shift ] [K] Fire: [Right Shift] or [ L ] Start Game: [ Space ] or [ Enter ] Pause: [ P ] 📱Mobile : Movement: Onscreen Joystick Melee Attack: ( A ) DigDash: ( B ) Fire: ( X ) Start Game: ( A )",
+  "github_url": "https://github.com/js13kGames/the-ninefold-gambit",
+  "play_url": "https://js13kgames.com/2025/games/the-ninefold-gambit",
+  "play_zip": "https://play.js13kgames.com/the-ninefold-gambit.zip",
+  "thumb_url": "https://play.js13kgames.com/the-ninefold-gambit/.ts.png",
+  "local_path": "games/2025-the-ninefold-gambit",
+  "entry": "index.html",
+  "commit_sha": "a150296916963530b7c2f94f5468484fde280bc8",
+  "build_status": "prebuilt"
+}

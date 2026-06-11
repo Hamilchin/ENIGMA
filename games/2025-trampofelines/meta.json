@@ -1,0 +1,56 @@
+{
+  "id": "2025-trampofelines",
+  "slug": "trampofelines",
+  "title": "Trampofelines",
+  "year": 2025,
+  "rank": 71,
+  "overall_score": 18.18,
+  "criteria": {
+    "theme": {
+      "rank": 93,
+      "score": 3.05,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 22,
+      "score": 3.5,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 117,
+      "score": 2.5,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 50,
+      "score": 3.55,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 88,
+      "score": 2.73,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 119,
+      "score": 2.86,
+      "top": 4.45
+    }
+  },
+  "author": "dalps",
+  "devices": [
+    "Desktop",
+    "Mobile"
+  ],
+  "desc_full": "The yarn balls are on the loose and elastic felines must soar high in the sky to rescue them! Use the stretchy body of the trampofelines to bounce the yarn balls to the baskets. The yarn balls unfurl in the air, getting progressively smaller until they’re all thread. If the ball doesn’t reach a basket soon enough it won’t bounce anymore, so don’t stall too long. Controls: draw a line by dragging your finger or pointer device across the screen to create a trampofeline. Rules: when three yarn balls go fully below the screen it’s game over; you can draw up to three trampofelines at a time; trampofelines may not intersect; a trampofeline stores a lot of energy, so it dies as soon as it hits a yarn ball. Goal: fill up as many baskets as you can!",
+  "description": "The yarn balls are on the loose and elastic felines must soar high in the sky to rescue them! Use the stretchy body of the trampofelines to bounce the yarn balls to the baskets. The yarn balls unfurl in the air, getting progressively smaller until they’re all thread. If the ball doesn’t reach a basket soon enough it won’t bounce anymore, so don’t stall too long.",
+  "controls": ": draw a line by dragging your finger or pointer device across the screen to create a trampofeline. Rules: when three yarn balls go fully below the screen it’s game over; you can draw up to three trampofelines at a time; trampofelines may not intersect; a trampofeline stores a lot of energy, so it dies as soon as it hits a yarn ball. Goal: fill up as many baskets as you can!",
+  "github_url": "https://github.com/js13kGames/trampofelines",
+  "play_url": "https://js13kgames.com/2025/games/trampofelines",
+  "play_zip": "https://play.js13kgames.com/trampofelines.zip",
+  "thumb_url": "https://play.js13kgames.com/trampofelines/.ts.png",
+  "local_path": "games/2025-trampofelines",
+  "entry": "index.html",
+  "commit_sha": "1f1aef8b3e6a2838f0255ac75c25eff4e37e3d33",
+  "build_status": "prebuilt"
+}

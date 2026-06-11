@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NLNMed</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        user-select: none;
+        outline: 0;
+        box-sizing: border-box;
+        /* font-family: 'Courier New', Courier, monospace; */
+
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+      }
+
+      html {
+        font-size: 62.5%;
+      }
+
+      body {
+        width: 100vw;
+        height: 100vh;
+        background-color: #222;
+        color: #ccc;
+        font-size: 1.5rem;
+        overflow: hidden;
+      }
+
+      .container {
+        display: grid; 
+        grid-template-columns: 200px 320px 1fr; 
+        grid-template-rows: 32px 1fr 32px; 
+        gap: 2px 2px;
+        grid-auto-flow: row;
+        grid-template-areas: 
+          "left_header center_header right_header"
+          "left_editor center_editor right_editor"
+          "left_footer center_footer right_footer"; 
+        width: 100%; 
+        height: 100%; 
+      }
+
+      .left_footer { 
+        grid-area: left_footer; 
+        background-color: #222;
+        border: 1px solid #333;
+      }
+
+      .center_footer {
+        grid-area: center_footer;
+      }
+
+      .right_footer { 
+        grid-area: right_footer; 
+        background-color: #222;
+        border: 1px solid #333;
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+      }
+
+      .left_editor { 
+        grid-area: left_editor; 
+        background-color: #222;
+        border: 1px solid #333;
+        padding: 4px;
+        overflow-y: auto;
+        min-height: 0;
+      }
+      
+      .center_editor {
+        grid-area: center_editor;
+        background-color: #222;
+        border: 1px solid #333;
+        padding: 4px;
+        overflow-y: auto;
+        min-height: 0;
+      }
+
+      .right_editor { 
+        grid-area: right_editor; 
+        background-color: #222;
+        border: 1px solid #333;
+        position: relative;
+        min-height: 0;
+      }
+
+      .left_header { 
+        grid-area: left_header; 
+        background-color: #222;
+        border: 1px solid #333;
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        font-weight: bold;
+      }
+
+      .center_header {
+        grid-area: center_header;
+      }
+
+      .right_header { 
+        grid-area: right_header; 
+        background-color: #333;
+        border: 1px solid #222;
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        font-weight: bold;
+        justify-content: space-between;
+      }
+
+      canvas {
+        display: block;
+        background-color: #222;
+        cursor: crosshair;
+      }
+
+      .control-group {
+        margin-bottom: 12px;
+      }
+
+      .control-label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #ccc;
+      }
+
+      select, input[type="text"] {
+        width: 100%;
+        background-color: #333;
+        border: 1px solid #444;
+        color: #cccccc;
+        padding: 4px;
+        margin-bottom: 5px;
+        border-radius: 4px;
+      }
+
+      button {
+        background-color: #036;
+        border: 1px solid #17c;
+        color: #fff;
+        padding: 4px 12px;
+        cursor: pointer;
+        margin-bottom: 3px;
+        width: 100%;
+        border-radius: 6px;
+      }
+
+      button:hover {
+        background-color: #17c;
+      }
+
+      button:disabled {
+        background-color: #333;
+        border-color: #444;
+        color: #888;
+        cursor: not-allowed;
+      }
+      
+      .export-controls {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        margin-bottom: 5px;
+      }
+
+      .export-controls button {
+        flex: 0 0 auto;
+        width: auto;
+        min-width: 80px;
+        margin-bottom: 0;
+      }
+
+      .export-scale-value {
+        display: inline-block;
+        width: 28px;
+        text-align: right;
+        font-size: 1.4rem;
+      }
+
+      .two-button-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 4px;
+      }
+
+      .three-button-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4px;
+      }
+
+      .four-button-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 4px;
+      }
+
+      .six-button-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 4px;
+      }
+
+      .color-picker {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      
+      .color-value {
+        display: inline-block;
+        width: 28px;
+        text-align: right;
+      }
+
+      .color-slider {
+        flex: 1;
+        height: 20px;
+        -webkit-appearance: none;
+        background: linear-gradient(to right, #000, #fff);
+        outline: none;
+      }
+
+      .color-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 15px;
+        height: 20px;
+        background: #fff;
+        border: 1px solid #000;
+        cursor: pointer;
+      }
+
+      .color-preview {
+        width: 100%;
+        height: 32px;
+        border: 1px solid #444;
+        border-radius: 4px;
+      }
+
+      .item-list-container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        align-content: flex-start;
+        gap: 5px;
+        padding: 4px;
+        background-color: #333;
+        border: 1px solid #444;
+        border-radius: 4px;
+        height: 200px;
+        overflow-y: auto;
+        margin-bottom: 5px;
+      }
+              
+      .list-item {
+        background-color: #444;
+        border: 1px solid #555;
+        padding: 2px 6px;
+        border-radius: 4px;
+        cursor: pointer;
+        white-space: nowrap;
+        font-size: 1.4rem;
+      }
+
+      .list-item:hover {
+        background-color: #555;
+      }
+
+      .list-item.selected {
+        background-color: #036;
+        border-color: #17b;
+        color: #fff;
+      }
+
+    </style>
+  </head>
+  <body oncontextmenu="return false" ondragstart="return false">
+
+    <div class=container>
+      
+      <div class=left_header>NLNMed</div>
+
+      <div class="center_header"></div>
+
+      <div class=right_header>
+        <span>3D Viewport</span>
+        <span id=viewportInfo></span>
+      </div>
+
+      <div class=left_editor>
+        <div class=control-group>
+          <span class=control-label>Models</span>
+          <select id=modelList size=15></select>
+          <input type=text id=modelName placeholder="Model name">
+
+          <div class=control-group>
+            <span class=control-label>Vertices</span>
+            <div id=vertexList class=item-list-container></div>
+            <button id=deleteVertexBtn>Delete Vertex</button>
+          </div>
+
+          <div class=control-group>
+            <span class=control-label>Edges</span>
+            <div id=edgeList class=item-list-container></div>
+            <button id=deleteEdgeBtn>Delete Edge</button>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="center_editor">
+
+        <div class=control-group>
+
+          <div class=four-button-grid>
+            <button id=newModelBtn>New</button>
+            <button id=saveModelBtn>Save</button>
+            <button id=duplicateModelBtn>Duplicate</button>
+            <button id=deleteModelBtn>Delete</button>
+
+          </div>
+          <div class=six-button-grid>
+            <button id=moveXMinusBtn>X-1</button>
+            <button id=moveXPlusBtn>X+1</button>
+            <button id=moveYMinusBtn>Y-1</button>
+            <button id=moveYPlusBtn>Y+1</button>
+            <button id=moveZMinusBtn>Z-1</button>
+            <button id=moveZPlusBtn>Z+1</button>
+          </div>
+          <div class=three-button-grid>
+            <button id=rotateXBtn>Rot X</button>
+            <button id=rotateYBtn>Rot Y</button>
+            <button id=rotateZBtn>Rot Z</button>
+          </div>
+
+          <div class=two-button-grid>
+            <button id=undoBtn>Undo</button>
+            <button id=redoBtn>Redo</button>
+          </div>
+    
+          <div class="export-controls">
+            <button id=exportModelBtn>Export</button>
+            <select id="exportFormatSelect" style="flex: 1; margin-left: 8px;">
+              <option value="encoded" selected>Encoded String</option>
+              <option value="standard">Standard Array</option>
+            </select>
+            <select id="exportScaleSelect" style="flex: 1; margin-left: 4px;">
+              <option value="0.1">Scale: 0.1</option>
+              <option value="0.2">Scale: 0.2</option>
+              <option value="0.3">Scale: 0.3</option>
+              <option value="0.4">Scale: 0.4</option>
+              <option value="0.4">Scale: 0.5</option>
+              <option value="0.6">Scale: 0.6</option>
+              <option value="0.7">Scale: 0.7</option>
+              <option value="0.8">Scale: 0.8</option>
+              <option value="0.9">Scale: 0.9</option>
+              <option value="1.0" selected>Scale: 1.0</option>
+              <option value="1.1">Scale: 1.1</option>
+              <option value="1.2">Scale: 1.2</option>
+              <option value="1.3">Scale: 1.3</option>
+              <option value="1.4">Scale: 1.4</option>
+              <option value="1.4">Scale: 1.5</option>
+              <option value="1.6">Scale: 1.6</option>
+              <option value="1.7">Scale: 1.7</option>
+              <option value="1.8">Scale: 1.8</option>
+              <option value="1.9">Scale: 1.9</option>
+              <option value="2.0">Scale: 2.0</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class=control-group>
+          <span class=control-label>Color</span>
+          <div class=color-picker>
+            <span>R</span>
+            <input type=range class=color-slider id=colorR min=0 max=255 value=255 style="background: linear-gradient(to right, #000, #f00)">
+            <span id=colorRVal class=color-value>255</span>
+          </div>
+          <div class=color-picker>
+            <span>G</span>
+            <input type=range class=color-slider id=colorG min=0 max=255 value=255 style="background: linear-gradient(to right, #000, #0f0)">
+            <span id=colorGVal class=color-value>255</span>
+          </div>
+          <div class=color-picker>
+            <span>B</span>
+            <input type=range class=color-slider id=colorB min=0 max=255 value=255 style="background: linear-gradient(to right, #000, #00f)">
+            <span id=colorBVal class=color-value>255</span>
+          </div>
+          <div class=color-preview id=colorPreview></div>
+        </div>
+      </div>
+
+
+      <div class="center_footer"></div>
+
+      
+      <div class=right_editor>
+        <canvas id=canvas></canvas>
+      </div>
+      
+      <div class=left_footer></div>
+      <div class=right_footer>
+        <span id=statusText>Right-click drag to rotate • Mouse wheel to zoom • P to toggle preview</span>
+      </div>
+
+    </div>
+
+    <script>
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+
+      // UI Elements
+      const modelList = document.getElementById('modelList');
+      const modelName = document.getElementById('modelName');
+      const newModelBtn = document.getElementById('newModelBtn');
+      const saveModelBtn = document.getElementById('saveModelBtn');
+      const deleteModelBtn = document.getElementById('deleteModelBtn');
+      const exportModelBtn = document.getElementById('exportModelBtn');
+      const duplicateModelBtn = document.getElementById('duplicateModelBtn');
+      const undoBtn = document.getElementById('undoBtn');
+      const redoBtn = document.getElementById('redoBtn');
+      const moveXMinusBtn = document.getElementById('moveXMinusBtn');
+      const moveXPlusBtn = document.getElementById('moveXPlusBtn');
+      const moveYMinusBtn = document.getElementById('moveYMinusBtn');
+      const moveYPlusBtn = document.getElementById('moveYPlusBtn');
+      const moveZMinusBtn = document.getElementById('moveZMinusBtn');
+      const moveZPlusBtn = document.getElementById('moveZPlusBtn');
+      const rotateXBtn = document.getElementById('rotateXBtn');
+      const rotateYBtn = document.getElementById('rotateYBtn'); 
+      const rotateZBtn = document.getElementById('rotateZBtn');
+      const exportScale = document.getElementById('exportScale');
+      const vertexList = document.getElementById('vertexList');
+      const deleteVertexBtn = document.getElementById('deleteVertexBtn');
+      const edgeList = document.getElementById('edgeList');
+      const deleteEdgeBtn = document.getElementById('deleteEdgeBtn');
+      const statusText = document.getElementById('statusText');
+      const viewportInfo = document.getElementById('viewportInfo');
+
+      // Global state
+      let camera = {
+        rotationX: -0.3,
+        rotationY: 0.3,
+        zoom: 50,
+        distance: 8
+      };
+
+      let mouse = {
+        x: 0,
+        y: 0,
+        down: false,
+        rightDown: false,
+        lastX: 0,
+        lastY: 0
+      };
+
+      let hoveredVertex = null;
+      let selectedVertices = []; // For edge creation
+
+      let hoveredVertexListIndex = -1;
+      let hoveredEdgeListIndex = -1;
+
+      // Models data
+      let models = [];
+      let currentModelIndex = 0;
+
+      let selectedVertexListIndex = -1;
+      let selectedEdgeListIndex = -1;
+
+      // Undo/Redo system
+      let undoStack = [];
+      let redoStack = [];
+      const MAX_UNDO_STATES = 50;
+      
+      // New: Preview mode state
+      let isPreviewMode = false;
+
+      const gridVertices = [];
+      for (let x = 0; x < 5; x++) {
+        for (let y = 0; y < 5; y++) {
+          for (let z = 0; z < 5; z++) {
+            gridVertices.push({
+              x: x,
+              y: y,
+              z: z
+            });
+          }
+        }
+      }
+
+      function rotateX(p, a) {
+        const c = Math.cos(a),
+        s = Math.sin(a);
+        return {
+          x: p.x,
+          y: p.y * c - p.z * s,
+          z: p.y * s + p.z * c
+        };
+      }
+      function rotateY(p, a) {
+        const c = Math.cos(a),
+        s = Math.sin(a);
+        return {
+          x: p.x * c + p.z * s,
+          y: p.y,
+          z: -p.x * s + p.z * c
+        };
+      }
+
+      function project3DTo2D(point) {
+        const centered = {
+          x: point.x - 2,
+          y: point.y - 2,
+          z: point.z - 2
+        };
+        let rotated = rotateX(centered, camera.rotationX);
+        rotated = rotateY(rotated, camera.rotationY);
+        const scale = camera.zoom * canvas.height * 0.02 / (camera.distance + rotated.z);
+        return {
+          x: canvas.width / 2 + rotated.x * scale,
+          y: (canvas.height / 10 * 4) - rotated.y * scale, // Y axis just a bit above half way.
+          z: rotated.z,
+          scale: scale
+        };
+      }
+
+      function getVertexSize(z) {
+        return Math.max(1, Math.min(6, 2 - z * 0.5));
+      }
+
+      function drawGroundPlane() {
+        // Plane dimensions
+        const PLANE_WIDTH = 7;
+        const PLANE_DEPTH = 7;
+        
+        // The plane is centered under the 5x5 grid, which itself is centered at (2,2,2).
+        // So, the ground plane's center is at (2, 0, 2).
+        const CENTER_X = 2;
+        const CENTER_Z = 2;
+        const Y_LEVEL = 0;
+
+        // Set the fill style and transparency for the plane
+        ctx.fillStyle = '#888'; 
+        ctx.globalAlpha = 0.15;
+
+        // Calculate the 3D corners of the plane based on the parameters above
+        const x_start = CENTER_X - (PLANE_WIDTH / 2);
+        const x_end = CENTER_X + (PLANE_WIDTH / 2);
+        const z_start = CENTER_Z - (PLANE_DEPTH / 2);
+        const z_end = CENTER_Z + (PLANE_DEPTH / 2);
+
+        // Project the four 3D corner points to 2D screen coordinates
+        const corner1 = project3DTo2D({ x: x_start, y: Y_LEVEL, z: z_start });
+        const corner2 = project3DTo2D({ x: x_end,   y: Y_LEVEL, z: z_start });
+        const corner3 = project3DTo2D({ x: x_end,   y: Y_LEVEL, z: z_end });
+        const corner4 = project3DTo2D({ x: x_start, y: Y_LEVEL, z: z_end });
+        
+        // Draw the filled polygon using the projected 2D points
+        ctx.beginPath();
+        ctx.moveTo(corner1.x, corner1.y);
+        ctx.lineTo(corner2.x, corner2.y);
+        ctx.lineTo(corner3.x, corner3.y);
+        ctx.lineTo(corner4.x, corner4.y);
+        ctx.closePath();
+        ctx.fill();
+        
+        ctx.globalAlpha = 1; // Reset alpha for other drawing functions
+      }
+
+      // Render the 3d view
+      function render() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawGroundPlane(); // Always draw the ground plane for context
+
+        // New: Conditionally draw grid elements based on preview mode
+        if (!isPreviewMode) {
+          drawGridLines();
+          drawAxisLines();
+          drawGridVertices();
+        }
+        
+        drawCurrentModel();
+      }
+
+      // Draw 3d view grid lines
+      function drawGridLines() {
+        ctx.lineWidth = 1;
+        for (let i = 0; i < 5; i++) {
+          for (let j = 0; j < 5; j++) {
+            let isOutline = (i === 0 || i === 4) && (j === 0 || j === 4);
+            ctx.globalAlpha = isOutline ? 0.3 : 0.1;
+            ctx.strokeStyle = isOutline ? '#999' : '#666';
+            let s = project3DTo2D({
+              x: 0,
+              y: i,
+              z: j
+            }),
+            e = project3DTo2D({
+              x: 4,
+              y: i,
+              z: j
+            });
+            ctx.beginPath();
+            ctx.moveTo(s.x, s.y);
+            ctx.lineTo(e.x, e.y);
+            ctx.stroke();
+            s = project3DTo2D({
+              x: i,
+              y: 0,
+              z: j
+            });
+            e = project3DTo2D({
+              x: i,
+              y: 4,
+              z: j
+            });
+            ctx.beginPath();
+            ctx.moveTo(s.x, s.y);
+            ctx.lineTo(e.x, e.y);
+            ctx.stroke();
+            s = project3DTo2D({
+              x: i,
+              y: j,
+              z: 0
+            });
+            e = project3DTo2D({
+              x: i,
+              y: j,
+              z: 4
+            });
+            ctx.beginPath();
+            ctx.moveTo(s.x, s.y);
+            ctx.lineTo(e.x, e.y);
+            ctx.stroke();
+          }
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      // Draw directional arrowhead on 3d view axis lines
+      function drawArrowhead(p1, p2, color) {
+        const p1_2d = project3DTo2D(p1),
+        p2_2d = project3DTo2D(p2);
+        const angle = Math.atan2(p2_2d.y - p1_2d.y, p2_2d.x - p1_2d.x),
+        size = 15,
+        barb = Math.PI / 6;
+        ctx.strokeStyle = color;
+        ctx.globalAlpha = 0.8;
+        ctx.beginPath();
+        ctx.moveTo(p2_2d.x, p2_2d.y);
+        ctx.lineTo(p2_2d.x - size * Math.cos(angle - barb), p2_2d.y - size * Math.sin(angle - barb));
+        ctx.moveTo(p2_2d.x, p2_2d.y);
+        ctx.lineTo(p2_2d.x - size * Math.cos(angle + barb), p2_2d.y - size * Math.sin(angle + barb));
+        ctx.stroke();
+      }
+
+      // Draw 3d view axis lines
+      function drawAxisLines() {
+        ctx.globalAlpha = 0.4;
+        const axes = [
+          [{
+              x: -0.5,
+              y: 2,
+              z: 2
+            }, {
+              x: 4.5,
+              y: 2,
+              z: 2
+            }, '#f00'],
+          [{
+              x: 2,
+              y: -0.5,
+              z: 2
+            }, {
+              x: 2,
+              y: 4.5,
+              z: 2
+            }, '#0f0'],
+          [{
+              x: 2,
+              y: 2,
+              z: -0.5
+            }, {
+              x: 2,
+              y: 2,
+              z: 4.5
+            }, '#00f']
+        ];
+        axes.forEach(([start, end, color]) => {
+          ctx.strokeStyle = color;
+          const p1 = project3DTo2D(start),
+          p2 = project3DTo2D(end);
+          ctx.beginPath();
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.stroke();
+          drawArrowhead(start, end, color);
+        });
+
+        ctx.globalAlpha = 1;
+      }
+
+      // Draw 3d view grid vertices
+      function drawGridVertices() {
+        ctx.fillStyle = '#666';
+        gridVertices.forEach((v, i) => {
+          const p = project3DTo2D(v),
+          s = getVertexSize(p.z);
+
+          if (hoveredVertex === i) {
+            ctx.strokeStyle = '#ff0';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, s + 3, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, s, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
+
+      // Draw the currently selected model to the 3d view
+      function drawCurrentModel() {
+        const model = models[currentModelIndex];
+        if (!model) return;
+
+        // Standard color setup
+        const h = model.color,
+        r = parseInt(h.slice(1, 2).repeat(2), 16),
+        g = parseInt(h.slice(2, 3).repeat(2), 16),
+        b = parseInt(h.slice(3, 4).repeat(2), 16),
+        a = h.length > 4 ? parseInt(h.slice(4, 5).repeat(2), 16) / 255 : 1;
+        const defaultFill = `rgba(${r},${g},${b},${a})`;
+
+        // Draw vertices
+        model.vertices.forEach((vi, i) => {
+          if (!gridVertices[vi])
+            return;
+
+          const p = project3DTo2D(gridVertices[vi]);
+          const isSelected = (i === selectedVertexListIndex);
+          const isHovered = (i === hoveredVertexListIndex);
+
+          if (isSelected || isHovered) {
+            // 1. Draw the white outline first
+            ctx.fillStyle = '#fff';
+            ctx.beginPath();
+            // The outline is 2px larger than the highlighted vertex
+            ctx.arc(p.x, p.y, getVertexSize(p.z) + 4, 0, Math.PI * 2);
+            ctx.fill();
+
+            // 2. Draw the highlight color on top
+            ctx.fillStyle = isSelected ? '#ff0' : '#ff8';
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, getVertexSize(p.z) + 2, 0, Math.PI * 2);
+            ctx.fill();
+
+          } else {
+            // 3. Draw the normal vertex
+            ctx.fillStyle = defaultFill;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, getVertexSize(p.z) + 2, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        });
+
+        // Draw edges
+        model.edges.forEach((e, i) => {
+          const v1 = gridVertices[e[0]],
+          v2 = gridVertices[e[1]];
+          if (!v1 || !v2)
+            return;
+          const p1 = project3DTo2D(v1),
+          p2 = project3DTo2D(v2);
+
+          const isSelected = (i === selectedEdgeListIndex);
+          const isHovered = (i === hoveredEdgeListIndex);
+
+          if (isSelected || isHovered) {
+            // 1. Draw the thick white outline line
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = 4; // Thicker for the outline
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.stroke();
+
+            // 2. Draw the thinner highlight color line on top
+            ctx.strokeStyle = isSelected ? '#ff0' : '#ff8';
+            ctx.lineWidth = 2; // Normal width for the highlight
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.stroke();
+          } else {
+            // 3. Draw the normal gradient edge
+            const grad = ctx.createLinearGradient(p1.x, p1.y, p2.x, p2.y);
+            const fc = `rgba(${r},${g},${b},${a})`,
+            dc = `rgba(${r * 0.25},${g * 0.25},${b * 0.25},${a})`;
+            if (p1.z < p2.z) {
+              grad.addColorStop(0, fc);
+              grad.addColorStop(1, dc);
+            } else {
+              grad.addColorStop(0, dc);
+              grad.addColorStop(1, fc);
+            }
+
+            ctx.strokeStyle = grad;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.stroke();
+          }
+        });
+      }
+
+      function findHoveredVertex(x, y) {
+        const threshold = 15;
+        let closestVertex = null;
+        let closestDistance = threshold;
+
+        gridVertices.forEach((v, i) => {
+          const p = project3DTo2D(v);
+          const distance = Math.sqrt((x - p.x) ** 2 + (y - p.y) ** 2);
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestVertex = i;
+          }
+        });
+
+        return closestVertex;
+      }
+
+      function updateColorPreview() {
+        const r = document.getElementById('colorR').value;
+        const g = document.getElementById('colorG').value;
+        const b = document.getElementById('colorB').value;
+
+        // Update the R, G, B value readouts
+        document.getElementById('colorRVal').textContent = r;
+        document.getElementById('colorGVal').textContent = g;
+        document.getElementById('colorBVal').textContent = b;
+
+        // Create a 3-character shorthand hex color (e.g., #fff)
+        const h = `#${[r, g, b].map(c => Math.round(parseInt(c) / 17).toString(16)).join('')}`;
+
+        // Update the preview box with full alpha
+        document.getElementById('colorPreview').style.backgroundColor = `rgb(${r},${g},${b})`;
+
+        // Update the current model's color
+        if (models[currentModelIndex]) {
+          models[currentModelIndex].color = h;
+          render();
+        }
+      }
+
+      function handleVertexClick(vertexIndex) {
+        const model = models[currentModelIndex];
+        if (!model)
+          return;
+        
+        saveStateForUndo(); // Save state before modification
+        
+        if (!selectedVertices.includes(vertexIndex)) {
+          selectedVertices.push(vertexIndex);
+          if (!model.vertices.includes(vertexIndex)) {
+            model.vertices.push(vertexIndex);
+          }
+          if (selectedVertices.length === 2) {
+            const edge = selectedVertices.slice().sort((a, b) => a - b);
+            if (!model.edges.some(e => e[0] === edge[0] && e[1] === edge[1])) {
+              model.edges.push(edge);
+            }
+            selectedVertices = [];
+          }
+        }
+        // NEW: Select the vertex in the list and re-render UI and canvas
+        selectedVertexListIndex = model.vertices.indexOf(vertexIndex);
+        selectedEdgeListIndex = -1; // Deselect any edge
+        updateUI();
+        render();
+      }
+
+      function updateViewportInfo() {
+        if (!viewportInfo)
+          return;
+        const rotXDeg = (camera.rotationX * 180 / Math.PI).toFixed(1);
+        const rotYDeg = (camera.rotationY * 180 / Math.PI).toFixed(1);
+        const zoom = camera.zoom.toFixed(1);
+        viewportInfo.textContent = `Rot X: ${rotXDeg}° • Rot Y: ${rotYDeg}° • Zoom: ${zoom}x`;
+      }
+
+      function updateUI() {
+        // Models
+        modelList.innerHTML = '';
+        models.forEach((model, i) => {
+          const option = document.createElement('option');
+          option.value = i;
+          option.textContent = model.name;
+          option.selected = i === currentModelIndex;
+          modelList.appendChild(option);
+        });
+
+        const currentModel = models[currentModelIndex];
+        if (!currentModel) {
+          modelName.value = '';
+          vertexList.innerHTML = '';
+          edgeList.innerHTML = '';
+          deleteModelBtn.disabled = true;
+          deleteVertexBtn.disabled = true;
+          deleteEdgeBtn.disabled = true;
+          exportModelBtn.disabled = true;
+          duplicateModelBtn.disabled = true;
+          return;
+        }
+
+        modelName.value = currentModel.name;
+
+        vertexList.innerHTML = '';
+        currentModel.vertices.forEach((vertexIndex, i) => {
+          const vertex = gridVertices[vertexIndex];
+          const item = document.createElement('span');
+          item.className = 'list-item';
+          if (i === selectedVertexListIndex) {
+            item.classList.add('selected');
+          }
+          item.textContent = `(${vertex.x},${vertex.y},${vertex.z})`;
+
+          item.addEventListener('click', () => {
+            selectedVertexListIndex = (selectedVertexListIndex === i) ? -1 : i; // Toggle
+            selectedEdgeListIndex = -1; // Deselect edge
+            updateUI();
+            render(); // Add render to ensure canvas updates immediately
+          });
+
+          // Add hover listeners
+          item.addEventListener('mouseenter', () => {
+            hoveredVertexListIndex = i;
+            render();
+          });
+
+          item.addEventListener('mouseleave', () => {
+            hoveredVertexListIndex = -1;
+            render();
+          });
+
+          vertexList.appendChild(item);
+        });
+
+        edgeList.innerHTML = '';
+        currentModel.edges.forEach((edge, i) => {
+          const v1Index = currentModel.vertices.indexOf(edge[0]);
+          const v2Index = currentModel.vertices.indexOf(edge[1]);
+          const item = document.createElement('span');
+          item.className = 'list-item';
+          if (i === selectedEdgeListIndex) {
+            item.classList.add('selected');
+          }
+          item.textContent = `V${v1Index}-V${v2Index}`;
+
+          item.addEventListener('click', () => {
+            selectedEdgeListIndex = (selectedEdgeListIndex === i) ? -1 : i; // Toggle
+            selectedVertexListIndex = -1; // Deselect vertex
+            updateUI();
+            render(); // Add this to ensure canvas updates on selection
+          });
+
+          // Add hover listeners
+          item.addEventListener('mouseenter', () => {
+            hoveredEdgeListIndex = i;
+            render(); // Re-render to show hover highlight
+          });
+
+          item.addEventListener('mouseleave', () => {
+            hoveredEdgeListIndex = -1;
+            render(); // Re-render to remove hover highlight
+          });
+
+          edgeList.appendChild(item);
+        });
+
+        // Color
+        const h = currentModel.color;
+        const r = parseInt(h.slice(1, 2), 16) * 17;
+        const g = parseInt(h.slice(2, 3), 16) * 17;
+        const b = parseInt(h.slice(3, 4), 16) * 17;
+        document.getElementById('colorR').value = r;
+        document.getElementById('colorG').value = g;
+        document.getElementById('colorB').value = b;
+        updateColorPreview();
+
+        // Button states
+        deleteModelBtn.disabled = models.length === 0;
+        deleteVertexBtn.disabled = selectedVertexListIndex === -1;
+        deleteEdgeBtn.disabled = selectedEdgeListIndex === -1;
+        exportModelBtn.disabled = !currentModel;
+        duplicateModelBtn.disabled = !currentModel;
+        moveXMinusBtn.disabled = !currentModel;
+        moveXPlusBtn.disabled = !currentModel;
+        moveYMinusBtn.disabled = !currentModel;
+        moveYPlusBtn.disabled = !currentModel;
+        moveZMinusBtn.disabled = !currentModel;
+        moveZPlusBtn.disabled = !currentModel;
+        rotateXBtn.disabled = !currentModel;
+        rotateYBtn.disabled = !currentModel;
+        rotateZBtn.disabled = !currentModel;
+        
+        updateUndoRedoButtons();
+      }
+
+      // Undo/Redo system functions
+      function saveStateForUndo() {
+        const currentModel = models[currentModelIndex];
+        if (!currentModel) return;
+        
+        // Create a deep copy of the current model state
+        const state = {
+          modelIndex: currentModelIndex,
+          model: {
+            name: currentModel.name,
+            vertices: [...currentModel.vertices],
+            edges: [...currentModel.edges.map(edge => [...edge])],
+            color: currentModel.color
+          },
+          selectedVertexIndex: selectedVertexListIndex,
+          selectedEdgeIndex: selectedEdgeListIndex
+        };
+        
+        undoStack.push(state);
+        
+        // Limit undo stack size
+        if (undoStack.length > MAX_UNDO_STATES) {
+          undoStack.shift();
+        }
+        
+        // Clear redo stack when new action is performed
+        redoStack = [];
+        
+        updateUndoRedoButtons();
+      }
+
+      function undo() {
+        if (undoStack.length === 0) return;
+        
+        // Save current state to redo stack first
+        const currentModel = models[currentModelIndex];
+        if (currentModel) {
+          const currentState = {
+            modelIndex: currentModelIndex,
+            model: {
+              name: currentModel.name,
+              vertices: [...currentModel.vertices],
+              edges: [...currentModel.edges.map(edge => [...edge])],
+              color: currentModel.color
+            },
+            selectedVertexIndex: selectedVertexListIndex,
+            selectedEdgeIndex: selectedEdgeListIndex
+          };
+          redoStack.push(currentState);
+        }
+        
+        // Restore previous state
+        const state = undoStack.pop();
+        currentModelIndex = state.modelIndex;
+        
+        // Restore the model
+        models[currentModelIndex] = {
+          name: state.model.name,
+          vertices: [...state.model.vertices],
+          edges: [...state.model.edges.map(edge => [...edge])],
+          color: state.model.color
+        };
+        
+        // Restore selections
+        selectedVertexListIndex = state.selectedVertexIndex;
+        selectedEdgeListIndex = state.selectedEdgeIndex;
+        
+        updateUI();
+        render();
+        updateUndoRedoButtons();
+        setStatus('Undone');
+      }
+
+      function redo() {
+        if (redoStack.length === 0) return;
+        
+        // Save current state to undo stack first
+        const currentModel = models[currentModelIndex];
+        if (currentModel) {
+          const currentState = {
+            modelIndex: currentModelIndex,
+            model: {
+              name: currentModel.name,
+              vertices: [...currentModel.vertices],
+              edges: [...currentModel.edges.map(edge => [...edge])],
+              color: currentModel.color
+            },
+            selectedVertexIndex: selectedVertexListIndex,
+            selectedEdgeIndex: selectedEdgeListIndex
+          };
+          undoStack.push(currentState);
+        }
+        
+        // Restore redo state
+        const state = redoStack.pop();
+        currentModelIndex = state.modelIndex;
+        
+        // Restore the model
+        models[currentModelIndex] = {
+          name: state.model.name,
+          vertices: [...state.model.vertices],
+          edges: [...state.model.edges.map(edge => [...edge])],
+          color: state.model.color
+        };
+        
+        // Restore selections
+        selectedVertexListIndex = state.selectedVertexIndex;
+        selectedEdgeListIndex = state.selectedEdgeIndex;
+        
+        updateUI();
+        render();
+        updateUndoRedoButtons();
+        setStatus('Redone');
+      }
+
+      function updateUndoRedoButtons() {
+        undoBtn.disabled = undoStack.length === 0;
+        redoBtn.disabled = redoStack.length === 0;
+      }
+
+      function moveModel(axis, direction) {
+        const model = models[currentModelIndex];
+        if (!model) return;
+
+        saveStateForUndo(); // Save state before modification
+
+        const newVertices = model.vertices.map(vertexIndex => {
+          const vertex = gridVertices[vertexIndex];
+          let newX = vertex.x;
+          let newY = vertex.y;
+          let newZ = vertex.z;
+          
+          if (axis === 'x') {
+            newX = Math.max(0, Math.min(4, vertex.x + direction));
+          } else if (axis === 'y') {
+            newY = Math.max(0, Math.min(4, vertex.y + direction));
+          } else if (axis === 'z') {
+            newZ = Math.max(0, Math.min(4, vertex.z + direction));
+          }
+          
+          // Find the new vertex index in the grid
+          return gridVertices.findIndex(v => v.x === newX && v.y === newY && v.z === newZ);
+        });
+
+        // Update edges to use the new vertex indices
+        const newEdges = model.edges.map(edge => {
+          const oldVertex1Index = edge[0];
+          const oldVertex2Index = edge[1];
+          
+          // Find where these old indices are in the original vertices array
+          const vertex1ArrayIndex = model.vertices.indexOf(oldVertex1Index);
+          const vertex2ArrayIndex = model.vertices.indexOf(oldVertex2Index);
+          
+          // Map to the new vertex indices
+          const newVertex1Index = newVertices[vertex1ArrayIndex];
+          const newVertex2Index = newVertices[vertex2ArrayIndex];
+          
+          return [newVertex1Index, newVertex2Index].sort((a, b) => a - b);
+        });
+
+        model.vertices = newVertices;
+        model.edges = newEdges;
+        updateUI();
+        render();
+        setStatus(`Model moved ${axis}${direction > 0 ? '+' : ''}${direction}`);
+      }
+
+      function rotateModel(axis, angle) {
+        const model = models[currentModelIndex];
+        if (!model) return;
+
+        saveStateForUndo(); // Save state before rotation
+
+        const centerX = 2, centerY = 2, centerZ = 2;
+        const cosA = Math.round(Math.cos(angle)); // Use Math.round to avoid float issues with 90deg
+        const sinA = Math.round(Math.sin(angle));
+
+        const newVertexMap = new Map(); // Maps old grid index to new grid index
+
+        model.vertices.forEach(oldIndex => {
+            const v = gridVertices[oldIndex];
+
+            // 1. Translate to origin (0,0,0)
+            const relX = v.x - centerX;
+            const relY = v.y - centerY;
+            const relZ = v.z - centerZ;
+
+            let newRelX, newRelY, newRelZ;
+
+            // 2. Apply rotation formula
+            if (axis === 'x') {
+                newRelX = relX;
+                newRelY = relY * cosA - relZ * sinA;
+                newRelZ = relY * sinA + relZ * cosA;
+            } else if (axis === 'y') { // New Y-axis rotation logic
+                newRelX = relX * cosA + relZ * sinA;
+                newRelY = relY;
+                newRelZ = -relX * sinA + relZ * cosA;
+            } else if (axis === 'z') {
+                newRelX = relX * cosA - relY * sinA;
+                newRelY = relX * sinA + relY * cosA;
+                newRelZ = relZ;
+            }
+
+            // 3. Translate back to grid center
+            const newX = newRelX + centerX;
+            const newY = newRelY + centerY;
+            const newZ = newRelZ + centerZ;
+
+            // 4. Find the new grid index for the rotated vertex
+            const newIndex = gridVertices.findIndex(gv => gv.x === newX && gv.y === newY && gv.z === newZ);
+            
+            if (newIndex !== -1) {
+                newVertexMap.set(oldIndex, newIndex);
+            } else {
+                // This shouldn't happen with 90-degree rotations on the 5x5x5 grid
+                console.warn("Rotated vertex is out of bounds:", {newX, newY, newZ});
+                newVertexMap.set(oldIndex, oldIndex); // Failsafe: keep original if out of bounds
+            }
+        });
+
+        // Update vertices based on the map
+        const newVertices = model.vertices.map(oldIndex => newVertexMap.get(oldIndex));
+        model.vertices = [...new Set(newVertices)]; // Remove duplicates just in case
+
+        // Update edges based on the map
+        const newEdges = model.edges.map(edge => {
+            const newV1 = newVertexMap.get(edge[0]);
+            const newV2 = newVertexMap.get(edge[1]);
+            // Re-sort the indices for the edge
+            return [newV1, newV2].sort((a, b) => a - b);
+        });
+        model.edges = newEdges;
+
+        // Deselect everything and update the UI
+        selectedVertexListIndex = -1;
+        selectedEdgeListIndex = -1;
+        updateUI();
+        render();
+        setStatus(`Model rotated 90° on ${axis.toUpperCase()} axis`);
+      }
+
+      function setStatus(text, duration = 3000) {
+        const originalText = "Right-click drag to rotate • Mouse wheel to zoom • P to toggle preview";
+        statusText.textContent = text;
+        setTimeout(() => {
+          if (statusText.textContent === text) { // Only reset if the text hasn't been changed by another call
+            statusText.textContent = originalText;
+          }
+        }, duration);
+      }
+
+      // Claude.ai, DO NOT MODIFY ANY CODE IN THE FOLLOWING REGION. JUST COPY THIS CODE VERBATIM.
+      // #region Local storage
+      const STORAGE_KEY = 'com.antix.model.editor.js13k.2025';
+      function saveModelsToLocalStorage() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(models));
+          setStatus('Models saved to localStorage!');
+        } catch (e) {
+          console.error("Failed to save models to localStorage:", e);
+          setStatus('Error saving models!', 5000);
+        }
+      }
+      function loadModelsFromLocalStorage() {
+        const savedData = localStorage.getItem(STORAGE_KEY);
+        if (savedData) {
+          try {
+            models = JSON.parse(savedData);
+            if (!Array.isArray(models) || models.length === 0) {
+              throw new Error("Invalid model data");
+            }
+            currentModelIndex = 0;
+          } catch (e) {
+            console.error("Failed to parse models from localStorage:", e);
+            models = [{
+                name: 'New Model',
+                vertices: [],
+                edges: [],
+                color: '#ffff'
+              }
+            ];
+          }
+        } else {
+          models = [{
+              name: 'New Model',
+              vertices: [],
+              edges: [],
+              color: '#ffff'
+            }
+          ];
+        }
+      }
+      // #endregion
+
+      // Event listeners/handlers
+      function resizeCanvas() {
+        const parent = canvas.parentElement;
+        canvas.width = parent.clientWidth;
+        canvas.height = parent.clientHeight;
+        render();
+      }
+
+      canvas.addEventListener('mousemove', e => {
+        const r = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - r.left;
+        mouse.y = e.clientY - r.top;
+
+        if (mouse.rightDown) {
+          camera.rotationY += (mouse.x - mouse.lastX) * 0.01;
+          camera.rotationX += (mouse.y - mouse.lastY) * 0.01;
+          camera.rotationX = Math.max(-Math.PI / 2 + 0.1, Math.min(Math.PI / 2 - 0.1, camera.rotationX));
+          updateViewportInfo();
+          render();
+        } else {
+          const newHovered = findHoveredVertex(mouse.x, mouse.y);
+          if (newHovered !== hoveredVertex) {
+            hoveredVertex = newHovered;
+            render();
+          }
+        }
+        mouse.lastX = mouse.x;
+        mouse.lastY = mouse.y;
+      });
+
+      canvas.addEventListener('mousedown', e => {
+        if (e.button === 2) {
+          mouse.rightDown = true;
+          canvas.style.cursor = 'grabbing';
+        } else if (e.button === 0 && hoveredVertex !== null) {
+          handleVertexClick(hoveredVertex);
+        }
+      });
+
+      canvas.addEventListener('mouseup', e => {
+        if (e.button === 2) {
+          mouse.rightDown = false;
+          canvas.style.cursor = 'crosshair';
+        }
+      });
+
+      canvas.addEventListener('wheel', e => {
+        e.preventDefault();
+        camera.zoom *= (1 - e.deltaY * 0.002);
+        camera.zoom = Math.max(5, Math.min(100, camera.zoom));
+        updateViewportInfo();
+        render();
+      });
+
+      // Keyboard shortcuts
+      document.addEventListener('keydown', e => {
+        // Prevent shortcuts when typing in an input field
+        const activeEl = document.activeElement;
+        if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'SELECT')) {
+            return;
+        }
+
+        if (e.ctrlKey || e.metaKey) {
+          if (e.key === 'z' && !e.shiftKey) {
+            e.preventDefault();
+            undo();
+          } else if (e.key === 'z' && e.shiftKey || e.key === 'y') {
+            e.preventDefault();
+            redo();
+          }
+        } else if (e.key.toLowerCase() === 'v') {
+          e.preventDefault();
+          const model = models[currentModelIndex];
+          if (model && model.vertices.length > 0) {
+            const numVertices = model.vertices.length;
+            let nextIndex = selectedVertexListIndex;
+
+            if (e.shiftKey) { // Previous vertex (Shift + v)
+              if (nextIndex === -1) {
+                nextIndex = numVertices - 1; // Wrap to last from unselected
+              } else {
+                nextIndex = (nextIndex - 1 + numVertices) % numVertices;
+              }
+            } else { // Next vertex (v)
+              nextIndex = (nextIndex + 1) % numVertices;
+            }
+            
+            selectedVertexListIndex = nextIndex;
+            selectedEdgeListIndex = -1; // Deselect any selected edge
+            updateUI();
+            render();
+          }
+        } else if (e.key.toLowerCase() === 'e') {
+          e.preventDefault();
+          const model = models[currentModelIndex];
+          if (model && model.edges.length > 0) {
+            const numEdges = model.edges.length;
+            let nextIndex = selectedEdgeListIndex;
+
+            if (e.shiftKey) { // Previous edge (Shift + e)
+              if (nextIndex === -1) {
+                nextIndex = numEdges - 1; // Wrap to last from unselected
+              } else {
+                nextIndex = (nextIndex - 1 + numEdges) % numEdges;
+              }
+            } else { // Next edge (e)
+              nextIndex = (nextIndex + 1) % numEdges;
+            }
+
+            selectedEdgeListIndex = nextIndex;
+            selectedVertexListIndex = -1; // Deselect any selected vertex
+            updateUI();
+            render();
+          }
+        } else if (e.key.toLowerCase() === 'p') {
+            e.preventDefault();
+            isPreviewMode = !isPreviewMode;
+            setStatus(`Preview Mode: ${isPreviewMode ? 'ON' : 'OFF'}`);
+            render();
+        }
+      });
+
+      ['colorR', 'colorG', 'colorB'].forEach(id => document.getElementById(id).addEventListener('input', () => {
+        saveStateForUndo();
+        updateColorPreview();
+      }));
+
+      newModelBtn.addEventListener('click', () => {
+        saveStateForUndo(); // Save before creating new model
+        models.push({
+          name: `New Model ${models.length + 1}`,
+          vertices: [],
+          edges: [],
+          color: '#fff'
+        });
+        currentModelIndex = models.length - 1;
+        selectedVertexListIndex = -1;
+        selectedEdgeListIndex = -1;
+        updateUI();
+        render();
+      });
+
+      saveModelBtn.addEventListener('click', saveModelsToLocalStorage);
+
+      deleteModelBtn.addEventListener('click', () => {
+        if (models.length > 0) {
+          saveStateForUndo(); // Save before deleting
+          models.splice(currentModelIndex, 1);
+          currentModelIndex = Math.max(0, currentModelIndex - 1);
+          selectedVertexListIndex = -1;
+          selectedEdgeListIndex = -1;
+          updateUI();
+          render();
+        }
+      });
+
+      exportModelBtn.addEventListener('click', () => {
+        const model = models[currentModelIndex];
+        if (!model) return;
+
+        // Read the values from our dropdowns
+        const exportFormat = document.getElementById('exportFormatSelect').value;
+        const EXPORT_SCALE = parseFloat(document.getElementById('exportScaleSelect').value);
+        
+        let exportString = '';
+        
+        // --- BRANCH 1: ENCODED EXPORT ---
+        if (exportFormat === 'encoded') {
+          let encodeValues = '';
+          for (let i = 40; i < 127; i++) {
+              encodeValues += String.fromCharCode(i);
+          }
+
+          let encodedVertices = '';
+          model.vertices.forEach(gridIndex => {
+            const { x, y, z } = gridVertices[gridIndex];
+            encodedVertices += encodeValues[x];
+            encodedVertices += encodeValues[y];
+            encodedVertices += encodeValues[z];
+          });
+
+          let encodedEdges = '';
+          model.edges.forEach(edge => {
+            const startIndex = model.vertices.indexOf(edge[0]);
+            const endIndex = model.vertices.indexOf(edge[1]);
+            encodedEdges += encodeValues[startIndex];
+            encodedEdges += encodeValues[endIndex];
+          });
+
+          exportString = `'${encodedVertices}',\n'${encodedEdges}',`;
+          setStatus('Encoded model data copied to clipboard!');
+
+        // --- BRANCH 2: STANDARD ARRAY EXPORT (Your original logic) ---
+        } else {
+          const exportedVertices = model.vertices.flatMap(gridIndex => {
+            const { x, y, z } = gridVertices[gridIndex];
+            const scaledX = ((x / 2) - 1) * EXPORT_SCALE;
+            const scaledY = ((y / 2) - 1) * EXPORT_SCALE;
+            const scaledZ = ((z / 2) - 1) * EXPORT_SCALE;
+            return [scaledX, scaledY, scaledZ];
+          });
+
+          const exportedEdges = model.edges.flatMap(edge => {
+            const startIndex = model.vertices.indexOf(edge[0]);
+            const endIndex = model.vertices.indexOf(edge[1]);
+            return [startIndex, endIndex];
+          });
+
+          const vStr = JSON.stringify(exportedVertices);
+          const eStr = JSON.stringify(exportedEdges);
+          
+          exportString = `${vStr},\n${eStr},`;
+          setStatus('Standard array model data copied to clipboard!');
+        }
+
+        // Copy the final generated string to the clipboard
+        navigator.clipboard.writeText(exportString).catch(() => {
+          setStatus('Failed to copy to clipboard.', 5000);
+        });
+      });
+
+      undoBtn.addEventListener('click', undo);
+      redoBtn.addEventListener('click', redo);
+
+      moveXMinusBtn.addEventListener('click', () => moveModel('x', -1));
+      moveXPlusBtn.addEventListener('click', () => moveModel('x', 1));
+      moveYMinusBtn.addEventListener('click', () => moveModel('y', -1));
+      moveYPlusBtn.addEventListener('click', () => moveModel('y', 1));
+      moveZMinusBtn.addEventListener('click', () => moveModel('z', -1));
+      moveZPlusBtn.addEventListener('click', () => moveModel('z', 1));
+      
+      rotateXBtn.addEventListener('click', () => rotateModel('z', Math.PI / 2)); // 90 degrees
+      rotateYBtn.addEventListener('click', () => rotateModel('y', Math.PI / 2)); // 90 degrees
+      rotateZBtn.addEventListener('click', () => rotateModel('x', Math.PI / 2)); // 90 degrees
+
+      duplicateModelBtn.addEventListener('click', () => {
+        const currentModel = models[currentModelIndex];
+        if (!currentModel) return;
+        
+        saveStateForUndo(); // Save before duplicating
+        
+        const duplicatedModel = {
+          name: `${currentModel.name} Copy`,
+          vertices: [...currentModel.vertices],
+          edges: [...currentModel.edges.map(edge => [...edge])],
+          color: currentModel.color
+        };
+        
+        models.push(duplicatedModel);
+        currentModelIndex = models.length - 1;
+        selectedVertexListIndex = -1;
+        selectedEdgeListIndex = -1;
+        updateUI();
+        render();
+        setStatus('Model duplicated!');
+      });
+
+      modelList.addEventListener('change', () => {
+        currentModelIndex = parseInt(modelList.value);
+        selectedVertexListIndex = -1;
+        selectedEdgeListIndex = -1;
+        updateUI();
+        render();
+      });
+
+      modelName.addEventListener('input', () => {
+        const model = models[currentModelIndex];
+        if (model) {
+          model.name = modelName.value;
+          modelList.options[currentModelIndex].text = model.name;
+        }
+      });
+
+      deleteVertexBtn.addEventListener('click', () => {
+        const model = models[currentModelIndex];
+        if (model && selectedVertexListIndex > -1) {
+          saveStateForUndo(); // Save before deleting
+          const vertexGridIndex = model.vertices[selectedVertexListIndex];
+          model.vertices.splice(selectedVertexListIndex, 1);
+          model.edges = model.edges.filter(edge => !edge.includes(vertexGridIndex));
+          selectedVertexListIndex = -1; // Deselect after deleting
+          updateUI();
+          render();
+        }
+      });
+
+      deleteEdgeBtn.addEventListener('click', () => {
+        const model = models[currentModelIndex];
+        if (model && selectedEdgeListIndex > -1) {
+          saveStateForUndo(); // Save before deleting
+          const [vertex1_index, vertex2_index] = model.edges[selectedEdgeListIndex];
+          model.edges.splice(selectedEdgeListIndex, 1);
+          const isV1Orphaned = !model.edges.some(edge => edge.includes(vertex1_index));
+          if (isV1Orphaned) {
+            model.vertices = model.vertices.filter(v => v !== vertex1_index);
+          }
+          const isV2Orphaned = !model.edges.some(edge => edge.includes(vertex2_index));
+          if (isV2Orphaned) {
+            model.vertices = model.vertices.filter(v => v !== vertex2_index);
+          }
+          selectedEdgeListIndex = -1; // Deselect after deleting
+          updateUI();
+          render();
+        }
+      });
+
+      // Initialize
+      window.addEventListener('resize', resizeCanvas);
+      loadModelsFromLocalStorage();
+      resizeCanvas();
+      updateUI();
+      updateViewportInfo();
+
+    </script>
+  </body>
+</html>

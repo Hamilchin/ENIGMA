@@ -1,0 +1,26 @@
+Core gameplay things to sort out:
+Length of game session
+Limits on player powers
+When to offer player power choices
+Luck mechanic
+What Powers to add:
+    Offensive:
+        Thorn Dmg
+        Radial Attack
+        Ring Attack
+        Homing Attack
+        Orbit Attack
+    Defensive:
+        Shield
+        Healing
+    Stats:
+        HP Up
+        Atk Up
+        Def Up
+        Move Up
+        Cooldown Down
+
+
+Give projectile hp?
+    Can making limited piercing projectiles by removing 1 hp per hit
+Need to track what enemy was hit by a projectile to prevent re hits

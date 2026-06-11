@@ -1,0 +1,13 @@
+.btg {
+  font-size: 12px;
+  left: 20px;
+  padding: 10px;
+  position: absolute;
+  text-shadow: none;
+  top: 20px;
+}
+
+#btn-restart {
+  right: 20px;
+  left: unset;
+}

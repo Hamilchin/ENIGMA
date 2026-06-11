@@ -1,0 +1,30 @@
+{
+  "name": "js13kgames2025",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "start": "vite",
+    "build": "tsc && vite build && roadroller dist/assets/index.js -o dist/assets/index.js -Zab18 -Zlr2616 -Zmc3 -Zmd94 -Zpr15 -S0,1,2,3,5,7,11,13,22,42,225,409",
+    "postbuild": "node createDeployPackage.js",
+    "preview": "vite preview",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.33.0",
+    "@types/eslint__js": "^8.42.3",
+    "archiver": "^7.0.1",
+    "eslint": "^9.33.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "prettier": "3.6.2",
+    "roadroller": "^2.1.0",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.39.1",
+    "vite": "^7.1.2"
+  },
+  "dependencies": {
+    "advzip-bin": "^2.0.0"
+  }
+}

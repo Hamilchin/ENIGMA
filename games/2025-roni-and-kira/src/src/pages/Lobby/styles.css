@@ -1,0 +1,43 @@
+.lob-c .cat {
+  position: relative;
+}
+
+.lob-c h1 {
+  font-weight: bold;
+  line-height: 50px;
+  margin: 30px 0;
+  padding-top: 20px;
+  text-shadow: 1px 6px 4px #000;
+}
+
+.lob-c h1 span {
+  display: block;
+}
+
+.lob-c h1 span:first-child,
+.lob-c h1 span:last-child {
+  font-size: 60px;
+}
+
+.lob-c p,
+.lob-c h1 {
+  text-align: center;
+}
+
+.lob-c p {
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 10px;
+  padding: 20px;
+}
+
+.lob-c .lob-l {
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.lob-c a,
+.lob-c a:visited {
+  color: white;
+}

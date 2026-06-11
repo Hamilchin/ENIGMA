@@ -1,0 +1,89 @@
+modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+modal.hide {
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 100ms;
+}
+
+modal.show {
+  visibility: visible;
+}
+
+.ms,
+.mw {
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+
+.ms {
+  background: rgb(0 0 0 / 50%);
+}
+
+.mw {
+  z-index: 1;
+}
+
+.mc {
+  border-radius: 5px;
+  overflow: hidden;
+  width: 80%;
+  background: #fff;
+  overflow: hidden;
+}
+
+.mc .txt {
+  color: #8f9cb5;
+  padding: 20px;
+  flex-direction: column;
+}
+
+.mb button {
+  width: 100%;
+  border: none;
+  height: 50px;
+  background: #fc7169;
+  cursor: pointer;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.mb button:nth-child(2) {
+  background: #b6bece;
+}
+
+modal.show .mc {
+  animation: fD 400ms both;
+}
+
+modal.hide .mc {
+  animation: fUp 400ms both;
+}
+
+@keyframes fD {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fUp {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+}

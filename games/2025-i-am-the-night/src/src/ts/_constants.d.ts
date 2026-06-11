@@ -1,0 +1,157 @@
+// GENERATED CONSTANTS
+declare const X: 0;
+declare const Y: 1;
+declare const Z: 2;
+declare const W: 3;
+
+declare const R: 0;
+declare const G: 1;
+declare const B: 2;
+declare const A: 3;
+
+declare const DX: 0;
+declare const DY: 1;
+declare const DIST: 2;
+declare const NX: 3;
+declare const NY: 4;
+
+declare const SCREEN_WIDTH: 640;
+declare const SCREEN_HEIGHT: 360;
+
+declare const SCREEN_DIM: 336;
+declare const SCREEN_HALF: 168;
+
+declare const SCREEN_GUTTER: 152;
+
+declare const SCREEN_LEFT: 152;
+declare const SCREEN_RIGHT: 488;
+
+declare const SCREEN_CENTER_X: 320;
+declare const SCREEN_CENTER_Y: 180;
+
+declare const IMAGE_WIDTH: 256;
+declare const IMAGE_HEIGHT: 32;
+
+declare const ATLAS_WIDTH: 256;
+declare const ATLAS_HEIGHT: 256;
+
+declare const GL_TRIANGLES: 4;
+declare const GL_TRIANGLES_FAN: 6;
+declare const GL_SRC_ALPHA: 770;
+declare const GL_ONE_MINUS_SRC_ALPHA: 771;
+declare const GL_BLEND: 3042;
+declare const GL_TEXTURE_2D: 3553;
+declare const GL_UNSIGNED_BYTE: 5121;
+declare const GL_UNSIGNED_SHORT: 5123;
+declare const GL_FLOAT: 5126;
+declare const GL_RGBA: 6408;
+declare const GL_NEAREST: 9728;
+declare const GL_TEXTURE_MAG_FILTER: 10240;
+declare const GL_TEXTURE_MIN_FILTER: 10241;
+declare const GL_TEXTURE_WRAP_S: 10242;
+declare const GL_TEXTURE_WRAP_T: 10243;
+declare const GL_COLOR_BUFFER_BIT: 16384;
+declare const GL_CLAMP_TO_EDGE: 33071;
+declare const GL_TEXTURE0: 33984;
+declare const GL_TEXTURE1: 33985;
+declare const GL_ARRAY_BUFFER: 34962;
+declare const GL_ELEMENT_ARRAY_BUFFER: 34963;
+declare const GL_STATIC_DRAW: 35044;
+declare const GL_DYNAMIC_DRAW: 35048;
+declare const GL_FRAGMENT_SHADER: 35632;
+declare const GL_VERTEX_SHADER: 35633;
+declare const GL_COLOR_ATTACHMENT0: 36064;
+declare const GL_FRAMEBUFFER: 36160;
+
+declare const D_LEFT: 0;
+declare const D_UP: 1;
+declare const D_RIGHT: 2;
+declare const D_DOWN: 3;
+declare const A_BUTTON: 4;
+declare const B_BUTTON: 5;
+
+declare const KEY_IS_UP: 0;
+declare const KEY_WAS_DOWN: 1;
+declare const KEY_IS_DOWN: 2;
+
+declare const TEXT_ALIGN_LEFT: 0;
+declare const TEXT_ALIGN_CENTER: 1;
+declare const TEXT_ALIGN_RIGHT: 2;
+
+declare const TEXT_ALIGN_TOP: 0;
+declare const TEXT_ALIGN_MIDDLE: 1;
+declare const TEXT_ALIGN_BOTTOM: 2;
+
+declare const TEXTURE_TYPE_SPRITE: 0;
+declare const TEXTURE_TYPE_SPRITE_STRIP: 1;
+
+declare const TEXTURE_UNKNOWN: 0;
+declare const TEXTURE_C_4x4: 1;
+declare const TEXTURE_C_5x5: 2;
+declare const TEXTURE_C_6x6: 3;
+declare const TEXTURE_C_7x7: 4;
+declare const TEXTURE_C_8x8: 5;
+declare const TEXTURE_C_16x16: 6;
+declare const TEXTURE_D_PAD: 7;
+declare const TEXTURE_D_PAD_UP: 8;
+declare const TEXTURE_D_PAD_RIGHT: 9;
+declare const TEXTURE_A_BUTTON_UP: 10;
+declare const TEXTURE_B_BUTTON_UP: 11;
+declare const TEXTURE_A_BUTTON_DOWN: 12;
+declare const TEXTURE_B_BUTTON_DOWN: 13;
+declare const TEXTURE_CAT_01: 14;
+declare const TEXTURE_CAT_02: 15;
+declare const TEXTURE_RAT: 16;
+declare const TEXTURE_GRASS_01: 17;
+declare const TEXTURE_GRASS_02: 18;
+declare const TEXTURE_DITH_00: 19;
+declare const TEXTURE_DITH_01: 20;
+declare const TEXTURE_DITH_02: 21;
+declare const TEXTURE_DITH_03: 22;
+declare const TEXTURE_DITH_04: 23;
+declare const TEXTURE_DITH_05: 24;
+declare const TEXTURE_DITH_06: 25;
+declare const TEXTURE_DITH_07: 26;
+declare const TEXTURE_DITH_08: 27;
+declare const TEXTURE_DITH_09: 28;
+declare const TEXTURE_DITH_10: 29;
+declare const TEXTURE_DITH_11: 30;
+declare const TEXTURE_DITH_12: 31;
+declare const TEXTURE_DITH_13: 32;
+declare const TEXTURE_DITH_14: 33;
+declare const TEXTURE_DITH_15: 34;
+
+declare const GS_PROGRESS: 0;
+declare const GS_RUNCOUNT: 1;
+declare const GS_MUTEMUSIC: 2;
+declare const GS_SCREENSHAKE: 3;
+
+declare const TIME_TRACKER: 0;
+declare const TIME_STAGE: 1;
+declare const TIME_LENGTH: 2;
+
+declare const UP_HP: 0;
+declare const UP_ATK: 1;
+declare const UP_DEF: 2;
+declare const UP_CD: 3;
+declare const UP_MS: 4;
+declare const UP_CLAW: 5;
+declare const UP_ZOOMY: 6;
+declare const UP_HAIRBALL: 7;
+declare const UP_MENACE: 8;
+declare const UP_NINELIFE: 9;
+declare const UP_CARDINAL: 10;
+declare const UP_SLASH: 11;
+declare const UP_SHED: 12;
+declare const UP_FELD1: 13;
+declare const UP_REFLEX: 14;
+declare const UP_HISS: 15;
+declare const UP_POUNCE: 16;
+declare const UP_STALK: 17;
+
+declare const COOLDOWN: 0;
+declare const AURA: 1;
+declare const PASSIVE: 2;
+
+declare const STAT: 0;
+declare const ABILITY: 1;

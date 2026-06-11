@@ -1,0 +1,55 @@
+{
+  "id": "2025-biralo",
+  "slug": "biralo",
+  "title": "Biralo",
+  "year": 2025,
+  "rank": 50,
+  "overall_score": 19.27,
+  "criteria": {
+    "theme": {
+      "rank": 98,
+      "score": 2.92,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 90,
+      "score": 2.7,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 32,
+      "score": 3.38,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 18,
+      "score": 4.11,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 56,
+      "score": 3.14,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 94,
+      "score": 3.03,
+      "top": 4.45
+    }
+  },
+  "author": "smiley405",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "Story: Meow… Meow, Meow…. Meow, Meow Meow.. Controls: Meow… Meow, Meow…. Screenshots:",
+  "description": "Story: Meow… Meow, Meow…. Meow, Meow Meow..",
+  "controls": ": Meow… Meow, Meow…. Screenshots:",
+  "github_url": "https://github.com/js13kGames/biralo",
+  "play_url": "https://js13kgames.com/2025/games/biralo",
+  "play_zip": "https://play.js13kgames.com/biralo.zip",
+  "thumb_url": "https://play.js13kgames.com/biralo/.ts.png",
+  "local_path": "games/2025-biralo",
+  "entry": "index.html",
+  "commit_sha": "ac91264c2df64cf855c15cc981dd3d7853a970cd",
+  "build_status": "prebuilt"
+}

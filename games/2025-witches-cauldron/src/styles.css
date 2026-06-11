@@ -1,0 +1,42 @@
+/* #mc, #c {
+  position: absolute;
+  width: 100vw;
+  outline: 0;
+  image-rendering: pixelated;
+} */
+* {
+    touch-action: manipulation;
+    user-select: none;
+    touch-action: none;
+}
+/* Get rid of any margins, set background black, use flexbox to center */
+html,
+body {
+  margin: 0;
+  /* background-color: black; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+#mc, #gc {
+  position: absolute;
+  width: 100vw;
+  outline: 0;
+  /* image-rendering: pixelated; */
+}
+
+@media (max-aspect-ratio: 3/2) {
+  #mc, #gc {
+    width: 100vw;
+  }
+}
+
+/* Input whatever aspect ratio you use here */
+@media (min-aspect-ratio: 3/2) {
+  #mc, #gc, #oc {
+    height: 100vh;
+    width: auto;
+  }
+}

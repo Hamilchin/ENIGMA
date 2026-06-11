@@ -1,0 +1,30 @@
+# secrets
+.env
+
+# node
+node_modules/
+
+# generated build artifact (rebuilt by `npm run build` / postinstall)
+env/clock/shim.bundle.js
+
+# NOTE: game source (games/<id>/src) IS tracked — kept in-repo for full reproducibility
+# and future instrumentation. It's ~167M; commit_sha in each meta.json also lets it be
+# re-cloned exactly if ever needed.
+
+# pipeline build intermediates — regenerable; only corpus/games_<y>.json (merged) and
+# corpus/tags_<y>.json (hand-authored) are committed
+corpus/build/
+
+# run artifacts (screenshots, montages, trajectories) — regenerable
+runs/
+!runs/.gitkeep
+
+# logs
+*.log
+
+# OS / scratch
+.DS_Store
+/tmp/
+
+# python
+__pycache__/

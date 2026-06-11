@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <script type="text/javascript" src="svg_to_image_definition.js"></script>
+        <style>
+            body,
+            textarea,
+            input
+            {
+                background: #111;
+                color: #aaa;
+            }
+            body
+            {
+                font-family: sans-serif;
+            }
+            textarea
+            {
+                width: 100%;
+                height: 200px;
+                font-size: 8pt;
+            }
+            a,
+            a:visited,
+            a:active
+            {
+                text-decoration: none;
+                color: #0cf;
+            }
+/*
+            textarea,
+            button
+            {
+                display: block;
+            }
+*/
+        </style>
+    </head>
+    <body>
+        Project files:<br/>
+        <ul id="filelist"></ul>
+        Upload file: <input type="file" id="input" multiple onchange="startUpload(); return false;"/> | 
+        <b>Notes:</b> Supported elements: path. Supported path modes: <code>m,M,l,L,h,H,v,V,Z</code>
+        <hr/>
+
+        Style replacements ("old>new"):<br/>
+        <textarea id="style_replacements"></textarea>
+
+        <button onclick="convert(); return false;">Update output</button><br/>
+        <hr/>
+
+        Output:
+        <textarea id="output" onchange="drawOutput(); return false;" onkeypress="drawOutput(); return false;"></textarea>
+        <button onclick="copyOutputToClipboard();return false;">Copy to clipboard</button>
+        <hr/>
+
+        <button onclick="clearProject(); return false;">New project</button> |
+        <a href="#" id="download_project">Save project to file</a> |
+        Load project from file: <input type="file" id="upload_project" onchange="loadProject(); return false;"/><br/>
+    </body>
+</html>

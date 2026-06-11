@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NLNM</title>
+
+    <!-- This is the absolute smallest HTML that removes the favicon not found console error message. -->
+    <link rel=icon href=data:>
+
+    <style>
+
+      /* Some styling removed to save bytes. No glitches in FireFox or Chrome. */
+
+      * {
+        margin: 0;
+        padding: 0;
+        /* user-select: none;
+        outline: 0; */
+        overflow: hidden;
+        position: absolute;
+        /* left: 0;
+        top: 0; */
+        background-color: #000;
+
+      /* }
+
+      body, #C { */
+        width: 1920px;
+        height: 1080px;
+        transform-origin: top left;
+      }
+
+      /*beginclip*/
+
+      html {
+        font-size: 62.5%;
+      }
+      #debugControls {
+        display: none;
+        left: 480px;
+        top: 32px;
+        width: 960px;
+        height: 3rem;
+        background-color: #444c;
+        border-radius: 6px;
+        padding: 1rem 1rem .25rem 1rem;
+      }
+
+      button, label {
+        font-family: 'Courier New', Courier, monospace;
+        color: #ddd;
+        font-size: 1.6rem;
+        position: relative;
+        border-radius: 4px;
+      }
+
+      button {
+        height: 2.4rem;
+        width: 80px;
+        background-color: #666;
+      }
+
+      label {
+        margin-left: 4px;
+        background-color: #0000;
+      }
+/*endclip*/
+
+  </style>
+
+  </head>
+
+  <body oncontextmenu=return!1 ondragstart=return!1>
+
+    <canvas id=C width=1920 height=1080></canvas>
+
+<!--beginclip-->
+    <div id=debugControls>
+      <button id=toggleGodModeButton>GodMode</button>
+      <button id=nextLevelButton>Warp</button>
+      <button id=wingmenButton>WingMen</button>
+      <button id=shieldsButton>Shields</button>
+      <button id=LaserButton>Laser</button>
+      <button id=HornetsButton>Hornets</button>
+      <label id=linesLabel></label>
+      <label id=trianglesLabel></label>
+      <label id=fpsLabel></label>
+      <!-- <label id=debugLabel></label> -->
+
+    </div>
+<!--endclip-->
+
+    <script src="constants.js"></script>
+    <script src="zzfx.js"></script>
+    <script src="utility.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>
+
+

@@ -1,0 +1,56 @@
+{
+  "id": "2025-black-cat-squadron",
+  "slug": "black-cat-squadron",
+  "title": "Black Cat Squadron",
+  "year": 2025,
+  "rank": 5,
+  "overall_score": 23.33,
+  "criteria": {
+    "theme": {
+      "rank": 32,
+      "score": 3.59,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 31,
+      "score": 3.41,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 3,
+      "score": 4.19,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 16,
+      "score": 4.19,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 2,
+      "score": 4.19,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 17,
+      "score": 3.78,
+      "top": 4.45
+    }
+  },
+  "author": "Jesper Rasmussen",
+  "devices": [
+    "Desktop",
+    "Mobile"
+  ],
+  "desc_full": "A one button shooter based on a real WW2 secret US Navy squadron. Controls Tap to shoot Hold to pull up Your mission Survive & sink the enemy ships Tips and tricks Tap rhythmically to make a swarm of bullets Barrage balloons take three hits. Their cable is dangerous The faster you sink a ship the more points you get About the Black Cats The “Black Cat” squadrons were U.S. Navy patrol squadrons, primarily using the PBY Catalina aircraft, that conducted night bombing operations against Japanese shipping and installations during World War II. These operations were notable for their effectiveness and the distinctive black paint scheme of the aircraft, which helped them operate under the cover of darkness. More info https://en.wikipedia.org/wiki/VP-33 https://archive.org/details/gov.archives.arc.12990",
+  "description": "A one button shooter based on a real WW2 secret US Navy squadron.",
+  "controls": "Tap to shoot Hold to pull up Your mission Survive & sink the enemy ships Tips and tricks Tap rhythmically to make a swarm of bullets Barrage balloons take three hits. Their cable is dangerous The faster you sink a ship the more points you get About the Black Cats The “Black Cat” squadrons were U.S. Navy patrol squadrons, primarily using the PBY Catalina aircraft, that conducted night bombing operations against Japanese shipping and installations during World War II. These operations were notable for their effectiveness and the distinctive black paint scheme of the aircraft, which helped them operate under the cover of darkness. More info https://en.wikipedia.org/wiki/VP-33 https://archive.org/details/gov.archives.arc.12990",
+  "github_url": "https://github.com/js13kGames/black-cat-squadron",
+  "play_url": "https://js13kgames.com/2025/games/black-cat-squadron",
+  "play_zip": "https://play.js13kgames.com/black-cat-squadron.zip",
+  "thumb_url": "https://play.js13kgames.com/black-cat-squadron/.ts.png",
+  "local_path": "games/2025-black-cat-squadron",
+  "entry": "index.html",
+  "commit_sha": "22b42f5b7f8968094f9077d71de07b60dde6c8ac",
+  "build_status": "prebuilt"
+}

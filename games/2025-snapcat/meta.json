@@ -1,0 +1,56 @@
+{
+  "id": "2025-snapcat",
+  "slug": "snapcat",
+  "title": "SnapCat",
+  "year": 2025,
+  "rank": 40,
+  "overall_score": 19.79,
+  "criteria": {
+    "theme": {
+      "rank": 23,
+      "score": 3.68,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 21,
+      "score": 3.53,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 85,
+      "score": 2.84,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 34,
+      "score": 3.84,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 107,
+      "score": 2.32,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 33,
+      "score": 3.58,
+      "top": 4.45
+    }
+  },
+  "author": "Can Altıparmak",
+  "devices": [
+    "Desktop",
+    "Mobile"
+  ],
+  "desc_full": "SnapCat - Complete the Black Cats’ photo album! Every level always has a Black Cat. Each cat has likes and dislikes, especially about Black Cats. Cats may or may not have opinions on other colors, pattern or accessories. Cats close to each other influence each other’s mood; distant cats appear blurred and have little effect. Goal is to arrange the cats to meet all objectives and capture the perfect group photo.",
+  "description": "SnapCat - Complete the Black Cats’ photo album! Every level always has a Black Cat. Each cat has likes and dislikes, especially about Black Cats. Cats may or may not have opinions on other colors, pattern or accessories. Cats close to each other influence each other’s mood; distant cats appear blurred and have little effect. Goal is to arrange the cats to meet all objectives and capture the perfect group photo.",
+  "controls": "",
+  "github_url": "https://github.com/js13kGames/snapcat",
+  "play_url": "https://js13kgames.com/2025/games/snapcat",
+  "play_zip": "https://play.js13kgames.com/snapcat.zip",
+  "thumb_url": "https://play.js13kgames.com/snapcat/.ts.png",
+  "local_path": "games/2025-snapcat",
+  "entry": "index.html",
+  "commit_sha": "8f9635c8600c143ea41a0c5d46af1eeefd780a69",
+  "build_status": "prebuilt"
+}

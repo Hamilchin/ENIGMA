@@ -1,0 +1,55 @@
+{
+  "id": "2025-the-black-cross-cat",
+  "slug": "the-black-cross-cat",
+  "title": "The Black Cross-Cat",
+  "year": 2025,
+  "rank": 43,
+  "overall_score": 19.73,
+  "criteria": {
+    "theme": {
+      "rank": 34,
+      "score": 3.59,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 74,
+      "score": 2.91,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 79,
+      "score": 2.86,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 74,
+      "score": 3.23,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 34,
+      "score": 3.41,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 20,
+      "score": 3.73,
+      "top": 4.45
+    }
+  },
+  "author": "nclbiagio",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "A project for the 2025 JS13K Game Jam for fun!",
+  "description": "A project for the 2025 JS13K Game Jam for fun!",
+  "controls": "",
+  "github_url": "https://github.com/js13kGames/the-black-cross-cat",
+  "play_url": "https://js13kgames.com/2025/games/the-black-cross-cat",
+  "play_zip": "https://play.js13kgames.com/the-black-cross-cat.zip",
+  "thumb_url": "https://play.js13kgames.com/the-black-cross-cat/.ts.png",
+  "local_path": "games/2025-the-black-cross-cat",
+  "entry": "index.html",
+  "commit_sha": "a35110da9a9573ba145aa5987932545b0c1eb084",
+  "build_status": "prebuilt"
+}

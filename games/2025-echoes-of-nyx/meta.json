@@ -1,0 +1,55 @@
+{
+  "id": "2025-echoes-of-nyx",
+  "slug": "echoes-of-nyx",
+  "title": "Echoes of Nyx",
+  "year": 2025,
+  "rank": 11,
+  "overall_score": 22.09,
+  "criteria": {
+    "theme": {
+      "rank": 45,
+      "score": 3.5,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 7,
+      "score": 3.73,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 9,
+      "score": 3.82,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 40,
+      "score": 3.73,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 15,
+      "score": 3.77,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 39,
+      "score": 3.55,
+      "top": 4.45
+    }
+  },
+  "author": "Corentin Pillet",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "Nyx, goddess of the night, finds herself in a tough predicament and decides to leave her home disguised as a cat to reflect on her choices. Echoes of Nyx is a puzzle-platformer where you play as Nyx on her journey, while the sun rises and the light grows brighter. Gameplay Navigate through several levels and reach the mighty cardboard. But be careful—every jump you make changes the state of all platforms in the level. P.S.: There might even be treats to collect! KeysAction Arrow keys or A/DMove SpaceJump EscapePause Menu (with skip option)",
+  "description": "Nyx, goddess of the night, finds herself in a tough predicament and decides to leave her home disguised as a cat to reflect on her choices. Echoes of Nyx is a puzzle-platformer where you play as Nyx on her journey, while the sun rises and the light grows brighter. Gameplay Navigate through several levels and reach the mighty cardboard. But be careful—every jump you make changes the state of all platforms in the level. P.S.: There might even be treats to collect! KeysAction Arrow keys or A/DMove SpaceJump EscapePause Menu (with skip option)",
+  "controls": "",
+  "github_url": "https://github.com/js13kGames/echoes-of-nyx",
+  "play_url": "https://js13kgames.com/2025/games/echoes-of-nyx",
+  "play_zip": "https://play.js13kgames.com/echoes-of-nyx.zip",
+  "thumb_url": "https://play.js13kgames.com/echoes-of-nyx/.ts.png",
+  "local_path": "games/2025-echoes-of-nyx",
+  "entry": "index.html",
+  "commit_sha": "ecbd83eba397cc06c8eb2b1adfbb50167976d0e2",
+  "build_status": "prebuilt"
+}

@@ -1,0 +1,55 @@
+{
+  "id": "2025-void-cat",
+  "slug": "void-cat",
+  "title": "VOID Cat",
+  "year": 2025,
+  "rank": 52,
+  "overall_score": 19.26,
+  "criteria": {
+    "theme": {
+      "rank": 69,
+      "score": 3.29,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 17,
+      "score": 3.55,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 62,
+      "score": 3.03,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 106,
+      "score": 2.84,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 71,
+      "score": 2.9,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 26,
+      "score": 3.65,
+      "top": 4.45
+    }
+  },
+  "author": "Benjamin Boyd Austin",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "VOID Cat Overview VOID Cat is a game/interactive story in which you help a black cat on its weight-loss journey. It has extremely limited deck-building elements, grid-based strategy on a grid whose out-of-bounds logic actually works this year (probably), and a story that will shake Js13k to its very core. Considerations If you read all of the story, VOID Cat might take 10 or so minutes to play. You can’t save the game, so you have to do it all in one go. Credits Sound effects by zzfx",
+  "description": "VOID Cat Overview VOID Cat is a game/interactive story in which you help a black cat on its weight-loss journey. It has extremely limited deck-building elements, grid-based strategy on a grid whose out-of-bounds logic actually works this year (probably), and a story that will shake Js13k to its very core. Considerations If you read all of the story, VOID Cat might take 10 or so minutes to play. You can’t save the game, so you have to do it all in one go. Credits Sound effects by zzfx",
+  "controls": "",
+  "github_url": "https://github.com/js13kGames/void-cat",
+  "play_url": "https://js13kgames.com/2025/games/void-cat",
+  "play_zip": "https://play.js13kgames.com/void-cat.zip",
+  "thumb_url": "https://play.js13kgames.com/void-cat/.ts.png",
+  "local_path": "games/2025-void-cat",
+  "entry": "index.html",
+  "commit_sha": "d2a95e4789c333033ce34ffa33e6ad5d838477a9",
+  "build_status": "prebuilt"
+}

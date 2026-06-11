@@ -1,0 +1,55 @@
+{
+  "id": "2025-midnight-paws",
+  "slug": "midnight-paws",
+  "title": "Midnight Paws",
+  "year": 2025,
+  "rank": 45,
+  "overall_score": 19.65,
+  "criteria": {
+    "theme": {
+      "rank": 17,
+      "score": 3.75,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 67,
+      "score": 2.95,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 81,
+      "score": 2.85,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 57,
+      "score": 3.4,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 53,
+      "score": 3.15,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 38,
+      "score": 3.55,
+      "top": 4.45
+    }
+  },
+  "author": "Sami Heikkinen and Tero Jäntti",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "MIDNIGHT PAWS by Frost Sun It is almost midnight, and the darkness is deepening. Find the mouse holes that lead to the next backyards. Be quiet and hide in the bushes - or the black cat will catch you! Controls Use arrow keys or WASD to move. Tips Watch the fence — if the cat appears on top, it’s about to leap and target the mouse! Stay under a bush to make the cat lose interest in chasing you.",
+  "description": "MIDNIGHT PAWS by Frost Sun It is almost midnight, and the darkness is deepening. Find the mouse holes that lead to the next backyards. Be quiet and hide in the bushes - or the black cat will catch you!",
+  "controls": "Use arrow keys or WASD to move. Tips Watch the fence — if the cat appears on top, it’s about to leap and target the mouse! Stay under a bush to make the cat lose interest in chasing you.",
+  "github_url": "https://github.com/js13kGames/midnight-paws",
+  "play_url": "https://js13kgames.com/2025/games/midnight-paws",
+  "play_zip": "https://play.js13kgames.com/midnight-paws.zip",
+  "thumb_url": "https://play.js13kgames.com/midnight-paws/.ts.png",
+  "local_path": "games/2025-midnight-paws",
+  "entry": "index.html",
+  "commit_sha": "02ad609a9da1c6c556d31eb86b329f0c34de0868",
+  "build_status": "prebuilt"
+}

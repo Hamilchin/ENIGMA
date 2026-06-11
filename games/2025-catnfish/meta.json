@@ -1,0 +1,55 @@
+{
+  "id": "2025-catnfish",
+  "slug": "catnfish",
+  "title": "CatNFish",
+  "year": 2025,
+  "rank": 68,
+  "overall_score": 18.33,
+  "criteria": {
+    "theme": {
+      "rank": 35,
+      "score": 3.59,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 63,
+      "score": 2.98,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 98,
+      "score": 2.67,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 111,
+      "score": 2.76,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 68,
+      "score": 2.92,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 53,
+      "score": 3.41,
+      "top": 4.45
+    }
+  },
+  "author": "smhaaker",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "Move with arrow keys Navigate the rooms Find the fish Exit through the yellow exterior wall in the randomly generated exit room Dont get caught I wanted to make this game as vanilla JS/HTML/CSS as possible to see what was possible. Sprites are arrays, converted from pixel drawings. sound is web audio API 1.1 Bugs: Yes! Improvements: Would be fun to increase difficulty more per level and maybe let cat evolve / get stronger?",
+  "description": "Move with arrow keys Navigate the rooms Find the fish Exit through the yellow exterior wall in the randomly generated exit room Dont get caught I wanted to make this game as vanilla JS/HTML/CSS as possible to see what was possible. Sprites are arrays, converted from pixel drawings. sound is web audio API 1.1 Bugs: Yes! Improvements: Would be fun to increase difficulty more per level and maybe let cat evolve / get stronger?",
+  "controls": "",
+  "github_url": "https://github.com/js13kGames/catnfish",
+  "play_url": "https://js13kgames.com/2025/games/catnfish",
+  "play_zip": "https://play.js13kgames.com/catnfish.zip",
+  "thumb_url": "https://play.js13kgames.com/catnfish/.ts.png",
+  "local_path": "games/2025-catnfish",
+  "entry": "index.html",
+  "commit_sha": "9f86fac88d80cd81fba276ddd65067c1d51f1b3f",
+  "build_status": "prebuilt"
+}

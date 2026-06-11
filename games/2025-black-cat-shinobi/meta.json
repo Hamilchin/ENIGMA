@@ -1,0 +1,56 @@
+{
+  "id": "2025-black-cat-shinobi",
+  "slug": "black-cat-shinobi",
+  "title": "Black Cat Shinobi",
+  "year": 2025,
+  "rank": 29,
+  "overall_score": 20.87,
+  "criteria": {
+    "theme": {
+      "rank": 42,
+      "score": 3.52,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 94,
+      "score": 2.67,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 26,
+      "score": 3.44,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 21,
+      "score": 4,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 20,
+      "score": 3.63,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 30,
+      "score": 3.61,
+      "top": 4.45
+    }
+  },
+  "author": "Igor Estêvão",
+  "devices": [
+    "Desktop",
+    "Mobile"
+  ],
+  "desc_full": "Black Cat Shinobi Is a platform game where you need to perform jumps and acrobatics moves to find the Torii gates, so you can finish your shinobi missions. Game instructions Use keyboard Left/Right Arrows or A/D to move character Sideways Use Up Arrow or W to Jump Hold Jump to glide during or after a Jump Use Down Arrow or S to Fall Mobile provides action buttons for player to use To mute the game click on the Speaker icon",
+  "description": "Black Cat Shinobi Is a platform game where you need to perform jumps and acrobatics moves to find the Torii gates, so you can finish your shinobi missions. Game instructions Use keyboard Left/Right Arrows or A/D to move character Sideways Use Up Arrow or W to Jump Hold Jump to glide during or after a Jump Use Down Arrow or S to Fall Mobile provides action buttons for player to use To mute the game click on the Speaker icon",
+  "controls": "",
+  "github_url": "https://github.com/js13kGames/black-cat-shinobi",
+  "play_url": "https://js13kgames.com/2025/games/black-cat-shinobi",
+  "play_zip": "https://play.js13kgames.com/black-cat-shinobi.zip",
+  "thumb_url": "https://play.js13kgames.com/black-cat-shinobi/.ts.png",
+  "local_path": "games/2025-black-cat-shinobi",
+  "entry": "index.html",
+  "commit_sha": "6c567d39d157e7afbbff8b8ca9f13a3d8544fa22",
+  "build_status": "prebuilt"
+}

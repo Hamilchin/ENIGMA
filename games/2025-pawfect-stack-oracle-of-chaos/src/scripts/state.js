@@ -1,0 +1,187 @@
+import { id, getItemFromUniqId } from "./items/index.js";
+import { getKey } from "./save.js";
+import initStore, { getState } from "./store.js";
+
+const defaultState = {
+  m: true, // is sound muted
+  b: null, // current board
+  s: 0, // current spent magic
+  order: 0, // Last level index for 'order game'
+  chaos: 0, // Last level index for 'chaos game'
+};
+
+export function reducer(state = defaultState, type, payload) {
+  switch (type) {
+    case "initGame":
+      return {
+        ...state,
+        b: payload,
+        s: 0,
+      };
+    case "setBoard":
+      return {
+        ...state,
+        b: payload,
+      };
+    case "spendMagic":
+      return {
+        ...state,
+        s: state.s + payload,
+      };
+    case "toggleMuteSounds":
+      return {
+        ...state,
+        m: payload,
+      };
+    case "setFinishedLevelCount":
+      return {
+        ...state,
+        [process.env.GAME_TYPE]: payload,
+      };
+    default:
+      return state;
+  }
+}
+
+export const getCurrentBoard = () => getState().b;
+export const getThisGameFinishedLevelCount = () =>
+  getState()[process.env.GAME_TYPE];
+export const getOtherGameFinishedLevelCount = () =>
+  getState()[process.env.GAME_TYPE === "order" ? "chaos" : "order"];
+
+function buildTempBoard(board) {
+  const tempBoard = [];
+  board.forEach((row, rowIndex) => {
+    tempBoard[rowIndex] = [];
+    row.forEach((uniqId, colIndex) => {
+      const item = getItemFromUniqId(uniqId);
+      const isBook = item ? id(item) === 11 : false;
+      tempBoard[rowIndex][colIndex] = isBook ? 1 : 0;
+    });
+  });
+  return tempBoard;
+}
+
+function floodFillSize(tempBoard, sr, sc, visited) {
+  const rows = tempBoard.length;
+  const cols = rows ? tempBoard[0].length : 0;
+  const dirs = [
+    [1, 0],
+    [-1, 0],
+    [0, 1],
+    [0, -1],
+  ];
+
+  let stack = [[sr, sc]];
+  visited[sr][sc] = true;
+  let n = 0;
+
+  while (stack.length) {
+    const [cr, cc] = stack.pop();
+    n++;
+    for (const [dr, dc] of dirs) {
+      const nr = cr + dr;
+      const nc = cc + dc;
+      if (
+        nr >= 0 &&
+        nr < rows &&
+        nc >= 0 &&
+        nc < cols &&
+        !visited[nr][nc] &&
+        tempBoard[nr][nc] === 1
+      ) {
+        visited[nr][nc] = true;
+        stack.push([nr, nc]);
+      }
+    }
+  }
+
+  return n;
+}
+
+export const getBooksMagic = () => {
+  const board = getCurrentBoard();
+  const tempBoard = buildTempBoard(board);
+
+  let bookMagicScore = 0;
+
+  const rows = tempBoard.length;
+  const cols = rows ? tempBoard[0].length : 0;
+  const visited = Array.from({ length: rows }, () => Array(cols).fill(false));
+
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      if (tempBoard[r][c] === 1 && !visited[r][c]) {
+        const n = floodFillSize(tempBoard, r, c, visited);
+        bookMagicScore += n * (n + 1);
+      }
+    }
+  }
+
+  return bookMagicScore;
+};
+
+export const getSpecificBookMagic = (itemUniqId) => {
+  const board = getCurrentBoard();
+  const tempBoard = buildTempBoard(board);
+
+  let start = null;
+  for (let r = 0; r < board.length && !start; r++) {
+    for (let c = 0; c < (board[r] || []).length; c++) {
+      if (board[r][c] === itemUniqId) {
+        start = [r, c];
+        break;
+      }
+    }
+  }
+  if (!start) return 0;
+
+  const [sr, sc] = start;
+
+  const rows = tempBoard.length;
+  const cols = rows ? tempBoard[0].length : 0;
+  const visited = Array.from({ length: rows }, () => Array(cols).fill(false));
+
+  const n = floodFillSize(tempBoard, sr, sc, visited);
+  return n + 1;
+};
+
+export const getItemUniqIds = () => {
+  const board = getCurrentBoard();
+  const uniqIds = new Set();
+
+  board.forEach((row) => {
+    row.forEach((cell) => {
+      if (cell > 0) {
+        uniqIds.add(cell);
+      }
+    });
+  });
+
+  return Array.from(uniqIds);
+};
+
+export const getTotalItems = () =>
+  getItemUniqIds().filter((uniqId) => {
+    const item = getItemFromUniqId(uniqId);
+    return item?.[5] < 2;
+  }).length;
+
+export const areSoundMuted = () => getState().m;
+
+export function getMagic() {
+  return (
+    getItemUniqIds().reduce((acc, uniqId) => {
+      const item = getItemFromUniqId(uniqId);
+      const isBook = id(item) === 11;
+
+      return acc + (isBook ? 0 : item?.[2] ?? 0);
+    }, 0) -
+    (getState().s ?? 0) +
+    getBooksMagic()
+  );
+}
+
+export default function init() {
+  initStore(reducer, getKey("state") || defaultState);
+}

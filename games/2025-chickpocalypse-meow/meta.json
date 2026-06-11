@@ -1,0 +1,55 @@
+{
+  "id": "2025-chickpocalypse-meow",
+  "slug": "chickpocalypse-meow",
+  "title": "Chickpocalypse Meow",
+  "year": 2025,
+  "rank": 25,
+  "overall_score": 21.1,
+  "criteria": {
+    "theme": {
+      "rank": 28,
+      "score": 3.61,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 10,
+      "score": 3.71,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 20,
+      "score": 3.59,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 56,
+      "score": 3.43,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 39,
+      "score": 3.35,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 54,
+      "score": 3.41,
+      "top": 4.45
+    }
+  },
+  "author": "Anthony Cosgrave",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "How many points can you score before the inevitable Chickpocalypse? Note: Audio is best with headphones How to play Keep your cute little chicks alive! Use your mouse todrag and drop them while the timer is running. Black cats will appear from the bushes at the start of each new level. The cats attack when the timer is up! They launch across the screen killing all chicks in their path. Try to find safe spaces between their paths before they attack. Place as many chicks as you can in those spaces.",
+  "description": "How many points can you score before the inevitable Chickpocalypse? Note: Audio is best with headphones How to play Keep your cute little chicks alive! Use your mouse todrag and drop them while the timer is running. Black cats will appear from the bushes at the start of each new level. The cats attack when the timer is up! They launch across the screen killing all chicks in their path. Try to find safe spaces between their paths before they attack. Place as many chicks as you can in those spaces.",
+  "controls": "",
+  "github_url": "https://github.com/js13kGames/chickpocalypse-meow",
+  "play_url": "https://js13kgames.com/2025/games/chickpocalypse-meow",
+  "play_zip": "https://play.js13kgames.com/chickpocalypse-meow.zip",
+  "thumb_url": "https://play.js13kgames.com/chickpocalypse-meow/.ts.png",
+  "local_path": "games/2025-chickpocalypse-meow",
+  "entry": "chickpocalypse-meow/index.html",
+  "commit_sha": "0e988b2b9c2c88027260cacb3269f1ae2bb0d4e7",
+  "build_status": "prebuilt"
+}

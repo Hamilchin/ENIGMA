@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width,initial-scale=1"name=viewport>
+    <title>Celestial Paws</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <svg id="svgs" style="display: none;" xmlns="http://www.w3.org/2000/svg"></svg>
+
+    <script id="draw-shader-vs" type="x-shader/x-vertex">
+      attribute vec2 inPos;void main(){gl_Position=vec4(inPos,0,1.0);}
+    </script>
+
+
+    <script src="./script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,94 @@
+-----------------------------
+TO DO
+-----------------------------
+Finalisation du jeu:
+X Faire dernier niveau
+- Faire écrand de fin de démo
+X Ajouter bouton son
+- Effets particules (eau et level)
+X Revoir couleurs pour fin niveau (mettre en fond blanc semi opaque?) 
+
+Soumission
+- Faie les screenshots et le texte de présentation
+
+Post Soumission
+- Faire le readme git
+- Ecrire un post mortem
+  
+
+P1
+X Finaliser la partie level fini 
+X Mettre en place l'écran d'accueil et le local storage
+
+P2
+- Faire les niveaux
+
+P3
+X Animations chat
+X Mettre en variable globale le local storage
+X Ecran accueil
+X Saleté chat sur le chat
+X REvoir design des boutons
+X Revoir desing shower
+X Revoir design eau qui tombe de la douche
+X Arreter la douche lorsque level completed
+X Revoir design des niveaux (cohérence d'ensemble)
+
+P4
+X Musique ??
+X Miaulement
+X Cliques
+
+P5 optimisations taille
+X Enleveer le draw boundaries
+X Revoir le pur indispensable mge
+
+P6 Polishing
+- Revoir le moment ou je mets à jour le max niveau + ne pas remettre à 0 en mode "restart"
+- Bouton arrêt / marche son
+X Perfect hit
+- Effets particules
+- Animation étoiles en fin de niveau
+- Enlever la pause lorsqu'on clique sur un interruptueur 
+
+
+
+
+
+IDEES niveaux
+- Mettre en réservoir qui va alimenter 4 ou 5 réservoirs liés à une douche chacun
+- Réalimenter le circuit principal grace à l'interruptueur du réseau secondaire qui a beaucoup plus de pression
+
+
+-----------------------------
+Mécanismes
+-----------------------------
+- Le chat change de direction lorsqu'il se fait arroser.
+- Le caht change de direction si il voit une douche ouverte
+- Il peut sortir de l'écran à gauche ou à droite
+- le caht se tache plus si il touche une poubelle
+- le taux de nettoyage dépend de la position du chat sous la douche. Si super bien centré, effet visuel 
+
+-----------------------------
+Idées pour les niveaux
+-----------------------------
+- Mettre plusieurs douches
+- Mettre plusieurs chats
+- Mettre plusieurs poubelles
+- Voir si scoll de manière à ne pas tout voir
+
+-----------------------------
+Condition de fin de niveau
+-----------------------------
+   le chat est propre à 100%
+OU il ne reste plus d'eau
+OU le chat est sorti de l'écran
+
+-----------------------------
+Condition de victoire
+-----------------------------
+>90% --> 3*
+>80% --> 2*
+>70% --> 1*
+en dessous, niveau perdu
+

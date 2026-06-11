@@ -1,0 +1,21 @@
+{
+  "name": "blackcat-game",
+  "version": "1.0.0",
+  "description": "A fun cat game with stars",
+  "main": "script.js",
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.1.0"
+  },
+  "prettier": {
+    "semi": true,
+    "trailingComma": "es5",
+    "singleQuote": false,
+    "printWidth": 80,
+    "tabWidth": 2,
+    "useTabs": false
+  }
+}

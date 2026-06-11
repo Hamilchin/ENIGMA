@@ -1,0 +1,24 @@
+{
+  "name": "js13k-webcomponents-starter",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && node scripts/zip-and-check.mjs",
+    "preview": "vite preview",
+    "vercel": "vercel login",
+    "deploy": "npm run build && vercel --prod ./dist"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.0",
+    "cssnano": "^7.0.2",
+    "postcss": "^8.4.41",
+    "terser": "^5.31.6",
+    "typescript": "^5.5.4",
+    "vercel": "^47.0.5",
+    "vite": "^5.4.2",
+    "vite-plugin-singlefile": "^2.3.0",
+    "zip-lib": "^1.0.4"
+  }
+}

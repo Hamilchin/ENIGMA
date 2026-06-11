@@ -1,0 +1,166 @@
+class GameObject {
+    sprites: Array<GfxSprite>
+    activeSpriteIndex: number = 0
+    x: number
+    y: number
+    velocityX: number = 0
+    velocityY: number = 0
+    boxWidth: number
+    boxHeight: number
+    boxOffsetX: number
+    boxOffsetY: number
+    interaction: GameObjectInteractionType = GameObjectInteractionType.None
+    interactionParam1: any
+    canFallThrough: boolean = true
+    // these will limit the vertical movement of the player. different levels might require different values
+    minX: number = 0
+    maxX: number = 1920 - 120
+    animations: Array<any>
+    activeAnimationIndex: number = -1
+    spriteFlipped: boolean = false
+    spriteFlipFlip: boolean = false // just for the broom animation... and probably it would be good for the left chair too!
+    autoDeleteTicksLeft: number = -1 // will delete this object in this many ticks
+
+    constructor(x: number, y: number, baseSpriteData: any, boxWidth: number = 0, boxHeight: number = 0, boxOffsetX: number = 0, boxOffsetY: number = 0, interaction = GameObjectInteractionType.None, interactionParam1: any = null) {
+        // NOTE: I really should have added an offset to the sprite to be in the middle of the point controlled by .x and .y...
+
+        // this.sprites = [ new GfxSprite(TEST_GFX_DEFINITION_1) ]
+        this.sprites = []
+        this.x = x
+        this.y = y
+        this.boxWidth = boxWidth
+        this.boxHeight = boxHeight
+        this.boxOffsetX = boxOffsetX
+        this.boxOffsetY = boxOffsetY
+        this.sprites[0] = new GfxSprite(baseSpriteData || GFX_EMPTY)
+        this.interaction = interaction
+        this.interactionParam1 = interactionParam1
+    }
+
+    injectCollisionBoxSvg(sprite: GfxSprite)
+    {
+        if (IS_PROD_BUILD)
+        {
+            return
+        }
+
+        var s = '<path style="fill:#0ff2;stroke:#0ffa;stroke-width:4" os="fill:#0ff2;stroke:#0ffa;stroke-width:4" d="M ' +
+            (this.boxOffsetX)                 + ',' + (this.boxOffsetY)                  + ' ' +
+            (this.boxOffsetX + this.boxWidth) + ',' + (this.boxOffsetY)                  + ' ' +
+            (this.boxOffsetX + this.boxWidth) + ',' + (this.boxOffsetY + this.boxHeight) + ' ' +
+            (this.boxOffsetX)                 + ',' + (this.boxOffsetY + this.boxHeight) + ' ' +
+            ' Z"/>'
+
+        sprite.svg.innerHTML += s
+    }
+
+    injectCollisionBox()
+    {
+        // NOTE: this is only accurate in non-flipped sprites
+        // NOTE: this might be cut of if the sprite is smaller than the box
+
+        if (IS_PROD_BUILD)
+        {
+            return
+        }
+
+        if (this.animations && this.animations.length > 0)
+        {
+            for (var animation of this.animations)
+            {
+                for (var b of animation)
+                {
+                    this.injectCollisionBoxSvg(b)
+                }
+            }
+        }
+        else
+        {
+            for (var a of this.sprites)
+            {
+                this.injectCollisionBoxSvg(a)
+            }
+        }
+    }
+
+    setActiveSpriteIndex(n: number) {
+        this.activeSpriteIndex = n
+        for (var sprite of this.sprites) {
+            sprite.moveAway()
+        }
+        // NOTE: the active sprite will be moved to the correct place by the next renderFrame() call
+    }
+
+    setActiveAnimationIndex(n: number)
+    {
+        if (this.activeAnimationIndex != n)
+        {
+            this.setActiveSpriteIndex(-1)
+            this.sprites = this.animations[n]
+            this.setActiveSpriteIndex(0)
+            this.activeAnimationIndex = n
+        }
+    }
+
+    processAutoDelete() {
+        if (this.autoDeleteTicksLeft > 0) {
+            this.autoDeleteTicksLeft -= 1
+        }
+        else if (this.autoDeleteTicksLeft == 0) {
+            game.cleanupObject(this)
+        }
+    }
+
+    applyGravity() {
+        this.velocityY += (this.velocityY < 0 ? GRAVITY : FALL_GRAVITY) * 1/TARGET_TICK_INTERVAL_MS
+    }
+
+    physicsFrame() {
+        //
+    }
+
+    renderFrame() {
+        // only update flipped when actually moving - this will prevent flipping back the sprite when the object just stopped
+        // update this var, instead of the sprite directly so even if the sprite changes the flip is retained
+        if (this.velocityX < -0.5)
+        {
+            this.spriteFlipped = true
+        }
+        else if (this.velocityX > 0.5)
+        {
+            this.spriteFlipped = false
+        }
+
+        this.sprites[this.activeSpriteIndex].flipped = this.spriteFlipFlip ? !this.spriteFlipped : this.spriteFlipped
+        this.sprites[this.activeSpriteIndex].moveTo(this.x, this.y)
+    }
+
+    moveAway() {
+        if (this.sprites.length > this.activeSpriteIndex)
+        {
+            this.sprites[this.activeSpriteIndex].moveAway()
+        }
+    }
+
+    cleanupSprites() {
+        var a: GfxSprite
+
+        if (this.animations && this.animations.length > 0)
+        {
+            for (var animation of this.animations)
+            {
+                for (a of animation)
+                {
+                    a.cleanup()
+                }
+            }
+        }
+        else
+        {
+            for (a of this.sprites)
+            {
+                a.cleanup()
+            }
+        }
+    }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "2025-black-kate",
+  "slug": "black-kate",
+  "title": "Black Kate",
+  "year": 2025,
+  "rank": 37,
+  "overall_score": 20.04,
+  "criteria": {
+    "theme": {
+      "rank": 147,
+      "score": 2.3,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 109,
+      "score": 2.54,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 31,
+      "score": 3.38,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 13,
+      "score": 4.22,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 7,
+      "score": 4.05,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 35,
+      "score": 3.55,
+      "top": 4.45
+    }
+  },
+  "author": "Clark Kent and Alexey Tomanov",
+  "devices": [
+    "Desktop",
+    "Mobile"
+  ],
+  "desc_full": "Get acquainted! This is Kate. Since she likes to dress in black, she is nicknamed Black Kate! These guys offended her, but they didn’t know that she had a Black belt in karate! And now she’s going to show them! Controls: Keyboard (WASD/Arrows - move, Space - attack) Touch Joystick (on touch devices) Gamepad (XBox / Dual Sense) (on desktop and mobile) Creators: Sergey Antonov - Game Design / Programming / Art Alexey Tomanov - Sound Design There are only 13 levels. Get to the boss! Fight! Good Luck!",
+  "description": "Get acquainted! This is Kate. Since she likes to dress in black, she is nicknamed Black Kate! These guys offended her, but they didn’t know that she had a Black belt in karate! And now she’s going to show them!",
+  "controls": ": Keyboard (WASD/Arrows - move, Space - attack) Touch Joystick (on touch devices) Gamepad (XBox / Dual Sense) (on desktop and mobile) Creators: Sergey Antonov - Game Design / Programming / Art Alexey Tomanov - Sound Design There are only 13 levels. Get to the boss! Fight! Good Luck!",
+  "github_url": "https://github.com/js13kGames/black-kate",
+  "play_url": "https://js13kgames.com/2025/games/black-kate",
+  "play_zip": "https://play.js13kgames.com/black-kate.zip",
+  "thumb_url": "https://play.js13kgames.com/black-kate/.ts.png",
+  "local_path": "games/2025-black-kate",
+  "entry": "index.html",
+  "commit_sha": "6b67ef3c8bf137630bd58b22437641ffad786388",
+  "build_status": "prebuilt"
+}

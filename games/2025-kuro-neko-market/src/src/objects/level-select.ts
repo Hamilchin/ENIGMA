@@ -1,0 +1,390 @@
+import { diContainer } from "../core/di-container";
+import { Flexbox, FlexboxArgs } from "../core/flexbox";
+import { Game } from "../core/game";
+import { GameObject, GameObjectArgs } from "../core/game-object";
+import { INPUT_MOUSEDOWN_EVENT, InputServer } from "../core/input.server";
+import { OffFunction } from "../core/observable";
+import { TOP_LEFT, Vector, ZERO } from "../core/vector";
+import { fishTypes } from "../data/fish-types";
+import { GLYPH_PERCENT, GLYPH_PLAY } from "../data/glyphs";
+import { LEVEL_SCREEN } from "../data/screens";
+import {
+	FishTypeIndex,
+	LevelAttributes,
+	LevelSystem,
+} from "../systems/level/level.system";
+import { ScreenSystem } from "../systems/screen/screen.system";
+import { fillCircle, fillRect, fillRoundRect, stroke } from "../utils/draw";
+import { makePattern } from "../utils/pattern";
+import { randomFloat } from "../utils/random";
+import { range } from "../utils/range";
+import { getStored, setStored } from "../utils/storage";
+import { Counter } from "./counter";
+import { Digit, DigitValue } from "./digit";
+import { FishGraphic } from "./fish/fish-graphic";
+import { Glyph } from "./glyph";
+import { DIAMOND_ID } from "./patterns/diamond";
+import { WAVE_ID } from "./patterns/wave";
+import { ActiveSurface, InactiveSurface, SURFACE_CLICK } from "./surface";
+
+const buttonSize = Vector(36, 24);
+
+const levels: LevelInfo[] = [
+	[[0], 0, 0, 0],
+	[[0, 1], 1, 1, 0],
+	[[0, 1, 2], 2, 2, 0],
+];
+
+type LevelInfo = [...LevelAttributes, number];
+
+export class LevelSelect extends GameObject {
+	game = diContainer.get(Game);
+
+	constructor() {
+		super();
+
+		(getStored<number[]>("s") ?? []).map((score, idx) => {
+			levels[idx]![3] = score;
+		});
+
+		this.addChild(
+			new Flexbox({
+				size: this.game.root.size,
+				direction: "col",
+				spaceBetween: 16,
+				heirs: [
+					...levels.map(
+						(level, index) =>
+							new Card({
+								levelIndex: index,
+								level,
+							})
+					),
+					new Card({
+						level: getStored<LevelInfo>("c") ?? [[], 0, 0, 0],
+						isEditable: true,
+					}),
+				],
+			})
+		);
+	}
+
+	render(ctx: OffscreenCanvasRenderingContext2D) {
+		fillRect(ctx, ZERO, this.game.root.size, makePattern(ctx, WAVE_ID));
+	}
+}
+
+class Bg extends GameObject {
+	render(ctx: OffscreenCanvasRenderingContext2D): void {
+		fillRoundRect(ctx, ZERO, this.size, 16, makePattern(ctx, DIAMOND_ID));
+	}
+}
+
+type CardArgs = GameObjectArgs & {
+	isEditable?: boolean;
+	levelIndex?: number;
+	level: LevelInfo;
+};
+
+class Card extends GameObject {
+	size = Vector(296, 32);
+
+	fishes: FishGraphic[];
+	difficultyGraphic: DifficultyGraphic;
+	speedGraphic: SpeedGraphic;
+	actionButton: ActiveSurface;
+	fishTypeIndices: FishTypeIndex[] = [];
+
+	mouseDownListener: OffFunction;
+
+	kill(): void {
+		super.kill();
+		this.mouseDownListener();
+		this.fishes = [];
+		this.difficultyGraphic = null as any;
+		this.speedGraphic = null as any;
+		this.actionButton = null as any;
+	}
+
+	getLevelAttributes(): LevelAttributes {
+		return [
+			this.fishTypeIndices.sort(),
+			this.speedGraphic.value,
+			this.difficultyGraphic.value,
+		] as LevelAttributes;
+	}
+
+	toggleFishTypeIndex(idx: FishTypeIndex) {
+		const isNextEnabled = !this.fishTypeIndices.includes(idx);
+		if (isNextEnabled) {
+			this.fishTypeIndices.push(idx);
+		} else {
+			this.fishTypeIndices = this.fishTypeIndices.filter(
+				(activeIdx) => activeIdx != idx
+			);
+		}
+		const fish = this.fishes[idx]!;
+		fish.overrideColor = isNextEnabled ? null : "#3A1141";
+		fish.isShadowHidden = !isNextEnabled;
+		const isValid = this.fishTypeIndices.length != 0;
+		this.actionButton.opacity = isValid ? 1 : 0.5;
+	}
+
+	cycleSpeed = () => {
+		this.speedGraphic.setValue(
+			((this.speedGraphic.value + 1) % 3) as DigitValue
+		);
+	};
+
+	cycleDifficulty = () => {
+		this.difficultyGraphic.setValue(
+			((this.difficultyGraphic.value + 1) % 4) as DigitValue
+		);
+	};
+
+	constructor({ isEditable = false, levelIndex, level, ...rest }: CardArgs) {
+		super(rest);
+
+		const DynamicSurface = isEditable ? ActiveSurface : InactiveSurface;
+
+		this.fishes = fishTypes.map((type, idx) => {
+			return new FishGraphic({
+				size: Vector(type.size.x, 80),
+				overrideColor: "#3A1141",
+				isShadowHidden: true,
+				origin: TOP_LEFT,
+				type,
+			});
+		});
+
+		this.difficultyGraphic = new DifficultyGraphic();
+		this.difficultyGraphic.setValue(level[2]);
+		const difficultyButton = new DynamicSurface({
+			radius: 4,
+			size: buttonSize,
+			heirs: [
+				new Flexbox({ size: buttonSize, heirs: [this.difficultyGraphic] }),
+			],
+		});
+		difficultyButton.on(SURFACE_CLICK, this.cycleDifficulty);
+
+		this.speedGraphic = new SpeedGraphic({ size: buttonSize });
+		this.speedGraphic.setValue(level[1]);
+		const speedButton = new DynamicSurface({
+			radius: 4,
+			size: buttonSize,
+			heirs: [this.speedGraphic],
+		});
+		speedButton.on(SURFACE_CLICK, this.cycleSpeed);
+
+		this.actionButton = new ActiveSurface({
+			radius: 12,
+			size: buttonSize,
+			heirs: [
+				new Flexbox({
+					size: buttonSize,
+					heirs: [
+						new Glyph({
+							path: GLYPH_PLAY,
+							svgStrokeColor: "#FEE2E2",
+							svgFillColor: "#FEE2E2",
+							size: Vector(5, 9),
+						}),
+					],
+				}),
+			],
+			opacity: 0.5,
+		});
+		this.actionButton.on(SURFACE_CLICK, () => {
+			if (this.actionButton.opacity == 1) {
+				diContainer
+					.get(LevelSystem)
+					.init(...this.getLevelAttributes(), levelIndex);
+				diContainer.get(ScreenSystem).to(LEVEL_SCREEN);
+			}
+		});
+
+		for (const enabledIdx of level[0]) {
+			this.toggleFishTypeIndex(enabledIdx);
+		}
+
+		this.mouseDownListener = diContainer
+			.get(InputServer)
+			.on(INPUT_MOUSEDOWN_EVENT, ({ pos }) => {
+				if (isEditable) {
+					this.fishes.map((fish, idx) => {
+						if (fish.isPointWithinObject(pos)) {
+							this.toggleFishTypeIndex(idx as FishTypeIndex);
+						}
+					});
+					// Save level
+					setStored("c", [...this.getLevelAttributes(), 0]);
+				}
+			});
+
+		const container = new Bg({
+			size: this.size,
+			heirs: [
+				new Flexbox({
+					size: this.size.diff(Vector(12, 8)),
+					pos: Vector(6, 4),
+					spaceBetween: 8,
+					heirs: [
+						new InactiveSurface({
+							pos: Vector(6, 4),
+							radius: 12,
+							size: Vector(40, 24),
+							heirs: [
+								new Flexbox({
+									size: Vector(40, 24),
+									heirs:
+										levelIndex != void 0
+											? [
+													new Digit({
+														value: (levelIndex + 1) as DigitValue,
+														svgStrokeColor: "#FEE2E2",
+													}),
+											  ]
+											: [new NumberLevelPlaceholder()],
+								}),
+							],
+						}),
+						new DynamicSurface({
+							radius: 4,
+							size: Vector(106, 24),
+							heirs: [
+								new Flexbox({
+									pos: Vector(4, 12),
+									direction: "col",
+									// size: Vector(60, 0),
+									align: "center",
+									justify: "start",
+									rotation: -Math.PI / 2,
+									spaceBetween: (4 * 1) / 0.375,
+									scale: 0.375,
+									heirs: this.fishes,
+								}),
+							],
+						}),
+						speedButton,
+						difficultyButton,
+						this.actionButton,
+					],
+				}),
+			],
+		});
+
+		this.addChildren([container]);
+
+		if (levelIndex != void 0) {
+			this.addChild(
+				new BestScore({
+					size: Vector(40, 13),
+					pos: Vector(6, 26),
+					// spaceBetween: -1,
+					heirs: [
+						new Counter({
+							// glyphFontSize: 10,
+							value: Math.floor(
+								((getStored<number[]>("s") ?? [])[levelIndex] ?? 0) * 100
+							),
+						}),
+						new Glyph({
+							// glyphFontSize: 10,
+							path: GLYPH_PERCENT,
+							size: Vector(10, 9),
+						}),
+					],
+				})
+			);
+		}
+	}
+}
+
+type SpeedGraphicArgs = FlexboxArgs;
+
+const playGlyphSize = Vector(5, 9);
+
+class SpeedGraphic extends Flexbox {
+	value: number;
+
+	constructor(args?: SpeedGraphicArgs) {
+		super(args);
+		this.addChildren(
+			range(3).map(
+				() =>
+					new Glyph({
+						size: playGlyphSize,
+						path: GLYPH_PLAY,
+						svgStrokeColor: "#FEE2E2",
+					})
+			)
+		);
+	}
+
+	setValue(value: number) {
+		this.value = value;
+		(this.heirs as Glyph[]).map(
+			(child, idx) =>
+				(child.svgFillColor = idx <= this.value ? "#10A11A" : "#3A1141")
+		);
+	}
+}
+
+class DifficultyGraphic extends GameObject {
+	value: number;
+	color: string;
+	size = Vector(18, 8);
+
+	setValue(value: number) {
+		this.value = value;
+		this.color = ["#10A11A", "#B27242", "#B44141", "#AD64BA"][value]!;
+	}
+
+	render(ctx: OffscreenCanvasRenderingContext2D): void {
+		const vibration =
+			this.value == 3
+				? Vector(randomFloat(-0.5, 0.5), randomFloat(-0.5, 0.5))
+				: ZERO;
+		fillRoundRect(
+			ctx,
+			Vector(0, 8).add(vibration),
+			Vector(5, -4).add(vibration),
+			1,
+			this.color
+		);
+		stroke(ctx, "#FEE2E2");
+		fillRoundRect(
+			ctx,
+			Vector(6.5, 8).add(vibration),
+			Vector(5, -6).add(vibration),
+			1,
+			this.value > 0 ? this.color : "#3A1141"
+		);
+		stroke(ctx, "#FEE2E2");
+		fillRoundRect(
+			ctx,
+			Vector(13, 8).add(vibration),
+			Vector(5, -8).add(vibration),
+			1,
+			this.value > 1 ? this.color : "#3A1141"
+		);
+		stroke(ctx, "#FEE2E2");
+	}
+}
+
+class NumberLevelPlaceholder extends GameObject {
+	size = Vector(16, 4);
+
+	render(ctx: OffscreenCanvasRenderingContext2D): void {
+		fillCircle(ctx, ZERO, 2, "#FEE2E2");
+		fillCircle(ctx, Vector(6, 0), 2);
+		fillCircle(ctx, Vector(12, 0), 2);
+	}
+}
+
+class BestScore extends Flexbox {
+	render(ctx: OffscreenCanvasRenderingContext2D): void {
+		fillRoundRect(ctx, ZERO, this.size, 2, "#FEE2E2");
+	}
+}

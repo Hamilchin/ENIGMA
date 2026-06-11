@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>Grass Tower Defense</title>
+    <style>
+        body {
+            margin: 0; background: #f6f8fa; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex; flex-direction: column; align-items: center; min-height: 100vh;
+        }
+        #loginScreen {
+            width: 100%; max-width: 300px;
+            margin: 100px auto; text-align: center;
+        }
+        #loginScreen input {
+            width: 100%;
+            padding: 10px;
+            margin: 12px 0;
+            font-size: 1rem;
+        }
+        #loginScreen button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #2ea44f;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        #loginScreen button:hover {
+            background-color: #24943c;
+        }
+        #container {
+            max-width: 1280px; width: 100%; margin-top: 40px;
+            background: #fff; border-radius: 12px; border: 1px solid #e1e4e8;
+            box-shadow: 0 0 12px rgba(0,0,0,0.07); padding: 24px;
+            display: none;
+        }
+        #header {
+            display: flex; align-items: center; margin-bottom: 20px;
+        }
+        #avatar {
+            width: 60px; height: 60px; border-radius: 50%;
+            margin-right: 20px;
+        }
+        #nickname {
+            font-weight: 700; font-size: 1.5rem; color: #24292e;
+        }
+        #activity-label {
+            font-weight: 600; font-size: 1.1rem; margin-bottom: 16px; color: #24292e;
+            display: flex; align-items: center; gap: 8px;
+        }
+        #activity-label svg {
+            width: 24px; height: 24px; fill: #24292e;
+        }
+        #commitBarContainer {
+            width: 100%; background: #dce4e8; border-radius: 8px; height: 32px; margin-bottom: 18px;
+        }
+        #commitBar {
+            background:#2ea44f; width:0; height:32px;
+            border-radius:8px; text-align:center;
+            color:white; line-height:32px; font-weight:700;
+        }
+        #activityOverview {
+            display: flex;
+            gap: 24px;
+            background: #fafbfc;
+            border: 1px solid #e1e4e8;
+            border-radius: 12px;
+            padding: 24px;
+            align-items: center;
+            margin-bottom: 36px;
+            position: relative;
+        }
+        #dev-image {
+            position: relative;
+        }
+        #dev-image img {
+            width: 140px;
+            border-radius: 20px;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));
+            animation: subtleMove 3s ease-in-out infinite;
+            user-select: none;
+        }
+        @keyframes subtleMove {
+            0%, 100% {transform: translateY(0);}
+            50% {transform: translateY(-6px);}
+        }
+
+        @keyframes steam {
+            0%, 100% {opacity: 1; transform: translateY(0);}
+            50% {opacity: 0.6; transform: translateY(-6px);}
+        }
+        #controls {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            position: relative;
+        }
+        #controls button {
+            background: #2ea44f;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 7px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            width: fit-content;
+            transition: background-color 0.2s ease;
+        }
+        #controls button:hover {
+            background: #24943c;
+        }
+        #info {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c2e35;
+        }
+        #statusBars label {
+            font-size: 0.9rem;
+            color: #555;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+        progress {
+            width: 100%;
+            height: 14px;
+            margin-top: 4px;
+            border-radius: 8px;
+            overflow: hidden;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        progress::-webkit-progress-bar {
+            background-color: #e0e0e0;
+            border-radius: 8px;
+        }
+        progress::-webkit-progress-value {
+            background-color: #2ea44f;
+            border-radius: 8px;
+        }
+        #dayClock {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 80px;
+            height: 80px;
+            border: 1.4px solid #2ea44f;
+            border-radius: 50%;
+            background: white;
+        }
+        #gameCanvas {
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 0 12px rgba(0,0,0,0.1);
+            display: block;
+            margin: 0 auto 36px auto;
+            width: 100%;
+            max-width: 1280px;
+            height: 220px;
+            user-select: none;
+        }
+        @media (max-width: 720px) {
+            #activityOverview {
+                flex-direction: column;
+                align-items: center;
+            }
+            #dev-image img {
+                width: 120px;
+            }
+            #controls {
+                width: 100%;
+            }
+        }
+
+        progress#levelStat::-webkit-progress-value { background-color: #28a745; }
+        progress#expStat::-webkit-progress-value { background-color: #218838; }
+        progress#monsterStat::-webkit-progress-value { background-color: #17a2b8; }
+
+        .pixel-vm {
+               width: 260px;
+               background: #0d192769;
+               border: 4px solid #767778;
+               border-radius: 12px;
+               box-shadow: 3px 3px 0 #87a7c7;
+               padding: 14px 16px 16px 16px;
+               font-family: 'Courier New', monospace;
+           }
+        .slot {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 2px 6px 2px;
+            margin: 8px 0;
+            border-radius: 10px;
+            min-height: 58px;
+            width: 100%;
+            border: 2px solid #767778;
+            box-shadow: 1px 1.5px 0 #87a7c7;
+            background: none;
+            transition: background 0.15s, box-shadow 0.15s;
+            font-size: 1rem;
+        }
+        .slot-inner {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .slot-inner > .slot-info-col {
+            display: flex;
+            flex-direction: column;
+            width: calc(100% - 50px);
+        }
+        .coffee { background: #9c7a6b; color: #fff; }
+        .energy { background: #0b0054; color: #fff; }
+        .choco { background: #6d4c2f; color: #fff; }
+        .slot:active, .slot:focus, .slot:hover {
+            outline: 2px solid #fff83d;
+            box-shadow: 0 0 0 3px #fffac233;
+            filter: brightness(1.13);
+        }
+
+        .buttons { display: flex; justify-content: flex-start; gap:7px; margin:11px 0 3px 0;}
+        .btn { width:21px; height:21px; border-radius:50%; border:3px solid #122; outline:none; }
+        .red { background: #e44343; border-color:#850;}
+        .green { background: #4ceb51; border-color:#283;}
+        .blue { background: #46beea; border-color:#258;}
+        .yellow { background: #ffe066; border-color:#ab9a23;}
+
+        .price {
+            font-weight: 700;
+            color: #fde293;
+        }
+
+        .effect {
+            font-weight: 500;
+            color: #a9e34b;
+        }
+
+        .slot {
+            flex-direction: column;
+            padding: 8px 10px 14px 10px;
+        }
+        .icon-pixel {
+            width: 50px;
+            height: 50px;
+            min-width: 48px;
+            min-height: 48px;
+            image-rendering: pixelated;
+            border-radius: 8px;
+            margin: 0 2px;
+        }
+        .slot-info-col {
+             display: flex;
+             flex-direction: column;
+             justify-content: center;
+             gap: 0;
+             min-width: 0;
+         }
+
+
+        .slot-label {
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-bottom: 2px;
+            color: #fff;
+        }
+
+        .price,
+        .effect {
+            font-size: 0.9em;
+            display: inline-block;
+            width: auto;
+        }
+        .price-effect-wrapper {
+            gap: 12px;
+        }
+
+        #gameIntro h3, #gameIntro h4 {
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        #gameIntro ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        #loginScreen button {
+            margin-top: 12px;
+        }
+        #commitColors span {
+             margin-top: 4px;
+             color: #555;
+         }
+        #avatar img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid #e1e4e8;
+            box-shadow: 0 0 4px rgba(0,0,0,0.1);
+            object-fit: cover;
+            display: block;
+        }
+        button {
+            background-color: #2ea44f; /* 그린톤 배경 */
+            border: 2px solid #238636; /* 진한 녹색 테두리 */
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 8px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 5px #1f792e;
+            transition: background-color 0.2s, box-shadow 0.1s;
+            user-select: none;
+        }
+        button:hover {
+            background-color: #36c95c;
+        }
+        button:active {
+            box-shadow: 0 2px #1f792e;
+            transform: translateY(3px);
+        }
+        button:disabled {
+            background-color: #94d3a2;
+            border-color: #7bb174;
+            cursor: not-allowed;
+            box-shadow: none;
+            color: #e6f4ea;
+        }
+    </style>
+    <script type="text/javascript" src="/asset/ZzFXMicro.js"></script>
+    <script src="/asset/zzfxm.min.js"></script>
+</head>
+<body>
+
+<div id="loginScreen">
+    <img id="catLogo" alt="Cat Logo" style="width:48px; height:48px; border-radius:50%;" src="">
+    <h2>Grass Tower Defense</h2>
+    <input type="text" id="gitNickname" placeholder="Enter your GitHub username" title="username"/>
+    <button id="loginBtn">Start Game</button>
+    <p style="margin-top: 12px; font-size: 0.9rem; color: #555;">
+        New to this game? <a href="#" id="gameIntroLink" style="color: #2ea44f; text-decoration: none; cursor: pointer;">Learn more</a>
+    </p>
+    <p style="margin-top: 12px; font-size: 0.9rem; color: #555;">
+        Sound: <a href="#" id="muteBtnLogin" style="color: #2ea44f; text-decoration: none; cursor: pointer;">BGM Mute </a> /
+        <a href="#" id="effectMuteBtnLogin" style="color: #2ea44f; text-decoration: none; cursor: pointer;"> Effect Mute</a>
+    </p>
+</div>
+<div id="gameIntroModal" style="display: none; position: fixed; top: 0; left: 0;
+    width: 100vw; height: 100vh; background: rgba(0,0,0,0.6);
+    justify-content: center; align-items: center; z-index: 1000;">
+    <div style="background: white; padding: 24px; border-radius: 8px; max-width: 450px; max-height: 80vh;
+      overflow-y: auto; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        <h2>Game Introduction</h2>
+        <p>The game is about a developer who tries every day to stop enemies (black cats inspired by GitHub's mascot Mona) from overwhelming the field.</p>
+        <h3>How to play</h3>
+        <ul>
+            <li>Enter your GitHub username and start playing. (it doesn't matter if it doesn't exist)</li>
+            <li>Click “Work” to gain contribution points and build towers.</li>
+            <li>If you have caffeinee, your work will proceed automatically, though at a slower pace.</li>
+            <li>Enemies are black cats inspired by Mona, GitHub’s mascot.</li>
+            <li>If too many black cats (30) overwhelm the field, it’s game over.</li>
+            <li>You cannot plant grass for previous days.</li>
+        </ul>
+        <div id="commitColors" style="margin-top: 16px; font-family: monospace; font-size: 14px;">
+            <div style="display: flex; gap: 16px; align-items: center;">
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <div style="width:20px; height:20px; background:#ebedf0; border:1px solid #ccc;"></div>
+                    <span>0 commits</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <div style="width:20px; height:20px; background:#c6e48b; border:1px solid #ccc;"></div>
+                    <span>1-3 commits</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <div style="width:20px; height:20px; background:#7bc96f; border:1px solid #ccc;"></div>
+                    <span>4-6 commits</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <div style="width:20px; height:20px; background:#239a3b; border:1px solid #ccc;"></div>
+                    <span>7-9 commits</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <div style="width:20px; height:20px; background:#196127; border:1px solid #ccc;"></div>
+                    <span>10+ commits</span>
+                </div>
+            </div>
+        </div>
+        <button id="closeGameIntro" style="margin-top: 16px; background: #2ea44f; color:white; border:none; padding: 8px 12px; border-radius: 5px; cursor: pointer;">Close</button>
+    </div>
+</div>
+<div id="container">
+    <div id="header">
+        <div id="avatar"> <img id="profileImg" src=""  alt="profile Img"  /></div>
+        <div id="nickname">black-kitty-dev</div>
+    </div>
+
+    <canvas id="gameCanvas" width="1280" height="220"></canvas>
+
+    <div id="activity-label">
+        <span>Contribution Activity</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 5H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 11H4V8h16v8zM7 10h2v2H7v-2zm3 0h2v2h-2v-2zM5 14h14v2H5v-2z"/></svg>
+    </div>
+
+    <div id="commitBarContainer">
+        <div id="commitBar">0%</div>
+    </div>
+    <div id="activityOverview">
+        <div id="dev-image">
+            <div id="avatar-container" style="width:128px; height:128px; overflow:hidden;">
+                <canvas id="avatar-canvas" width="128" height="128"></canvas>
+            </div>
+            <div id="stats-bar" style="justify-content:center; gap:30px; margin-bottom:16px; user-select:none;">
+                <div class="stat-cell" style="text-align:center;">
+                    <div>
+                        <span style="font-size:12px; font-weight:700; color:#57606a;">Level</span>
+                        <span id="levelVal" style="font-size:14px; font-weight:600; color:#1b1f23;">1</span>
+                    </div>
+                    <progress id="levelStat" value="1" max="100" style="width:120px; height:12px; border-radius:6px;"></progress>
+                </div>
+                <div class="stat-cell" style="text-align:center;">
+                    <div>
+                        <span style="font-size:12px; font-weight:700; color:#57606a;">Exp</span>
+                        <span id="expVal" style="font-size:14px; font-weight:600; color:#1b1f23;">0/10</span>
+                    </div>
+                    <progress id="expStat" value="0" max="20" style="width:120px; height:12px; border-radius:6px;"></progress>
+                </div>
+                <div class="stat-cell" style="text-align:center;">
+                    <div>
+                        <span style="font-size:12px; font-weight:700; color:#57606a;">Black Cat</span>
+                        <span id="monsterVal" style="font-size:14px; font-weight:600; color:#1b1f23;">3/10</span>
+                    </div>
+                    <progress id="monsterStat" value="1" max="30" style="width:120px; height:12px; border-radius:6px;"></progress>
+                </div>
+            </div>
+        </div>
+        <div id="controls">
+            <button id="workBtn">Work  +<span id="workRateCount">0</span>%</button>
+            <div id="info">
+                COIN: <span id="coinCount">0</span>
+            </div>
+            <canvas id="dayClock" width="80" height="80"></canvas>
+
+            <div class="stat-cell" style="text-align:center;">
+                <div style="font-size:16px; font-weight:700; color:#57606a; text-align: right;">Day</div>
+                <div id="dateVal" style="font-size:20px; font-weight:600; color:#1b1f23; text-align: right;">1</div>
+            </div>
+            <div id="statusBars">
+                <label for="fatigue">HP : <span id="hpText"></span></label>
+                <progress id="fatigue" value="30" max="100"></progress>
+                <label for="caffeinee">caffeinee : <span id="caffeineeText"></span></label>
+                <progress id="caffeinee" value="70" max="100"></progress>
+            </div>
+        </div>
+
+
+        <div class="pixel-vm">
+            <button class="slot choco" id="vmBuyChocoBar">
+                <div class="slot-inner">
+                    <div class="slot-info-col">
+                        <span class="slot-label">CHOCOLATE BAR</span>
+                        <div class="price-effect-wrapper">
+                            <div class="price">150 Coin</div>
+                            <div class="effect">Hp +30</div>
+                        </div>
+                    </div>
+                    <canvas class="icon-pixel" data-sprite-index="2" width="50" height="50"></canvas>
+                </div>
+            </button>
+            <button class="slot coffee" id="vmBuyCoffee">
+                <div class="slot-inner">
+                    <div class="slot-info-col">
+                        <div class="slot-label">COFFEE</div>
+                        <div class="price-effect-wrapper">
+                            <div class="price">50 Coin</div>
+                            <div class="effect">caffeinee +50</div>
+                        </div>
+                    </div>
+                    <canvas class="icon-pixel" data-sprite-index="1" width="50" height="50"></canvas>
+                </div>
+            </button>
+
+            <button class="slot energy" id="vmBuyEnergy">
+                <div class="slot-inner">
+                    <div class="slot-info-col">
+                        <span class="slot-label">ENERGY DRINK</span>
+                        <div class="price-effect-wrapper">
+                            <div class="price">80 Coin</div>
+                            <div class="effect">caffeinee +90</div>
+                        </div>
+                    </div>
+                    <canvas class="icon-pixel" data-sprite-index="0" width="50" height="50"></canvas>
+                </div>
+            </button>
+            <div class="buttons">
+                <button id="muteBtn" style="width: 100px; margin-left: 20px; padding: 6px 12px; font-size: 0.9rem; cursor: pointer;">BGM<br>Mute</button>
+                <button id="effectMuteBtn" style="width: 100px; margin-left: 20px; padding: 6px 12px; font-size: 0.9rem; cursor: pointer;">Effect<br>Mute</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    (() => {
+        const song = [
+            [
+                [1.3,0,70,,.03,.15,2,1.7,,,,,.03,3.8,-.05,,.25],
+                [1.0,0,30,,,.2,3,4,,,3,.9,.04],
+                [.9,0,740,,.05,.1,2,.35,-.1,-.18,9,.02,,.1,.12,,.06],
+                [1.6,0,12,,.02,.08,2,2.2,,, ,,.02,2.5,.1,,.2]
+            ],
+            [
+                [
+                    [0,-1,13,16,18,20,18,16,13,,,,,,,,,,,,,,,,,,, 13,16,18,20,18,16,13, 20,22,25,22,20,18,16, 13, , ,13,16,18,16,13, ,],
+                    [2,-1,13,0,11,,,,,,,,,,13,,25,25,11,11,23,11,,11,23,11,11,11,23,22,18,,30,,18,18,30,18,,18,30,18,18,18,30,22,13,,25,,13,13,25,13,,13,25,13,13,13,25,,],
+                    [3,0,13,,,,,13, ,,,,,,,,,,,,,,,,,,,13,,,,,13, ,13,13,,,,,13, ,13,,,,,13, ,],
+                    [2,0,,,,20,,,,,,25,,,,,,20,25, ,,,18,20, ,,,25, ,,,]
+                ],
+                [
+                    [0,-1,20,22,25,22,20,18,16, 18,20,22,,,,,,,,,,,,,,,,,,,20,18,16,13,18,20,22,20,18,16,13, 13,16,18,20,18,16,13, ,],
+                    [2,-1,13,0,11,,,,,,,,,,13,,25,25,11,11,23,11,,11,23,11,11,11,23,22,18,,30,,18,18,30,18,,18,30,18,18,18,30,22,13,,25,,13,13,25,13,,13,25,13,13,13,25,,],
+                    [3,0,13,,,,,13,13,,13,,,,,13,13,,13,,,,,13,13,,],
+                    [2,0,,,,25,,,,20,,,,,,,,,,,,,,,,,,,,,,25,,,,20,,18,,,22,,,,,,,,,,,,,,,,,,,,20,,,25,,,]
+                ]
+            ],
+            [0,0,1,1,0,1,0,1]
+        ];
+        let bgmPlayer = null;
+        let isMuted = false;
+        let isBGMMuted = false;
+        function playBgm() {
+            if (bgmPlayer) bgmPlayer.stop();
+            const songData = zzfxM(...song);
+            bgmPlayer = zzfxP(...songData);
+            bgmPlayer.loop = true;
+            bgmPlayer.volume = isBGMMuted ? 0 : 1;
+        }
+
+
+        const muteBtn = document.getElementById('muteBtn');
+        const muteBtnLogin = document.getElementById('muteBtnLogin');
+
+        const effectMuteBtn = document.getElementById('effectMuteBtn');
+        const effectMuteBtnLogin = document.getElementById('effectMuteBtnLogin');
+
+
+        function toggleMute() {
+            isBGMMuted = !isBGMMuted;
+            muteBtn.innerHTML = isBGMMuted ? "BGM<br>Unmute" : "BGM<br>Mute";
+            muteBtnLogin.textContent = isBGMMuted ? "BGM Unmute" : "BGM Mute";
+            if (isBGMMuted) {
+                if (bgmPlayer) bgmPlayer.stop();
+            } else {
+                playBgm();
+            }
+        }
+        muteBtn.addEventListener('click', toggleMute);
+        muteBtnLogin.addEventListener('click', toggleMute);
+        function toggleEffectMute() {
+            isMuted = !isMuted;
+            effectMuteBtn.innerHTML = isMuted ? "Effect<br>Unmute" : "Effect<br>Mute";
+            effectMuteBtnLogin.textContent = isMuted ? "Effect Unmute" : "Effect Mute";
+        }
+        effectMuteBtn.addEventListener('click', toggleEffectMute);
+        effectMuteBtnLogin.addEventListener('click', toggleEffectMute);
+
+        function playAttackSound() {
+            if (isMuted) return;
+            zzfx(...[1, 0.05, 120, 0.01, 0.07, 0.1, 1, 3.4, 8, 40, 0, 0, 0, 0, 0, 0, 0, 0.97, 0.09, 0, -1415]);
+        }
+        function playEnemyDefeatSound() {
+            if (isMuted) return;
+            zzfx(...[, , 925, 0.04, 0.3, 0.6, 1, 0.3, , 6.27, -184, 0.09, 0.17]);
+        }
+        function playClickSound() {
+            if (isMuted) return;
+            zzfx(...[, , 537, 0.02, 0.02, 0.22, 1, 1.59, -6.98, 4.97]);
+        }
+        function playCoffeeSound() {
+            if (isMuted) return;
+            zzfx(...[, , 150, 0.2, 0.05, 0.2, 2, 1.5, 2, 2.5, , , , 0.5, 0.1, 0.05]);
+        }
+        function playEnergyDrinkSound() {
+            if (isMuted) return;
+            zzfx(...[, , 300, 0.15, 0.05, 0.25, 2, 1.8, 6, 4.5, , , , 1.5, 0.2, 0.07]);
+        }
+        function playChocoBarSound() {
+            if (isMuted) return;
+            zzfx(...[, , 90, 0.08, 0.01, 0.1, 3.5, 2.5, , , , , , 0.2, 0.3, 0.02, 0.12]);
+        }
+        const itemImage = new Image();
+        itemImage.src = "/asset/item_border.png";
+
+        const iconCanvases = document.querySelectorAll('.icon-pixel');
+        const loginScreen = document.getElementById('loginScreen');
+        const loginBtn = document.getElementById('loginBtn');
+        const nicknameInput = document.getElementById('gitNickname');
+
+        const container = document.getElementById('container');
+        const nicknameLabel = document.getElementById('nickname');
+        const profileImg = document.getElementById('profileImg');
+        const coinCount = document.getElementById('coinCount');
+        const workRateCount = document.getElementById('workRateCount');
+        const fatigueBar = document.getElementById('fatigue');
+        const hpText = document.getElementById('hpText');
+        const caffeineeText = document.getElementById('caffeineeText');
+        const caffeineeBar = document.getElementById('caffeinee');
+        const dayClock = document.getElementById('dayClock');
+        const ctxClock = dayClock.getContext('2d');
+
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const ROWS = 7, COLS = 53, TILE_SIZE = 18, PADDING = 4;
+        const grassWidth = COLS * (TILE_SIZE + PADDING) - PADDING;
+        const grassHeight = ROWS * (TILE_SIZE + PADDING) - PADDING;
+        const grassStartX = (canvas.width - grassWidth) / 2;
+        const grassStartY = (canvas.height - grassHeight) / 2;
+
+        let gameStarted = false;
+        let coins = 100;
+        let workRate = 3;
+        let day = 1;
+
+        let playerLevel = 1;
+        let experience = 0;
+        let expToLevel = 10;
+
+        let dev = {
+            coffee: 0,
+            notebook: 0,
+            caffeinee: 0,
+            hp: 100,
+            maxHp: 100,
+            healHp: 1,
+        };
+        fatigueBar.value = dev.hp;
+        fatigueBar.max = dev.maxHp;
+        hpText.innerText = dev.hp;
+        caffeineeBar.value = dev.caffeinee;
+        caffeineeText.innerText = dev.caffeinee;
+
+        let grassLevels = new Array(ROWS * COLS).fill(0);
+        let grassUpgradeAllowed = new Array(ROWS * COLS).fill(true);
+
+        let avatarInterval, coffeeTimeout;
+        let commitGauge = 0;
+        let manualWorkRate = 1;
+        let autoWorkRate = 0;
+        let autoCommitSpeed = 0.01;
+        let currentCommitIdx = 0;
+        let dailyCommitCount = 0;
+        let coffeeEffectActive = false;
+        let recoveringStatus = false;
+
+        const avatarImg = new Image();
+        avatarImg.src = "/asset/avatar.png";
+
+        const avatarCanvas = document.getElementById("avatar-canvas");
+        const avatarCtx = avatarCanvas.getContext("2d");
+
+        let autoWorkEnabled = false;
+
+        const cardPool = [
+            {
+                id: 'healBoost',
+                title: 'Speed up your physical recovery',
+                description: 'HP recovery increased by 1',
+                apply: () => { dev.healHp += 1; }
+            },
+            {
+                id: 'manualBoost',
+                title: 'Increasing manual workload',
+                description: 'Increase the amount of increase when clicking the Work button',
+                apply: () => { manualWorkRate += 1; }
+            },
+            {
+                id: 'autoBoost',
+                title: 'Auto workload increase (caffeine)',
+                description: 'Auto workload increase (caffeine)',
+                apply: () => { autoWorkRate += 0.5; }
+            },
+            {
+                id: 'maxHpBoost',
+                title: 'Maximum HP growth',
+                description: 'Up to Hp+10',
+                apply: () => {
+                    dev.maxHp += 10;
+                    dev.hp = Math.min(dev.hp + 10, dev.maxHp);
+                }
+            }
+        ];
+
+        loginBtn.addEventListener('click', () => {
+            const nickname = nicknameInput.value.trim();
+            if (!nickname) {
+                alert('Please enter your nickname.');
+                return;
+            }
+            profileImg.src = `https://github.com/${nickname}.png?size=48`;
+            profileImg.onerror = () => { profileImg.src = catFrameDataUrl; };
+            nicknameLabel.textContent = nickname;
+            loginScreen.style.display = 'none';
+            container.style.display = 'block';
+            gameStarted = true;
+            startGame();
+        });
+
+        function updateUI() {
+            coinCount.textContent = coins;
+            workRateCount.textContent = manualWorkRate;
+            fatigueBar.value = dev.hp;
+            fatigueBar.max = dev.maxHp;
+            hpText.innerText = `${dev.hp}/${dev.maxHp}`;
+            caffeineeBar.value = dev.caffeinee;
+            caffeineeText.innerText = dev.caffeinee;
+            updateStatsUI();
+        }
+        function updateStatsUI() {
+            document.getElementById('levelStat').value = playerLevel;
+            document.getElementById('levelVal').textContent = playerLevel + "";
+            document.getElementById('expStat').value = experience;
+            document.getElementById('expStat').max = expToLevel;
+            document.getElementById('expVal').textContent = `${experience}/${expToLevel}`;
+            document.getElementById('dateVal').textContent = day;
+            const monsterCount = enemies.length;
+            document.getElementById('monsterStat').value = monsterCount;
+            document.getElementById('monsterStat').max = maxEnemies;
+            document.getElementById('monsterVal').textContent = `${monsterCount}/${maxEnemies}`;
+        }
+
+        function addWorkToCommitGauge(amount) {
+            commitGauge += amount;
+            while (commitGauge >= 100) {
+                commitGauge -= 100;
+                commitNow();
+            }
+            updateCommitBar();
+        }
+        function updateCommitBar() {
+            const commitBar = document.getElementById('commitBar');
+            let percent = Math.min(100, Math.floor(commitGauge));
+            commitBar.style.width = percent + '%';
+            commitBar.textContent = percent + '%';
+        }
+        function determineLevelBasedOnCommitCount(count) {
+            if (count >= 10) return 4;
+            if (count >= 5) return 3;
+            if (count >= 3) return 2;
+            if (count >= 1) return 1;
+            return 0;
+        }
+
+        let towers = [];
+        function findTowerAt(idx) {
+            const col = Math.floor(idx / ROWS);
+            const row = idx % ROWS;
+            const x = grassStartX + col * (TILE_SIZE + PADDING) + TILE_SIZE / 2;
+            const y = grassStartY + row * (TILE_SIZE + PADDING) + TILE_SIZE / 2;
+            return towers.find(t => Math.abs(t.x - x) < 1 && Math.abs(t.y - y) < 1);
+        }
+        class Tower {
+            constructor(x, y, level) {
+                this.x = x;
+                this.y = y;
+                this.level = level;
+                this.range = 120 + (level - 1) * 10;
+                this.damage = 5 + level * 3;
+                this.cooldown = 0;
+                this.cooldownMax = 30;
+                this.isAttacking = false;
+                this.attackEffectFrame = 0;
+                this.effectMaxFrames = 6;
+                this.effectTargetPos = null;
+                this.selected = false;
+            }
+            update() {
+                if (this.cooldown > 0) {
+                    this.cooldown--;
+                    this.attackEffectFrame++;
+                    if (this.attackEffectFrame > this.effectMaxFrames) {
+                        this.attackEffectFrame = 0;
+                        this.isAttacking = false;
+                        this.effectTargetPos = null;
+                    }
+                    return;
+                }
+                const targets = enemies.filter(e => !e.isDead && Math.hypot(e.x - this.x, e.y - this.y) <= this.range);
+                if (targets.length === 0) return;
+
+                targets.sort((a, b) =>
+                    Math.hypot(a.x - this.x, a.y - this.y) - Math.hypot(b.x - this.x, b.y - this.y)
+                );
+                const target = targets[0];
+                target.takeDamage(this.damage);
+                this.cooldown = this.cooldownMax;
+                this.isAttacking = true;
+                playAttackSound();
+                this.attackEffectFrame = 0;
+                this.effectTargetPos = { x: target.x, y: target.y };
+            }
+            draw() {
+                ctx.beginPath();
+                const baseColors = ["#69c739", "#389431", "#0a641d", "#196127"];
+                const colorIndex = Math.min(this.level - 1, baseColors.length - 1);
+                ctx.fillStyle = baseColors[colorIndex] || "#eee";
+                ctx.fillRect(this.x - TILE_SIZE / 2, this.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
+
+                if (this.isAttacking) {
+                    ctx.strokeStyle = ["#88cc55", "#55aa33", "#339900", "#227700"][colorIndex] || "#88cc55";
+                    ctx.lineWidth = 3 + this.level;
+                    ctx.shadowColor = "rgba(255,255,153,0.7)";
+                    ctx.shadowBlur = 8;
+                    ctx.strokeRect(this.x - TILE_SIZE / 2, this.y - TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
+                    ctx.shadowBlur = 0;
+
+                    if (this.effectTargetPos) {
+                        ctx.beginPath();
+                        ctx.lineWidth = ctx.lineWidth + 1;
+                        ctx.moveTo(this.x, this.y);
+                        ctx.lineTo(this.effectTargetPos.x, this.effectTargetPos.y);
+                        ctx.stroke();
+                    }
+                } else {
+                    ctx.lineWidth = 1;
+                    ctx.strokeStyle = "#bccbb9";
+                    ctx.strokeRect(this.x - 9, this.y - 9, 18, 18);
+                }
+
+                if (this.selected) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = "rgba(40,150,40,0.5)";
+                    ctx.lineWidth = 3;
+                    ctx.arc(this.x, this.y, this.range, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+            }
+            updateProperties(level) {
+                this.level = level;
+                this.damage = 5 + level * 3;
+                this.range = 120 + (level - 1) * 10;
+                this.cooldown = 0;
+                this.update();
+            }
+        }
+
+        const catSprite = new Image();
+        catSprite.src = '/asset/cat.png';
+
+        class Enemy {
+            constructor() {
+                this.left = grassStartX;
+                this.top = grassStartY;
+                this.right = grassStartX + grassWidth;
+                this.bottom = grassStartY + grassHeight;
+                this.speed = baseMonsterSpeed;
+                this.side = 0;
+                this.x = this.left;
+                this.y = this.top;
+
+                this.hp = baseMonsterHealth;
+                this.radius = baseMonsterRadius;
+                this.scale = this.radius / 10;
+                this.frameCount = 4;
+                this.frameIndex = 0;
+                this.frameDelay = 10;
+                this.frameTicker = 0;
+
+                this.width = 32;
+                this.height = 32;
+                this.isDead = false;
+            }
+            update() {
+                if (this.isDead) return;
+                this.frameTicker++;
+                if (this.frameTicker >= this.frameDelay) {
+                    this.frameTicker = 0;
+                    this.frameIndex = (this.frameIndex + 1) % this.frameCount;
+                }
+                switch (this.side) {
+                    case 0:
+                        this.x += this.speed;
+                        if (this.x >= this.right) {
+                            this.x = this.right;
+                            this.side = 1;
+                        }
+                        break;
+                    case 1:
+                        this.y += this.speed;
+                        if (this.y >= this.bottom) {
+                            this.y = this.bottom;
+                            this.side = 2;
+                        }
+                        break;
+                    case 2:
+                        this.x -= this.speed;
+                        if (this.x <= this.left) {
+                            this.x = this.left;
+                            this.side = 3;
+                        }
+                        break;
+                    case 3:
+                        this.y -= this.speed;
+                        if (this.y <= this.top) {
+                            this.y = this.top;
+                            this.side = 0;
+                        }
+                        break;
+                }
+            }
+            draw() {
+                if (this.isDead) return;
+                const scaledWidth = this.width * this.scale;
+                const scaledHeight = this.height * this.scale;
+
+                ctx.drawImage(
+                    catSprite,
+                    this.frameIndex * this.width, 0,
+                    this.width, this.height,
+                    this.x - scaledWidth / 2,
+                    this.y - scaledHeight / 2,
+                    scaledWidth,
+                    scaledHeight
+                );
+            }
+            takeDamage(amount) {
+                this.hp -= amount;
+                if (this.hp <= 0 && !this.isDead) {
+                    this.isDead = true;
+                    coins += 10;
+                    playEnemyDefeatSound();
+                    onMonsterKilled();
+                    updateUI();
+                }
+            }
+        }
+
+        let enemies = [];
+
+        function updateTowers() {
+            towers.forEach(t => t.update());
+        }
+        function drawTowers() {
+            towers.forEach(t => t.draw());
+        }
+
+        function drawGrass() {
+            for (let col = 0; col < COLS; col++) {
+                for (let row = 0; row < ROWS; row++) {
+                    const idx = col * ROWS + row;
+                    const level = grassLevels[idx];
+                    const x = grassStartX + col * (TILE_SIZE + PADDING);
+                    const y = grassStartY + row * (TILE_SIZE + PADDING);
+                    const colors = ["#ebedf0", "#c6e48b", "#7bc96f", "#239a3b", "#196127"];
+                    ctx.fillStyle = colors[level];
+                    ctx.shadowColor = "rgba(0,0,0,0.12)";
+                    ctx.shadowBlur = 2;
+                    ctx.shadowOffsetX = 0;
+                    ctx.shadowOffsetY = 1;
+                    ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+                    ctx.shadowColor = "transparent";
+                    ctx.strokeStyle = "#bcf2a4";
+                    ctx.lineWidth = 1;
+                    ctx.strokeRect(x, y, TILE_SIZE, TILE_SIZE);
+
+                    if (idx === currentCommitIdx) {
+                        ctx.strokeStyle = "#2ea44f";
+                        ctx.lineWidth = 4;
+                        ctx.shadowColor = "#2ea44f";
+                        ctx.shadowBlur = 8;
+                        ctx.strokeRect(x - 2, y - 2, TILE_SIZE + 4, TILE_SIZE + 4);
+                        ctx.shadowColor = "transparent";
+                    }
+                }
+            }
+        }
+
+        function updateAndDrawEnemies() {
+            enemies.forEach(e => {
+                e.update();
+                e.draw();
+            });
+            enemies = enemies.filter(e => !e.isDead);
+            if (enemies.length >= maxEnemies) {
+                alert("Too many black cats came! Game over!");
+                resetGame();
+            }
+        }
+
+        let maxEnemies = 30;
+        let dayProgress = 0;
+        let enemiesPerDay = 1;
+        let baseMonsterHealth = 30;
+        let baseMonsterRadius = 10;
+        let baseMonsterSpeed = 2;
+        let healthIncreaseRate = 2;
+        let radiusIncreaseStep = 2;
+
+        function commitNow() {
+            dailyCommitCount++;
+            commitGauge = 0;
+            updateCommitBar();
+
+            if (currentCommitIdx >= grassLevels.length) {
+                currentCommitIdx = 0;
+            }
+
+            const level = determineLevelBasedOnCommitCount(dailyCommitCount);
+            if (grassLevels[currentCommitIdx] === 0) {
+                grassLevels[currentCommitIdx] = level;
+                const col = Math.floor(currentCommitIdx / ROWS);
+                const row = currentCommitIdx % ROWS;
+                const x = grassStartX + col * (TILE_SIZE + PADDING) + TILE_SIZE / 2;
+                const y = grassStartY + row * (TILE_SIZE + PADDING) + TILE_SIZE / 2;
+                if (!findTowerAt(currentCommitIdx)) {
+                    towers.push(new Tower(x, y, level));
+                }
+            } else if (grassLevels[currentCommitIdx] < level) {
+                grassLevels[currentCommitIdx] = level;
+                const tower = findTowerAt(currentCommitIdx);
+                tower?.updateProperties(level);
+            }
+            updateCanvas();
+        }
+
+        function nextDay() {
+            day++;
+            dailyCommitCount = 0;
+            coins += Math.ceil(workRate * 1.5);
+
+            if (day % 7 === 1) {
+                baseMonsterHealth = Math.floor(baseMonsterHealth * healthIncreaseRate);
+                baseMonsterRadius += radiusIncreaseStep;
+            }
+
+            lockGrassUpgrades();
+            dayProgress = 0;
+            updateUI();
+
+            spawnEnemyWithDelay(enemiesPerDay, 1000);
+            currentCommitIdx = (currentCommitIdx + 1) % grassLevels.length;
+            enemiesPerDay = Math.min(enemiesPerDay + 1, 5);
+        }
+
+        function lockGrassUpgrades() {
+            for (let i = 0; i < grassLevels.length; i++) {
+                if (grassLevels[i] > 0) grassUpgradeAllowed[i] = false;
+            }
+        }
+
+        function getRandomEnemyPosition() {
+            const margin = 20;
+            let tries = 0;
+            let pos;
+            do {
+                const x = grassStartX + Math.random() * grassWidth;
+                const y = grassStartY + Math.random() * grassHeight;
+                const collision = enemies.some(e => Math.hypot(e.x - x, e.y - y) < margin * 2);
+                if (!collision) {
+                    pos = { x, y };
+                    break;
+                }
+                tries++;
+            } while (tries < 20);
+            return pos || { x: grassStartX, y: grassStartY };
+        }
+        function spawnEnemyWithDelay(count = 1, delay = 1500) {
+            let spawned = 0;
+            const intervalId = setInterval(() => {
+                if (spawned >= count || enemies.length >= maxEnemies) {
+                    clearInterval(intervalId);
+                    return;
+                }
+                const pos = getRandomEnemyPosition();
+                const enemy = new Enemy();
+                enemy.x = pos.x;
+                enemy.y = pos.y;
+                enemies.push(enemy);
+                spawned++;
+            }, delay);
+        }
+
+        function onMonsterKilled() {
+            experience++;
+            if (experience >= expToLevel) {
+                experience = 0;
+                playerLevel++;
+                showLevelUpCards();
+                expToLevel += 5;
+            }
+        }
+
+        function showLevelUpCards() {
+            const modal = document.createElement('div');
+            modal.style = 'position:fixed;top:0;left:0;width:100vw;height:100vh;display:flex;justify-content:center;align-items:center;background:rgba(0,0,0,0.7);z-index:999;';
+
+            const container = document.createElement('div');
+            container.style = 'background:#fff;padding:20px;border-radius:10px;display:flex;gap:16px;';
+
+            const options = [];
+            while (options.length < 3) {
+                const card = cardPool[Math.floor(Math.random() * cardPool.length)];
+                if (!options.includes(card)) options.push(card);
+            }
+
+            options.forEach(card => {
+                const cardDiv = document.createElement('div');
+                cardDiv.style = 'cursor:pointer;padding:12px;border:1px solid #ccc;border-radius:8px;width:130px;text-align:center;';
+                cardDiv.innerHTML = `<h3>${card.title}</h3><p style="font-size:12px">${card.description}</p>`;
+                cardDiv.onclick = () => {
+                    card.apply();
+                    playerLevel++;
+                    updateUI();
+                    document.body.removeChild(modal);
+                };
+                container.appendChild(cardDiv);
+            });
+
+            modal.appendChild(container);
+            document.body.appendChild(modal);
+        }
+
+        let avatarFrameIndex = 0;
+        function updateAvatarState() {
+            if (dev.hp <= 0 || recoveringStatus) {
+                avatarFrameIndex = 3;
+            } else if (isDrinkingCoffee()) {
+                avatarFrameIndex = 2;
+            } else {
+                avatarFrameIndex = (avatarFrameIndex + 1) % 2;
+            }
+        }
+        function drawAvatar() {
+            avatarCtx.clearRect(0, 0, 128, 128);
+            avatarCtx.imageSmoothingEnabled = false;
+            avatarCtx.drawImage(
+                avatarImg,
+                avatarFrameIndex * 64, 0, 64, 64,
+                0, 0, 128, 128
+            );
+        }
+        function startAvatarToggle() {
+            avatarInterval = setInterval(() => {
+                if (!isDrinkingCoffee() && !recoveringStatus) {
+                    updateAvatarState();
+                    drawAvatar();
+                }
+            }, 500);
+        }
+        function showCoffeeImage() {
+            clearInterval(avatarInterval);
+            clearTimeout(coffeeTimeout);
+            coffeeEffectActive = true;
+            updateAvatarState();
+            drawAvatar();
+            coffeeTimeout = setTimeout(() => {
+                coffeeEffectActive = false;
+                updateAvatarState();
+                drawAvatar();
+                startAvatarToggle();
+            }, 2000);
+        }
+
+        function isDrinkingCoffee() {
+            return coffeeEffectActive;
+        }
+
+        let catFrameDataUrl = '';
+        const catSpriteForProfile = new Image();
+        catSpriteForProfile.src = '/asset/cat.png';
+        function getCatSpriteFrame(frameIndex = 0, frameWidth = 32, frameHeight = 32) {
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = frameWidth;
+            tempCanvas.height = frameHeight;
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCtx.drawImage(
+                catSpriteForProfile,
+                frameIndex * frameWidth, 0, frameWidth, frameHeight,
+                0, 0, frameWidth, frameHeight
+            );
+            return tempCanvas.toDataURL();
+        }
+        catSpriteForProfile.onload = () => {
+            catFrameDataUrl = getCatSpriteFrame(0, 32, 32);
+            profileImg.src = catFrameDataUrl;
+            document.getElementById('catLogo').src = catFrameDataUrl;
+        };
+
+        function updateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawGrass();
+            updateTowers();
+            updateAndDrawEnemies();
+            drawTowers();
+        }
+
+        canvas.addEventListener('click', e => {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const clickY = e.clientY - rect.top;
+
+            let clickedTower = null;
+            for (const t of towers) {
+                if (clickX >= t.x - TILE_SIZE / 2 && clickX <= t.x + TILE_SIZE / 2 &&
+                    clickY >= t.y - TILE_SIZE / 2 && clickY <= t.y + TILE_SIZE / 2) {
+                    clickedTower = t;
+                    break;
+                }
+            }
+            towers.forEach(t => t.selected = false);
+            if (clickedTower) clickedTower.selected = true;
+        });
+
+        let lastWorkClickTime = Date.now();
+        document.getElementById("workBtn").onclick = () => {
+            if (!gameStarted || dev.hp <= 0) return;
+            addWorkToCommitGauge(manualWorkRate);
+            lastWorkClickTime = Date.now();
+            dev.hp = Math.max(0, dev.hp - 1);
+            recoveringStatus = false;
+            coffeeEffectActive = false;
+            playClickSound();
+            updateUI();
+        };
+
+        setInterval(() => {
+            const now = Date.now();
+            if (gameStarted && now - lastWorkClickTime > 10000 && dev.hp < dev.maxHp) {
+                dev.hp += dev.healHp;
+                recoveringStatus = true;
+                coffeeEffectActive = false;
+                updateUI();
+            }
+        }, 1000);
+
+        function updateWorkRate() {
+            workRate = manualWorkRate + autoWorkRate;
+        }
+
+        function startAutoWork(caffeineeGain) {
+            dev.caffeinee = Math.min(dev.caffeinee + caffeineeGain, 100);
+            autoWorkEnabled = true;
+            autoWorkRate = 1;
+            updateUI();
+
+            if (window.caffeineeTimer) clearInterval(window.caffeineeTimer);
+            window.caffeineeTimer = setInterval(() => {
+                if (dev.caffeinee > 0) {
+                    dev.caffeinee--;
+                    updateUI();
+                }
+                if (dev.caffeinee <= 0) {
+                    autoWorkRate = 0;
+                    autoWorkEnabled = false;
+                    clearInterval(window.caffeineeTimer);
+                }
+            }, 1000);
+        }
+
+        document.getElementById("vmBuyCoffee").onclick = () => {
+            if (coins >= 50) {
+                coins -= 50;
+                startAutoWork(50);
+                updateUI();
+                playCoffeeSound();
+                showCoffeeImage();
+            }
+        };
+        document.getElementById("vmBuyEnergy").onclick = () => {
+            if (coins >= 80) {
+                coins -= 80;
+                startAutoWork(90);
+                updateUI();
+                playEnergyDrinkSound();
+                showCoffeeImage();
+            }
+        };
+        document.getElementById("vmBuyChocoBar").onclick = () => {
+            if (coins >= 150) {
+                coins -= 150;
+                dev.hp = Math.min(dev.hp + 30, dev.maxHp);
+                updateUI();
+                playChocoBarSound();
+                showCoffeeImage();
+            }
+        };
+
+        function gameLoop() {
+            if (gameStarted) {
+                updateCanvas();
+                updateWorkRate();
+                if (autoWorkEnabled && autoWorkRate > 0) {
+                    addWorkToCommitGauge(autoWorkRate * autoCommitSpeed);
+                }
+            }
+            requestAnimationFrame(gameLoop);
+        }
+
+        let dayDuration = 14000;
+
+        function drawDayClock(progressPercent) {
+            const r = dayClock.width / 2;
+            ctxClock.clearRect(0, 0, dayClock.width, dayClock.height);
+            ctxClock.translate(r, r);
+
+            ctxClock.fillStyle = "#fff";
+            ctxClock.beginPath();
+            ctxClock.arc(0, 0, r - 5, 0, 2 * Math.PI);
+            ctxClock.fill();
+
+            ctxClock.strokeStyle = "#2ea44f";
+            ctxClock.lineWidth = 6;
+            ctxClock.beginPath();
+            ctxClock.arc(0, 0, r - 7, 0, 2 * Math.PI);
+            ctxClock.stroke();
+
+            const angle = progressPercent * 2 * Math.PI - Math.PI / 2;
+            ctxClock.strokeStyle = "#2ea44f";
+            ctxClock.lineWidth = 6;
+            ctxClock.beginPath();
+            ctxClock.moveTo(0, 0);
+            ctxClock.lineTo(r * Math.cos(angle), r * Math.sin(angle));
+            ctxClock.stroke();
+
+            ctxClock.resetTransform();
+        }
+
+        function animateDayClock(timestamp) {
+            if (!animateDayClock.last) animateDayClock.last = timestamp;
+            const elapsed = timestamp - animateDayClock.last;
+            animateDayClock.last = timestamp;
+
+            dayProgress += elapsed / dayDuration;
+            if (dayProgress > 1) dayProgress = 1;
+
+            drawDayClock(dayProgress);
+            requestAnimationFrame(animateDayClock);
+        }
+
+        function startGame() {
+            clearInterval(avatarInterval);
+            updateUI();
+            gameLoop();
+            startAutoWork(0);
+            startAvatarToggle();
+
+            iconCanvases.forEach(canvas => {
+                const ctx = canvas.getContext('2d');
+                const index = parseInt(canvas.dataset.spriteIndex);
+                const spriteWidth = 32, spriteHeight = 32;
+                ctx.clearRect(0, 0, 50, 50);
+                ctx.imageSmoothingEnabled = false;
+                ctx.drawImage(
+                    itemImage,
+                    index * spriteWidth, 0,
+                    spriteWidth, spriteHeight,
+                    0, 0,
+                    50, 50
+                );
+            });
+
+            if (gameStarted) {
+                if (window.nextDayInterval) clearInterval(window.nextDayInterval);
+                window.nextDayInterval = setInterval(nextDay, dayDuration);
+                requestAnimationFrame(animateDayClock);
+            }
+        }
+
+        function resetGame() {
+            coins = 0;
+            day = 1;
+            enemies = [];
+            towers = [];
+            grassLevels = new Array(ROWS * COLS).fill(0);
+            grassUpgradeAllowed = new Array(ROWS * COLS).fill(true);
+            currentCommitIdx = 0;
+            dailyCommitCount = 0;
+            commitGauge = 0;
+            manualWorkRate = 1;
+            autoWorkRate = 0;
+            dev.hp = 100;
+            dev.caffeinee = 0;
+            baseMonsterHealth = 30;
+            baseMonsterRadius = 10;
+            baseMonsterSpeed = 2;
+            updateUI();
+            gameStarted = false;
+            container.style.display = 'none';
+            loginScreen.style.display = 'block';
+        }
+
+        document.getElementById('gameIntroLink').addEventListener('click', e => {
+            e.preventDefault();
+            document.getElementById('gameIntroModal').style.display = 'flex';
+        });
+        document.getElementById('closeGameIntro').addEventListener('click', () => {
+            document.getElementById('gameIntroModal').style.display = 'none';
+        });
+
+        playBgm();
+
+    })();
+</script>
+
+</body>
+</html>

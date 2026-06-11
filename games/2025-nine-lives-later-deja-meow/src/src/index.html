@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>nine lives later - déjà meow</title>
+    <script type="module" src="./app.js"></script>
+    <style>
+        html,
+        body {
+            margin: 0;
+            height: 100%;
+            background: #666
+        }
+
+        canvas#c {
+            display: block;
+            margin: auto;
+            background: #E68E35;
+            background: linear-gradient(180deg, rgba(230, 142, 53, 1) 0%, rgba(221, 81, 126, 1) 100%);
+
+
+        }
+
+
+
+        #crt {
+            position: relative;
+            display: inline-block
+        }
+
+        #crt:after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: .95;
+            background:
+                repeating-linear-gradient(0deg, rgba(0, 0, 0, .12) 0 1px, transparent 1px 3px),
+                radial-gradient(120% 80% at 50% 50%, rgba(255, 255, 255, .06) 0 35%, transparent 60%),
+                radial-gradient(120% 90% at 50% 50%, transparent 65%, rgba(0, 0, 0, .35) 85%);
+            animation: crtFlicker 6s steps(60) infinite;
+        }
+
+        #ov {
+            position: absolute;
+            inset: 0;
+            display: block;
+            background: transparent;
+            opacity: .3;
+        }
+
+
+        @keyframes crtFlicker {
+            50% {
+                opacity: .98
+            }
+        }
+    </style>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+
+<body style="margin:0;display:grid;place-items:center;height:100vh;">
+
+    <div id="crt">
+        <canvas id="c" width="640" height="400"></canvas>
+        <canvas id="ov" width="640" height="400"></canvas>
+
+    </div>
+
+
+
+
+</body>
+
+</html>

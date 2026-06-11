@@ -1,0 +1,55 @@
+{
+  "id": "2025-oggys-curse",
+  "slug": "oggys-curse",
+  "title": "Oggy's Curse",
+  "year": 2025,
+  "rank": 70,
+  "overall_score": 18.19,
+  "criteria": {
+    "theme": {
+      "rank": 56,
+      "score": 3.38,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 95,
+      "score": 2.67,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 90,
+      "score": 2.76,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 126,
+      "score": 2.67,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 36,
+      "score": 3.38,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 61,
+      "score": 3.33,
+      "top": 4.45
+    }
+  },
+  "author": "Romain Arnaud",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "You are Oggy, a black cat caught in the middle of your witch master’s duels. As she unleashes powerful magic against hordes of enemies, you must survive through the chaos of fireballs, lightning, and curses raining from both sides. Your goal isn’t to fight - it’s to hunt. Dodge, dash, and sneak between spells in this arcade-style bullet hell, where you are not playing as the hero but as the unfortunate feline just trying to survive on the side. Gameplay Arrow keys : Move R : Restart the game Goal : Catch the most mice without getting hit Each mouse eaten gives you 1 point. Each bullet / spell taken makes you lose 1 HP (2 HP if it is one from your witch). Every 5 mice eaten you gain back 1 HP.",
+  "description": "You are Oggy, a black cat caught in the middle of your witch master’s duels. As she unleashes powerful magic against hordes of enemies, you must survive through the chaos of fireballs, lightning, and curses raining from both sides. Your goal isn’t to fight - it’s to hunt. Dodge, dash, and sneak between spells in this arcade-style bullet hell, where you are not playing as the hero but as the unfortunate feline just trying to survive on the side. Gameplay Arrow keys : Move R : Restart the game Goal : Catch the most mice without getting hit Each mouse eaten gives you 1 point. Each bullet / spell taken makes you lose 1 HP (2 HP if it is one from your witch). Every 5 mice eaten you gain back 1 HP.",
+  "controls": "",
+  "github_url": "https://github.com/js13kGames/oggys-curse",
+  "play_url": "https://js13kgames.com/2025/games/oggys-curse",
+  "play_zip": "https://play.js13kgames.com/oggys-curse.zip",
+  "thumb_url": "https://play.js13kgames.com/oggys-curse/.ts.png",
+  "local_path": "games/2025-oggys-curse",
+  "entry": "index.html",
+  "commit_sha": "bde95caba13a6b20adf30dda52e50bae69ed0a13",
+  "build_status": "prebuilt"
+}

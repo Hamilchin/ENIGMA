@@ -1,0 +1,55 @@
+{
+  "id": "2025-whiskers-witch-adventure",
+  "slug": "whiskers-witch-adventure",
+  "title": "Whiskers Witch Adventure",
+  "year": 2025,
+  "rank": 8,
+  "overall_score": 23,
+  "criteria": {
+    "theme": {
+      "rank": 2,
+      "score": 4.06,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 13,
+      "score": 3.69,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 14,
+      "score": 3.66,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 11,
+      "score": 4.26,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 29,
+      "score": 3.51,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 12,
+      "score": 3.83,
+      "top": 4.45
+    }
+  },
+  "author": "Rob Louie",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "Every Halloween the 13 witches of Whimsywick cast a Halloween party spell, bringing the jack-o-lanterns to life and creating magical bubbles across the town. But this year the spell went wrong! The witches are trapped in the bubbles and the jack-o-lanterns are running wild! Only the witches’ faithful familiar Whiskers can save them now! Controls Wield your controller for the full magic! Rumble enchantment in compatible browsers! Being a 3D action platformer, this game is best played with a controller, but a mouse and keyboard also works. ActionControllerKeyboard MoveLeft AnalogWASD JumpBottom Face Button(XBox 🟢 A / PS5 🔵 X)Space Adjust cameraRight AnalogMouse Gameplay Approach witches to save them. You can jump on jack-o-lanterns to smash them. Hints Cats can run on top of shrubs and trees Credits Song is a variation of 8-bit Adventure Theme Loop by TheLastOneOnEarth",
+  "description": "Every Halloween the 13 witches of Whimsywick cast a Halloween party spell, bringing the jack-o-lanterns to life and creating magical bubbles across the town. But this year the spell went wrong! The witches are trapped in the bubbles and the jack-o-lanterns are running wild! Only the witches’ faithful familiar Whiskers can save them now!",
+  "controls": "Wield your controller for the full magic! Rumble enchantment in compatible browsers! Being a 3D action platformer, this game is best played with a controller, but a mouse and keyboard also works. ActionControllerKeyboard MoveLeft AnalogWASD JumpBottom Face Button(XBox 🟢 A / PS5 🔵 X)Space Adjust cameraRight AnalogMouse Gameplay Approach witches to save them. You can jump on jack-o-lanterns to smash them. Hints Cats can run on top of shrubs and trees Credits Song is a variation of 8-bit Adventure Theme Loop by TheLastOneOnEarth",
+  "github_url": "https://github.com/js13kGames/whiskers-witch-adventure",
+  "play_url": "https://js13kgames.com/2025/games/whiskers-witch-adventure",
+  "play_zip": "https://play.js13kgames.com/whiskers-witch-adventure.zip",
+  "thumb_url": "https://play.js13kgames.com/whiskers-witch-adventure/.ts.png",
+  "local_path": "games/2025-whiskers-witch-adventure",
+  "entry": "index.html",
+  "commit_sha": "150fefc1be6caf841ce5be1026841f102ccf014c",
+  "build_status": "prebuilt"
+}

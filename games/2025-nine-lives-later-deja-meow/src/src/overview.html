@@ -1,0 +1,81 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Level Overview</title>
+<style>
+    body {
+        margin: 0;
+        display: grid;
+        grid-template-columns: minmax(320px, 1fr) 2fr;
+        height: 100vh;
+        background: #0b0b0b;
+        color: #ddd;
+        font: 14px/1.2 system-ui
+    }
+
+    textarea {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        outline: none;
+        background: #111;
+        color: #eee;
+        padding: 10px;
+        font: 12px/1.3 ui-monospace, monospace
+    }
+
+    canvas {
+        width: 100%;
+        height: 100%;
+        background: #111;
+        display: block
+    }
+</style>
+<textarea id=t>[{rects:[fm(200,200),fd(100,100)],doors:"wE",x:2,y:0},
+ {rects:[fd(1,1)],doors:"es",x:3,y:0},
+ {rects:[fd(1,1)],doors:"n",x:2,y:1}]</textarea>
+<canvas id=c></canvas>
+<script>
+    const T = document.getElementById("t"), C = document.getElementById("c"), X = C.getContext("2d");
+
+    function safeParse(src) {
+        const patched = src.replace(/([a-zA-Z_]\w*\([^)]*\))/g, '"$$$1$$"');
+        return eval(patched);
+    }
+
+    function draw(rooms) {
+        if (!rooms.length) return;
+        let minx = 9e9, miny = 9e9, maxx = -9e9, maxy = -9e9;
+        rooms.forEach(r => {
+            minx = Math.min(minx, r.x); maxx = Math.max(maxx, r.x);
+            miny = Math.min(miny, r.y); maxy = Math.max(maxy, r.y)
+        });
+        const cs = 40, pad = 16, w = (maxx - minx + 1) * cs + pad * 2, h = (maxy - miny + 1) * cs + pad * 2;
+        C.width = w; C.height = h; X.fillStyle = "#111"; X.fillRect(0, 0, w, h);
+        X.lineWidth = 2; X.font = "12px monospace"; X.textAlign = "center"; X.textBaseline = "middle";
+        rooms.forEach(r => {
+            const gx = (r.x - minx) * cs + pad,
+                gy = (r.y - miny) * cs + pad,
+                a = gx + 5, b = gy + 5, s = cs - 10, mid = gx + cs / 2, midY = gy + cs / 2, dl = 12;
+            X.strokeStyle = "#888"; X.strokeRect(a, b, s, s);
+            if ((r.rects || []).some(v => ("" + v).includes("fm("))) X.fillStyle = "#bbb", X.fillText("m", mid, midY);
+            if ((r.rects || []).some(v => ("" + v).includes("fwx("))) X.fillStyle = "#bbb", X.fillText("x", mid, midY + 10);
+            X.fillText(r.x + "," + r.y, mid, gy)
+            for (const ch of r.doors || "") {
+                const locked = ch === ch.toUpperCase(), dir = ch.toLowerCase();
+                X.beginPath(); X.strokeStyle = locked ? "red" : "lime";
+                if (dir === "n") X.moveTo(mid - dl / 2, b), X.lineTo(mid + dl / 2, b);
+                if (dir === "s") X.moveTo(mid - dl / 2, b + s), X.lineTo(mid + dl / 2, b + s);
+                if (dir === "w") X.moveTo(a, midY - dl / 2), X.lineTo(a, midY + dl / 2);
+                if (dir === "e") X.moveTo(a + s, midY - dl / 2), X.lineTo(a + s, midY + dl / 2);
+                X.stroke();
+            }
+        });
+    }
+
+    function parseAndDraw() {
+        try { draw(safeParse(T.value)) } catch (e) {
+            C.width = 300; C.height = 150; X.fillStyle = "#eee"; X.fillText("Parse error", 20, 20);
+        }
+    }
+    T.oninput = parseAndDraw; parseAndDraw();
+</script>

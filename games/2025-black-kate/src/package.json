@@ -1,0 +1,42 @@
+{
+    "name": "black-cat",
+    "version": "1.0.0",
+    "description": "Black Cat game for js13k",
+    "scripts": {
+        "clear": "node ./script/clear.js",
+        "copy-html": "node ./script/copy-html.js",
+        "build-resources": "node ./script/build-resources.js",
+        "compile": "tsc",
+        "bundle": "esbuild dist/esm/index.js --bundle --minify --mangle-props=_$ --sourcemap --outfile=dist/build/s.js",
+        "zip-info": "node script/zip-info.js",
+        "debug-mode": "node script/debug-mode.js",
+        "release-mode": "node script/release-mode.js",
+        "apply-roadroller": "roadroller -O=2 -M=512 dist/build/s.js -o dist/build/s.js",
+        "create-zip": "advzip --shrink-insane --iter=1000 --add dist/game.zip dist/build/index.html dist/build/s.js dist/build/r && npm run zip-info",
+        "build": "npm run clear && npm run build-resources && npm run compile && npm run bundle && npm run copy-html",
+        "watch": "npm run debug-mode && npm run build && tsc --watch & esbuild dist/esm/index.js --bundle --sourcemap --outfile=dist/build/s.js --watch --servedir=dist/build",
+        "build-final": "npm run release-mode && npm run build && npm run create-zip",
+        "build-roadroller": "npm run release-mode && npm run build && npm run apply-roadroller && npm run create-zip"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/superman2211/kids-games"
+    },
+    "keywords": [
+        "game",
+        "js13k",
+        "black",
+        "cat"
+    ],
+    "author": "Clark Kent",
+    "dependencies": {
+        "advzip-bin": "^2.0.0",
+        "apng-js": "^1.1.2",
+        "pngjs": "^7.0.0",
+        "roadroller": "^2.1.0"
+    },
+    "devDependencies": {
+        "esbuild": "0.25.8",
+        "typescript": "^5.8.3"
+    }
+}

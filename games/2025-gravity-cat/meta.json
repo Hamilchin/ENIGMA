@@ -1,0 +1,55 @@
+{
+  "id": "2025-gravity-cat",
+  "slug": "gravity-cat",
+  "title": "Gravity Cat",
+  "year": 2025,
+  "rank": 15,
+  "overall_score": 21.65,
+  "criteria": {
+    "theme": {
+      "rank": 113,
+      "score": 2.78,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 39,
+      "score": 3.27,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 7,
+      "score": 4,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 8,
+      "score": 4.27,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 41,
+      "score": 3.32,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 5,
+      "score": 4,
+      "top": 4.45
+    }
+  },
+  "author": "Jani Nykänen",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "A small puzzle game where you play as a black cat (who would have guessed!) and control the gravity. You have to collect all the purple gems because… umm… well, I’m fairly certain there is a good reason for that, and it has something to do with beliefs related to black cats or something. Idea Idea is that you can control the direction of the gravity, and it affects all the objects on the screen (excluding fire). You need to collect all the gems you can see. If you get crushed by an object, you die. However, in some stages there are people. They cannot collect the gems, but you must keep them alive (i.e. try not to crush them with anything!). Controls Move (gravity or the cursor in menus): ↑ ← ↓ → or W A S D Restart level: R Undo: Backspace Pause: Esc or Enter Accept (in menus): Enter or Space",
+  "description": "A small puzzle game where you play as a black cat (who would have guessed!) and control the gravity. You have to collect all the purple gems because… umm… well, I’m fairly certain there is a good reason for that, and it has something to do with beliefs related to black cats or something. Idea Idea is that you can control the direction of the gravity, and it affects all the objects on the screen (excluding fire). You need to collect all the gems you can see. If you get crushed by an object, you die. However, in some stages there are people. They cannot collect the gems, but you must keep them alive (i.e. try not to crush them with anything!).",
+  "controls": "Move (gravity or the cursor in menus): ↑ ← ↓ → or W A S D Restart level: R Undo: Backspace Pause: Esc or Enter Accept (in menus): Enter or Space",
+  "github_url": "https://github.com/js13kGames/gravity-cat",
+  "play_url": "https://js13kgames.com/2025/games/gravity-cat",
+  "play_zip": "https://play.js13kgames.com/gravity-cat.zip",
+  "thumb_url": "https://play.js13kgames.com/gravity-cat/.ts.png",
+  "local_path": "games/2025-gravity-cat",
+  "entry": "index.html",
+  "commit_sha": "4f682e144f65ec8e09bc215cd7ea41f25d6fa4c9",
+  "build_status": "prebuilt"
+}

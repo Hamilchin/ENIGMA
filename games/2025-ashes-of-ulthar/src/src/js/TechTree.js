@@ -1,0 +1,155 @@
+// TechTree
+
+export const TechTree = {
+    create() {
+        return {
+            // Job path
+            woodcutter: {
+                title: 'Woodcutters',
+                description: 'Recruit villagers to gather wood.',
+                perTurn: '-1 Meat\n+5 Wood',
+                // Automatically handed out. Not necessarily because I want it that way,
+                // more because it would take extra code bytes to handle the UI when
+                // no jobs were unlocked yet.
+                unlockCost: [],
+                x: 4, y: 4,
+                sprite: 3,
+                d: true, l: true, u: true
+            },
+            butcher: {
+                title: 'Butchers',
+                description: 'Recruit villagers to gather meat.',
+                perTurn: '-1 Meat\n+5 Meat',
+                unlockCost: [0, 0, 10],
+                x: 4, y: 5,
+                sprite: 4,
+                d: true, r: true
+            },
+            tallower: {
+                title: 'Tallowers',
+                description: 'Recruit villagers to render fat and make torches.',
+                perTurn: '-3 Meat\n-2 Wood\n+1 Torch',
+                unlockCost: [0, 0, 10, 5],
+                x: 4, y: 6,
+                sprite: 5,
+                d: true, l: true
+            },
+            stonecutter: {
+                title: 'Stonemasons',
+                description: 'Recruit villagers to gather stone.',
+                perTurn: '-1 Meat\n-1 Torch\n+5 Stone',
+                unlockCost: [0, 0, 15, 15],
+                x: 4, y: 7,
+                sprite: 6,
+                d: true, r: true
+            },
+            cantor: {
+                title: 'Cantors',
+                description: 'Soothe the old ones with song and sacrifice.',
+                unlockCost: [0, 0, 40, 30],
+                perTurn: '-3 Wood\n-3 Meat\n-1 Torch\n-3 Stone\n+1 Sanity',
+                x: 4, y: 8,
+                sprite: 7,
+                l: true
+            },
+
+            // Sanity path
+            sacrifice: {
+                title: 'Sacrificial Lamb',
+                description: 'Sacrifice villagers to temporarily increase sanity. Long cooldown.',
+                unlockCost: [0, 0, 20, 20, 5, 10],
+                perUse: '-1 Villager\n+10 Sanity',
+                x: 3, y: 4,
+                sprite: 8,
+                l: true,
+                u: true
+            },
+            sacrificeplus: {
+                title: 'Repeat Offender',
+                description: 'Shorten sacrifice cooldown.',
+                unlockCost: [0, 0, 30, 5, 5, 30],
+                perUse: '-40% Cooldown',
+                x: 3, y: 3,
+                sprite: 8,
+            },
+            sanityplus: {
+                title: 'Resolute',
+                description: 'The village is more resilient.',
+                unlockCost: [0, 0, 0, 0, 20],
+                perTurn: 'Reduce all sanity drain by 20%',
+                x: 2, y: 4,
+                sprite: 7,
+                d: true
+            },
+            sanityplusplus: {
+                title: 'Resolute+',
+                description: 'The village is even more resilient.',
+                unlockCost: [0, 0, 0, 0, 40],
+                perTurn: 'Reduce all sanity drain by 40%',
+                x: 2, y: 5,
+                sprite: 7
+            },
+
+            // Ritual path
+            ritual: {
+                title: 'The Ritual',
+                description: 'Unlock Freedom. Increases sanity drain.',
+                unlockCost: [0, 0, 5, 5, 20, 5],
+                perUse: '-5 Wood\n-5 Meat\n-20 Torches\n-5 Stone',
+                x: 4, y: 3,
+                sprite: 9
+            },
+
+            // Wood upgrades
+            woodplus: {
+                title: 'Screaming Trees',
+                description: 'Woodcutters bring back 40% more wood.',
+                perTurn: '+2 Wood',
+                unlockCost: [0, 0, 20, 0, 0, 20],
+                x: 6, y: 7,
+                sprite: 3
+            },
+
+            // Meat upgrades
+            meatplus: {
+                title: 'Organ Harvest',
+                description: 'Butchers bring back 40% more meat.',
+                perTurn: '+2 Meat',
+                unlockCost: [0, 0, 20, 0, 0, 20],
+                x: 5, y: 5,
+                sprite: 4
+            },
+
+            // Stone upgrades
+            stoneplus: {
+                title: 'Stone Cold',
+                description: 'Stonemasons bring back 40% more stone.',
+                perTurn: '+2 Stone',
+                unlockCost: [0, 0, 20, 0, 0, 20],
+                x: 5, y: 7,
+                sprite: 6,
+                r: true,
+            },
+
+            // Tallower upgrades
+            torchplus: {
+                title: 'Hallowed',
+                description: 'Tallower torch production is doubled.',
+                perTurn: '+1 Torch',
+                unlockCost: [0, 0, 30, 30],
+                x: 3, y: 6,
+                sprite: 5
+            },
+
+            // Cantor upgrades
+            cantorplus: {
+                title: 'Chorus',
+                description: 'Cantor sanity gain is doubled.',
+                perTurn: '+1 Sanity',
+                unlockCost: [0, 0, 30, 30, 30, 30],
+                x: 3, y: 8,
+                sprite: 7
+            }
+        };
+    }
+};

@@ -1,0 +1,3085 @@
+let keys = {};
+let catWearsFedora = false;
+let whiteScriptOption = false;
+let tailColor = "#222"; // allow different tail colors for Emmie, Script tail by default
+let tailWidth = 4; // default tail width for script, enables fluffy  tail for Emmie
+let round = 1;
+let timerInterval = null;
+let baseTime = 60 + Math.random() * 20; // 60-80 seconds
+baseTime = Math.floor(baseTime); // round down to whole seconds if needed
+let currentTime = baseTime;
+let handsDisabledThisRound = false;
+let logsCount = 0;
+
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('gameCanvas').style.display = 'none';
+  document.getElementById('mobileControls').style.display = 'none';
+});
+
+
+function showHandsDisabledMessage(msg = "SUCCESS! I hospitalised my owner with coffee burns! \n The computer is mine for the rest of the day! \n Now thats what i call social engineering!!!") {
+  playHighRankCelebration();
+  const msgDiv = document.getElementById("handsDisabledMsg");
+  const closeBtn = document.getElementById("closeHandsDisabledMsg");
+  document.getElementById("handsDisabledText").textContent = msg;
+  msgDiv.style.display = "block";
+  // Hide after 3 seconds unless closed manually
+  let hideTimeout = setTimeout(() => {
+    msgDiv.style.display = "none";
+  }, 7000);
+  closeBtn.onclick = () => {
+    msgDiv.style.display = "none";
+    clearTimeout(hideTimeout);
+  };
+}
+
+function formatTime(secs) {
+  const m = Math.floor(secs / 60)
+    .toString()
+    .padStart(2, "0");
+  const s = (secs % 60).toString().padStart(2, "0");
+  return `${m}:${s}`;
+}
+
+function updateTimerDisplay() {
+  document.getElementById("timer").textContent = formatTime(currentTime);
+}
+
+function showTimer(show) {
+  //document.getElementById('timer').style.display = show ? 'block' : 'none';
+}
+
+function endRound() {
+
+
+  
+  clearInterval(timerInterval);
+  showTimer(false); 
+  gameStarted = false;
+  gameOverScreen.style.display = "flex";
+  gameOverScreen.setAttribute("data-reason", "timeout");
+  document.getElementById("gameOverMessage").textContent = "work day over";
+  document.getElementById("restartButton").innerHTML = "Next Day";
+  finalScores.innerHTML = `<span style='color:#2ea043;'>+${score} additions</span> &nbsp; <span style='color:#f85149;'>-${deletionsScore} deletions</span>`;
+  drawGitGraph();
+    // --- Store result and update grid ---
+    if (gitGraphResults.length < maxGames) {
+      gitGraphResults.push({ score, deletions: deletionsScore });
+    }
+    updateGitGraphGrid();
+    // --- If 7 games played, show report ---
+    if (gitGraphResults.length === maxGames) {
+      setTimeout(showReport, 1500); // Give a moment for last game over
+    }
+  }
+function startTimer() {
+  showTimer(true);
+  updateTimerDisplay();
+  timerInterval = setInterval(() => {
+    currentTime--;
+    updateTimerDisplay();
+    if (currentTime <= 0) {
+      endRound();
+    }
+  }, 1000);
+}
+
+function nextRound() {
+  handsDisabledThisRound = false;
+  round++;
+  startTimer();
+}
+
+// Only start timer when a round actually starts (e.g., when gameplay begins)
+// Call startTimer() at the start of each round in your game logic.
+// --- Coffee Cup Mechanic ---
+let coffeeCups = [];
+const coffeeEmoji = "☕";
+function spawnCoffeeCups() {
+  coffeeCups = [];
+  const numCups = 1 + Math.floor(Math.random() * 3); // 1-3 cups
+  let spots = [];
+  // Only shelf spots (no desk spots)
+  [...shelves, ...randomShelves, ...higherRandomShelves].forEach((shelf) => {
+    spots.push({
+      x: shelf.x + 20 + Math.random() * (shelf.width - 40),
+      y: shelf.y - 18 + Math.random() * 4,
+    });
+  });
+  // Shuffle and pick
+  for (let i = 0; i < numCups && spots.length > 0; i++) {
+    const idx = Math.floor(Math.random() * spots.length);
+    const pos = spots.splice(idx, 1)[0];
+    coffeeCups.push({
+      x: pos.x,
+      y: pos.y,
+      vx: 0,
+      vy: 0,
+      airborne: false,
+      alpha: 1,
+    });
+  }
+}
+function isCatNearCup(cup) {
+  // Cat's center
+  const catCenterX = cat.x + cat.width / 2;
+  const catCenterY = cat.y + cat.height / 2;
+  // Cup center
+  const cupCenterX = cup.x + 10;
+  const cupCenterY = cup.y + 10;
+  return (
+    Math.abs(catCenterX - cupCenterX) < 32 &&
+    Math.abs(catCenterY - cupCenterY) < 32
+  );
+}
+function pushCoffeeCup(cup) {
+  if (cup.airborne) return;
+  // Push direction: away from cat
+  const catCenterX = cat.x + cat.width / 2;
+  const cupCenterX = cup.x + 10;
+  let dir = Math.sign(cupCenterX - catCenterX) || 1;
+  cup.vx = dir * (2.5 + Math.random() * 1.5);
+  cup.vy = -4.5 - Math.random() * 1.5;
+  cup.airborne = true;
+  // If hands are present, trigger chase
+  if (stealthState === "hands" && handsProgress === 1) {
+    stealthState = "handsChase";
+    handsChaseActive = false;
+  }
+}
+// --- GitGraph grid and report state ---
+let gitGraphResults = [];
+const maxGames = 7;
+function getRank(total) {
+  if (total >= 7000) return "Master B|ackc4t_h@cker";
+  if (total >= 5000) return "Grey Cat Hacker";
+  if (total >= 3500) return "Pawtonista";
+  if (total >= 2000) return "Script kitty";
+  if (total >= 1000) return "Copy-pasta cat";
+  return "Dumber than my cat Emmie";
+}
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+canvas.width = 800;
+canvas.height = 600;
+
+
+
+
+
+// Stealth mechanic variables
+let stealthState = "idle"; // idle, doorOpening, footprints, hands, handsWait, footstepsBack, doorClosing, handsChase, scrubStain
+let scrubStainTimer = 0;
+let scrubStainProgress = 0;
+let scrubStainAlpha = 0;
+let scrubStainActive = false;
+let scrubFootstepsProgress = 0; // 0..1, for footsteps back to door
+let scrubStainX = null;
+let scrubStainY = null;
+let stealthTimer = 0;
+let nextStealthEvent = Date.now() + 3000 + Math.random() * 5000; //
+let doorOpenProgress = 0; // 0=closed, 1=open
+let footprintsProgress = 0; // 0=start, 1=at desk
+let handsProgress = 0; // 0=hidden, 1=fully shown
+let handsHoldTimer = 0; // ms hands have been fully shown
+let footstepsBackProgress = 0; // 0=at desk, 1=at door
+let doorCloseProgress = 0; // 0=open, 1=closed
+let lastStealthFrame = Date.now();
+
+// --- Meow/Chase feature ---
+let meowCount = 0;
+let meowTarget = 0;
+// --- Track successful chase avoidances ---
+let chaseSuccessCount = 0;
+let chaseSuccessThreshold = 1 + Math.floor(Math.random() * 3); // 1-3
+let handsChaseTimer = 0;
+let handsChaseStart = 0;
+let handsChasePos = { x: 0, y: 0 };
+let handsChaseActive = false;
+let handsChaseSpeed = 2.0; // px per frame
+
+const startScreen = document.getElementById("startScreen");
+const startButton = document.getElementById("startButton");
+const tutorialButton = document.getElementById("tutorialButton");
+const tutorialScreen = document.getElementById("reportScreen");
+const gitGraphGrid = document.getElementById("gitGraphGrid");
+const reportScreen = document.getElementById("reportScreen");
+const scoreboard = document.getElementById("scoreboard");
+const mobileControls = document.getElementById('mobileControls');
+
+// Sound API for harmonized, customizable effects
+const aMajorScale = [440, 494, 554, 587, 659, 740, 831, 880]; // A major scale frequencies
+let audioCtx = null;
+
+function playSoundEffect({
+  type = "default", // 'meow', 'score', 'scrub', etc.
+  pitch = 440, // base frequency
+  duration = 0.18, // seconds
+  volume = 0.18, // gain
+  scale = aMajorScale, // harmonized scale
+  randomize = true, // add randomness
+} = {}) {
+  if (!audioCtx)
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+  // Pick a harmonized note near the requested pitch
+  let freq = pitch;
+  if (scale && scale.length) {
+    // Find closest scale note
+    freq = scale.reduce((prev, curr) =>
+      Math.abs(curr - pitch) < Math.abs(prev - pitch) ? curr : prev
+    );
+    // Randomize within scale
+    if (randomize) {
+      freq = scale[Math.floor(Math.random() * scale.length)];
+    }
+  }
+
+  // Optionally randomize duration and volume
+  if (randomize) {
+    duration += (Math.random() - 0.5) * 0.05;
+    volume += (Math.random() - 0.5) * 0.04;
+  }
+
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+
+  // Choose waveform based on type
+  osc.type =
+    type === "meow"
+      ? "triangle"
+      : type === "scrub"
+      ? "square"
+      : type === "alert"
+      ? "sawtooth"
+      : "sine";
+  osc.frequency.value = freq;
+  gain.gain.value = Math.max(0.01, volume);
+
+  osc.connect(gain).connect(audioCtx.destination);
+
+  // Envelope for smoother sound
+  gain.gain.setValueAtTime(gain.gain.value, audioCtx.currentTime);
+  gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + duration);
+
+  osc.start();
+  osc.stop(audioCtx.currentTime + duration);
+
+  osc.onended = () => osc.disconnect();
+}
+
+function playGameOverProgression() {
+  const notes = [
+    { pitch: 349.23, duration: 0.38 }, // F (E string, fret 1)
+    { pitch: 392.0, duration: 0.38 }, // G (E string, fret 3)
+    { pitch: 415.3, duration: 0.38 }, // G# (E string, fret 4)
+    { pitch: 392.0, duration: 0.38 }, // G (E string, fret 3)
+    { pitch: 349.23, duration: 0.38 }, // F (E string, fret 1)
+    // Longer pause before last two notes
+    { pitch: 311.13, duration: 0.48, delay: 0.7 }, // D# (B string, fret 4)
+    { pitch: 293.66, duration: 0.48, delay: 0.5 }, // D (B string, fret 3)
+  ];
+
+  let time = 0;
+  notes.forEach((note) => {
+    time += (note.delay || 0) + note.duration + 0.12; // 0.12s gap for more melody
+    setTimeout(() => {
+      playSoundEffect({
+        type: "meow", // triangle waveform for softer sound
+        pitch: note.pitch,
+        duration: note.duration,
+        volume: 0.19,
+        randomize: false,
+        scale: null,
+      });
+    }, time * 1000);
+  });
+}
+
+function playBootupSound() {
+  // play macos bootup sound
+  playSoundEffect({
+    type: "meow",
+    pitch: 174.61, // F3, deep tone
+    duration: 1.2, // longer, sustained
+    volume: 0.22,
+    randomize: false,
+    scale: null,
+  });
+  playSoundEffect({
+    type: "meow",
+    pitch: 220, // A3 deep tone
+    duration: 1.2, // longer, sustained
+    volume: 0.22,
+    randomize: false,
+    scale: null,
+  });
+  playSoundEffect({
+    type: "meow",
+    pitch: 261.63, // c4, deep tone
+    duration: 1.2, // longer, sustained
+    volume: 0.22,
+    randomize: false,
+    scale: null,
+  });
+}
+// Usage examples:
+
+// High rank celebration sound based on your tab
+function playHighRankCelebration() {
+  // Frequencies for each string/fret (approximate, standard tuning)
+  const tabNotes = [
+    { pitch: 329.63 * Math.pow(2, 15 / 12), duration: 0.1 }, // high e, fret 15
+    { pitch: 329.63 * Math.pow(2, 14 / 12), duration: 0.1 }, // high e, fret 14
+    { pitch: 246.94 * Math.pow(2, 16 / 12), duration: 0.1 }, // B, fret 16
+    { pitch: 196.0 * Math.pow(2, 14 / 12), duration: 0.1 }, // G, fret 14
+    { pitch: 196.0 * Math.pow(2, 13 / 12), duration: 0.1 }, // G, fret 13
+    { pitch: 246.94 * Math.pow(2, 17 / 12), duration: 0.1 }, // B, fret 17
+    { pitch: 329.63 * Math.pow(2, 16 / 12), duration: 0.1 }, // high e, fret 16
+    { pitch: 329.63 * Math.pow(2, 20 / 12), duration: 0.1 }, // high e, fret 20
+  ];
+
+  let time = 0;
+  tabNotes.forEach((note) => {
+    setTimeout(() => {
+      playSoundEffect({
+        type: "score",
+        pitch: note.pitch,
+        duration: note.duration,
+        volume: 0.18,
+        scale: null,
+        randomize: false,
+      });
+    }, time * 1000);
+    time += note.duration + 0.01; // 80ms gap between notes
+  });
+}
+
+let bgMusicInterval = null;
+let bgMusicStep = 0;
+let bgMusicLoopCount = 0;
+let bridgeActive = false;
+let bridgeRepeatCount = 0;
+let crescendoActive = false;
+let crescendoStep = 0;
+
+// Royal Road progression in C major: F, G, Em, Am
+const royalRoadChords = [
+  { root: 349.23 /2, type: 'major' }, // F
+  { root: 392.00/2, type: 'major' }, // G
+  { root: 329.63/2, type: 'minor' }, // E
+  { root: 220.00/2, type: 'minor' }, // A
+];
+
+// Simple bass notes for each chord
+const royalRoadBass = [
+  174.61 / 2, // F2
+  196.00 / 2, // G2
+  164.81 /2 , // E2
+  110.00 /2, // A2
+];
+
+// Melody notes for each chord (C major scale, fits royal road progression)
+const royalRoadMelody = [
+  [440 /2 , 523.25 / 2, 587.33 / 2],    // F chord: A4, C5, D5
+  [392 /2, 523.25 / 2, 659.25 / 2],    // G chord: G4, C5, E5
+  [329.63 /2 , 440 /2, 523.25 / 2],    // Em chord: E4, A4, C5
+  [220 /2, 392 / 2, 440 / 2],          // Am chord: A3, G4, A4
+];
+
+
+
+// Add to the list of available
+
+const royalRoadMelody2 = [
+  [440, 523.25, 587.33],    // F chord: A4, C5, D5
+  [392, 523.25, 659.25],    // G chord: G4, C5, E5
+  [329.63, 440, 523.25],    // Em chord: E4, A4, C5
+  [220, 392, 440],          // Am chord: A3, G4, A4
+];
+// Add more if you want
+const royalRoadMelodies = [royalRoadMelody, royalRoadMelody2];
+
+// --- Bridge Section ---
+// A short, contrasting progression and melody
+const bridgeChords = [
+  { root: 293.66, type: 'm7' },   // Dm7
+  { root: 392.00, type: '7' },    // G7
+  { root: 261.63, type: 'maj7' }, // Cmaj7
+  { root: 220.00, type: 'm7' },   // Am7
+];
+const bridgeBass = [
+  130.81, // C3
+  146.83, // D3
+  164.81, // E3
+  196.00, // G3
+];
+
+
+const bridgeMelody = [
+  [659.25, 523.25, 392],    // C chord: E5, C5, G4
+  [587.33, 440, 293.66],    // Dm chord: D5, A4, D4
+  [523.25, 392, 329.63],    // Em chord: C5, G4, E4
+  [784, 659.25, 392],       // G chord: G5, E5, G4
+];
+
+// Define multiple bridge melody arrays
+const bridgeMelody1 = [
+  [659.25, 523.25, 392],    // C chord: E5, C5, G4
+  [587.33, 440, 293.66],    // Dm chord: D5, A4, D4
+  [523.25, 392, 329.63],    // Em chord: C5, G4, E4
+  [784, 659.25, 392],       // G chord: G5, E5, G4
+];
+const bridgeMelody2 = [
+  [523.25, 659.25, 392],    // C chord: C5, E5, G4
+  [440, 587.33, 293.66],    // Dm chord: A4, D5, D4
+  [392, 523.25, 329.63],    // Em chord: G4, C5, E4
+  [659.25, 784, 392],       // G chord: E5, G5, G4
+];
+const bridgeMelodyImpactSite = [
+  [659.25, 880, 1046.5, 784],      // C chord: E5, A5, C6, G5 (big sweep up)
+  [587.33, 932.33, 1174.66, 880], // Dm chord: D5, A#5, D6, A5
+  [523.25, 784, 1046.5, 659.25],  // Em chord: C5, G5, C6, E5
+  [784, 1046.5, 1318.5, 880],     // G chord: G5, C6, E6, A5
+];
+
+// Rickroll bridge melody: long, sweeping, satisfying conclusion
+const bridgeMelodyRickroll = [
+  // ...existing Rickroll phrases...
+  [440, 587.33, 493.88, 739.99, 739.99, 659.25], // Never gonna give you up
+  [440, 587.33, 659.25, 659.25, 587.33, 554.37, 493.88], // Never gonna let you down
+  [440, 587.33, 587.33, 659.25, 554.37, 440, 440, 659.25, 587.33], // Never gonna run around...
+  [440, 587.33, 739.99, 739.99, 659.25], // Never gonna make you cry
+  [440, 587.33, 440, 554.37, 587.33, 554.37, 493.88], // Never gonna say goodbye
+  [440, 587.33, 587.33, 659.25, 554.37, 440, 440, 659.25, 587.33], // Never gonna tell a lie...
+
+  [659.25, 587.33, 523.25, 440, 493.88, 554.37, 587.33, 659.25], // And hurt you
+];
+
+// Add to bridgeMelodies array for use in background music
+
+const bridgeMelodyPop = [
+  [659.25, 784, 659.25, 587.33],      // C chord: E5, G5, E5, D5
+  [587.33, 698.46, 587.33, 523.25],   // Dm chord: D5, F5, D5, C5
+  [523.25, 659.25, 523.25, 440],      // Em chord: C5, E5, C5, A4
+  [784, 880, 784, 659.25],            // G chord: G5, A5, G5, E5
+];
+const bridgeMelodySmoothBridge = [
+  [293.66, 349.23, 392.00, 440],      // D4, F4, G4, A4 (ascending, builds tension)
+  [392.00, 440, 493.88, 523.25],      // G4, A4, B4, C5 (rising, resolves to C)
+  [349.23, 392.00, 329.63, 261.63],   // F4, G4, E4, C4 (descending, gentle release)
+  [220.00, 261.63, 329.63, 349.23],   // A3, C4, E4, F4 (lands on F, matches main melody start)
+];
+// // Add more arrays as desired
+// const bridgeMelody3 = [
+//   [392, 523.25, 659.25],
+//   [293.66, 440, 587.33],
+//   [329.63, 392, 523.25],
+//   [392, 659.25, 784],
+// ];
+const bridgeMelodies = [bridgeMelody1, bridgeMelody2, bridgeMelodyImpactSite, bridgeMelodyPop, bridgeMelodyRickroll, bridgeMelodySmoothBridge];
+// Percussive click (hi-hat style)
+function playPercussion() {
+  if (!audioCtx)
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = "triangle";
+  osc.frequency.value = 400; // Low frequency for click
+  gain.gain.value = 0.3; // Soft percussion
+  osc.connect(gain).connect(audioCtx.destination);
+  gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
+  gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.06);
+  osc.start();
+  osc.stop(audioCtx.currentTime + 0.06);
+  osc.onended = () => osc.disconnect();
+}
+
+// Play a chord (triad) using playSoundEffect
+function playChord(root, type = 'major', volume = 0.25) {
+  const third = type === 'major' ? root * Math.pow(2, 4/12) : root * Math.pow(2, 3/12);
+  const fifth = root * Math.pow(2, 7/12);
+  playSoundEffect({ pitch: root, duration: 0.05, volume, randomize: false });
+  playSoundEffect({ pitch: third, duration: 0.05, volume, randomize: false });
+  playSoundEffect({ pitch: fifth, duration: 0.05, volume, randomize: false });
+}
+
+// Play melody notes (arpeggio style)
+function playMelody(notes) {
+  notes.forEach((note, i) => {
+    setTimeout(() => {
+      playSoundEffect({
+        pitch: note,
+        duration: 0.50,
+        volume: 0.05,
+        type: "score",
+        randomize: false,
+        scale: null,
+      });
+    }, i * 120);
+  });
+}
+
+// ...existing code...
+
+
+
+function startBackgroundMusic() {
+  if (bgMusicInterval) return;
+  bgMusicStep = 0;
+  bgMusicLoopCount = 0;
+  bridgeActive = false;
+  bridgeRepeatCount = 0;
+  crescendoActive = false;
+  crescendoStep = 0;
+
+  // Select a random bridge melody for this bridge section
+  let currentBridgeMelody = bridgeMelodies[Math.floor(Math.random() * bridgeMelodies.length)];
+  // Select a random main melody for this main section
+  let currentRoyalRoadMelody = royalRoadMelodies[Math.floor(Math.random() * royalRoadMelodies.length)];
+
+  bgMusicInterval = setInterval(() => {
+    // Every 4 loops, play bridge for 2 loops
+    if (!bridgeActive && !crescendoActive && bgMusicLoopCount > 0 && bgMusicLoopCount % 4 === 0) {
+      bridgeActive = true;
+      bridgeRepeatCount = 0;
+      bgMusicStep = 0;
+      // Pick a new random bridge melody each time bridge starts
+      currentBridgeMelody = bridgeMelodies[Math.floor(Math.random() * bridgeMelodies.length)];
+    }
+
+    // Pick a new random main melody each time main section starts
+    if (!bridgeActive && bgMusicStep === 0) {
+      currentRoyalRoadMelody = royalRoadMelodies[Math.floor(Math.random() * royalRoadMelodies.length)];
+    }
+
+    if (bridgeActive) {
+      const chordIdx = bgMusicStep % bridgeChords.length;
+      const chord = bridgeChords[chordIdx];
+      //playChord(chord.root, chord.type, 0.05);
+      //playSoundEffect({ pitch: bridgeBass[chordIdx], duration: 0.22, volume: 0.07, type: "meow", randomize: false });
+      //playPercussion();
+      //setTimeout(playPercussion, 180);
+      playMelody(currentBridgeMelody[chordIdx]);
+      bgMusicStep++;
+      if (bgMusicStep >= bridgeChords.length) {
+        bgMusicStep = 0;
+        bridgeRepeatCount++;
+        if (bridgeRepeatCount >= 2) {
+          bridgeActive = false;
+          bgMusicLoopCount++;
+        }
+      }
+    } else {
+      const chordIdx = bgMusicStep % royalRoadChords.length;
+      const chord = royalRoadChords[chordIdx];
+      //playChord(chord.root, chord.type, 0.08);
+      playSoundEffect({ pitch: royalRoadBass[chordIdx], duration: 0.22, volume: 0.07, type: "score", randomize: false });
+      playMelody(currentRoyalRoadMelody[chordIdx]);
+      bgMusicStep++;
+      if (bgMusicStep >= royalRoadChords.length) {
+        bgMusicStep = 0;
+        bgMusicLoopCount++;
+      }
+    }
+  }, 480); // 480ms per chord
+}
+
+
+
+
+function startLaidBackMusic() {
+  // Pick one type for this interval
+    const soundType = Math.random() < 0.5 ? "meow" : "score";
+    const soundDuration = Math.random() < 0.5 ? 0.9 : 0.3;
+  if (bgMusicInterval) return;
+  bgMusicStep = 0;
+  bgMusicLoopCount = 0;
+
+  // Lower, softer orchestral string-like notes
+  const laidBackChords = [
+    { root: 174.61, type: 'major' }, // F2
+    { root: 196.00, type: 'major' }, // G2
+    { root: 164.81, type: 'minor' }, // E2
+    { root: 110.00, type: 'minor' }, // A2
+  ];
+  const laidBackMelody = [
+    [220, 261.63, 293.66],    // F chord: A3, C4, D4
+    [196, 261.63, 329.63],    // G chord: G3, C4, E4
+    [164.81, 220, 261.63],    // Em chord: E3, A3, C4
+    [110, 196, 220],          // Am chord: A2, G3, A3
+  ];
+
+  bgMusicInterval = setInterval(() => {
+    const chordIdx = bgMusicStep % laidBackChords.length;
+    const chord = laidBackChords[chordIdx];
+
+    
+
+    playSoundEffect({
+      pitch: chord.root,
+      duration: soundDuration,
+      volume: 0.08,
+      type: soundType,
+      randomize: false,
+      scale: null,
+    });
+
+    laidBackMelody[chordIdx].forEach((note, i) => {
+      setTimeout(() => {
+        playSoundEffect({
+          pitch: note,
+          duration: soundDuration,
+          volume: 0.08,
+          type: soundType,
+          randomize: false,
+          scale: null,
+        });
+      }, i * 220);
+    });
+
+    bgMusicStep++;
+    if (bgMusicStep >= laidBackChords.length) {
+      bgMusicStep = 0;
+      bgMusicLoopCount++;
+    }
+  }, 1200); // much slower tempo
+}
+    function stopBackgroundMusic() {
+    if (bgMusicInterval) {
+      clearInterval(bgMusicInterval);
+      bgMusicInterval = null;
+    }
+    // Optionally, stop all currently playing sounds
+    if (audioCtx) {
+      audioCtx.close();
+      audioCtx = null;
+    }
+  }
+
+// Final Fantasy menu select chime
+function playFFMenuChime() {
+  playSoundEffect({
+    type: "score",      // triangle or square waveform
+    pitch: 1046.5,      // C6, bright/high note
+    duration: 0.09,
+    volume: 0.18,
+    randomize: false,
+    scale: null,
+  });
+  setTimeout(() => {
+    playSoundEffect({
+      type: "score",
+      pitch: 784,       // G5, lower note
+      duration: 0.11,
+      volume: 0.16,
+      randomize: false,
+      scale: null,
+    });
+  }, 80); // 80ms delay between notes
+}
+
+
+function updateGitGraphGrid() {
+  const squares = gitGraphGrid.querySelectorAll(".gitGraphSquare");
+  for (let i = 0; i < squares.length; i++) {
+    const ctx = squares[i].getContext("2d");
+    ctx.clearRect(0, 0, 32, 32);
+    if (gitGraphResults[i]) {
+      const net = Math.max(
+        0,
+        gitGraphResults[i].score - gitGraphResults[i].deletions
+      );
+      const maxScore = 1000;
+      const percent = Math.min(net / maxScore, 1);
+      function lerp(a, b, t) {
+        return a + (b - a) * t;
+      }
+      function hexToRgb(hex) {
+        hex = hex.replace("#", "");
+        if (hex.length === 3)
+          hex = hex
+            .split("")
+            .map((x) => x + x)
+            .join("");
+        const num = parseInt(hex, 16);
+        return [num >> 16, (num >> 8) & 0xff, num & 0xff];
+      }
+      function rgbToHex([r, g, b]) {
+        return (
+          "#" + [r, g, b].map((x) => x.toString(16).padStart(2, "0")).join("")
+        );
+      }
+      const grey = hexToRgb("#888");
+      const green = hexToRgb("#2ea043");
+      const color = [
+        Math.round(lerp(grey[0], green[0], percent)),
+        Math.round(lerp(grey[1], green[1], percent)),
+        Math.round(lerp(grey[2], green[2], percent)),
+      ];
+      ctx.fillStyle = rgbToHex(color);
+      ctx.fillRect(0, 0, 32, 32);
+      ctx.strokeStyle = "#2ea043";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(1, 1, 30, 30);
+    } else {
+      ctx.fillStyle = "#181818";
+      ctx.fillRect(0, 0, 32, 32);
+      ctx.strokeStyle = "#222";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(1, 1, 30, 30);
+    }
+  }
+}
+
+let shelves = [];
+let randomShelves = [];
+let higherRandomShelves = [];
+
+const cat = {
+  x: 50,
+  y: 500,
+  width: 20,
+  height: 20,
+  speed: 5,
+  velocityY: 0,
+  isJumping: false,
+  color: "#222",
+};
+
+// Door position and size (moved to global scope for scrubStain)
+const doorX = 30;
+const doorY = 333;
+const doorW = 60;
+const doorH = 140;
+
+// Update desk to be at rightmost part of screen
+const deskWidth = 120;
+const deskHeight = 60;
+const desk = {
+  x: canvas.width - deskWidth,
+  y: canvas.height - deskHeight - 20, // 20px above bottom
+};
+
+// Move monitor to top of furthest right shelf
+const monitor = {
+  x: 680, // rightmost shelf x
+  y: 300, // shelf y minus monitor height
+  width: 100,
+  height: 100,
+  label: "Monitor",
+};
+
+let gameStarted = false;
+let codeMode = false;
+let score = 0;
+let codeParticles = [];
+const gitAdditions = document.getElementById("gitAdditions");
+const gitDeletions = document.getElementById("gitDeletions");
+const gitCube = document.getElementById("gitCube");
+const gameOverScreen = document.getElementById("gameOverScreen");
+const finalScores = document.getElementById("finalScores");
+const gitGraph = document.getElementById("gitGraph");
+const restartButton = document.getElementById("restartButton");
+// Red deletions score
+let deletionsScore = 0;
+let lastHandsSecond = null;
+// For git graph
+let additionsHistory = [];
+
+function animateDeletionsScore(points) {
+  let startScore = deletionsScore;
+  let endScore = deletionsScore + points;
+  const animationDuration = 20;
+  const startTime = performance.now();
+
+  function updateScore(currentTime) {
+    const elapsedTime = currentTime - startTime;
+    const progress = Math.min(elapsedTime / animationDuration, 1);
+    const animatedScore = Math.floor(
+      startScore + (endScore - startScore) * progress
+    );
+    gitDeletions.textContent = animatedScore;
+    if (progress < 1) {
+      requestAnimationFrame(updateScore);
+    } else {
+      deletionsScore = endScore;
+      gitDeletions.textContent = deletionsScore;
+    }
+  }
+
+  requestAnimationFrame(updateScore);
+}
+
+function isCatNearMonitor() {
+  // Cat's center x and y
+  const catCenterX = cat.x + cat.width / 2;
+  const catCenterY = cat.y + cat.height / 2;
+  // Monitor's center x and y
+  const monitorCenterX = monitor.x + monitor.width / 2;
+  const monitorCenterY = monitor.y + monitor.height / 2;
+
+  if (
+    Math.abs(catCenterX - monitorCenterX) < 40 &&
+    Math.abs(catCenterY - monitorCenterY) < 30
+  )
+    return true;
+}
+
+// Manually define the shelves
+shelves = [
+  { x: 25, y: 315, width: 65, height: 20, color: "transparent" },
+  { x: 200, y: 400, width: 100, height: 20, color: "#4b371C" },
+  { x: 325, y: 290, width: 150, height: 20, color: "#4b371C" },
+  { x: 670, y: 380, width: 150, height: 20, color: "#4b371C" },
+];
+
+function generateCodeParticle(score) {
+  const codeSnippets = [
+    {
+      text: "console.log(meow')",
+      consoleColor: "white",
+      logColor: "green",
+      meowColor: "lightblue",
+    },
+    {
+      text: "cat.jump()",
+      consoleColor: "white",
+      logColor: "orange",
+      meowColor: "white",
+    },
+    {
+      text: "if ( cat.Slep) { slepMore() }",
+      consoleColor: "white",
+      logColor: "yellow",
+      meowColor: "white",
+    },
+    {
+      text: "let catFood = new Food('tuna')",
+      consoleColor: "white",
+      logColor: "red",
+      meowColor: "white",
+    },
+    {
+      text: "cat.play('yarn')",
+      consoleColor: "white",
+      logColor: "purple",
+      meowColor: "white",
+    },
+    {
+      text: "debug('cat position : ' + cat.x + ', ' + cat.y)",
+      consoleColor: "white",
+      logColor: "cyan",
+      meowColor: "white",
+    },
+    {
+      text: "error ('too many belly rubs)",
+      consoleColor: "white",
+      logColor: "red",
+      meowColor: "white",
+    },
+    {
+      text: "function headscratch() { return ' purr ' }",
+      consoleColor: "white",
+      logColor: "lime",
+      meowColor: "white",
+    },
+    {
+      text: "cat.hunt('laser pointer')",
+      consoleColor: "white",
+      logColor: "pink",
+      meowColor: "white",
+    },
+    {
+      text: "while bowlEmpty(true) { meow() }",
+      consoleColor: "white",
+      logColor: "lightgreen",
+      meowColor: "red",
+    },
+    {
+      text: "if (Noctis.doesAnything()) {Ignis(newRecipeh); }",
+      consoleColor: "white",
+      logColor: "gold",
+      meowColor: "white",
+    },
+    {
+      text: "for (let thoseWhoComeAfter) { inspire(Gustave); }",
+      consoleColor: "white",
+      logColor: "teal",
+      meowColor: "white",
+    },
+  ];
+
+  const snippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+
+  codeParticles.push({
+    x: monitor.x - 500,
+    y: monitor.y + monitor.height / 2,
+    text: snippet.text,
+    consoleColor: snippet.consoleColor,
+    logColor: snippet.logColor,
+    meowColor: snippet.meowColor,
+    size: 12,
+    speedX: Math.random() * 2 - 1,
+    speedY: Math.random() * -2 - 1,
+    targetX: canvas.width - 25,
+    targetY: 50,
+    alpha: 1,
+  });
+}
+
+function triggerScrubStain(x, y) {
+  // Cancel hands/monitor/chase mode and start scrubStain
+  if (stealthState === "hands" || stealthState === "handsChase") {
+    handsChaseActive = false;
+  }
+  stealthState = "scrubStain";
+  scrubStainTimer = 0;
+  scrubStainProgress = 0;
+  scrubStainAlpha = 1;
+  scrubStainActive = true;
+  // Set stain position (default to center if not provided)
+  scrubStainX = typeof x === "number" ? x : canvas.width / 2;
+  scrubStainY = typeof y === "number" ? y : canvas.height / 2 + 80;
+}
+
+function endHandsMonitorAndTriggerWalkBack() {
+  // End hands/monitor sequence and trigger walk back and door close
+  stealthState = "footstepsBack";
+  footstepsBackProgress = 0;
+  lastHandsSecond = null;
+  handsHoldTimer = 0;
+}
+
+function spawnRandomShelves() {
+  randomShelves = [];
+  const numShelves = Math.floor(Math.random() * 3); // 0-3
+  const minDistance = 80; // minimum x distance between shelves
+
+  let attempts = 0;
+  while (randomShelves.length < numShelves && attempts < 50) {
+    const x = 80 + Math.random() * 520;
+    const y = 180 + Math.random() * 30;
+    const width = 60 + Math.random() * 40;
+    const height = 20;
+
+    // Check x distance from all existing shelves
+    let tooClose = randomShelves.some(shelf => Math.abs(shelf.x - x) < minDistance);
+    if (!tooClose) {
+      randomShelves.push({ x, y, width, height, color: "#7a5c3c" });
+    }
+    attempts++;
+  }
+}
+
+function spawnHigherRandomShelves() {
+  higherRandomShelves = [];
+  const numShelves = Math.floor(Math.random() * 3); // 0-3
+  const minDistance = 80; // minimum x distance between shelves
+
+  let attempts = 0;
+  while (higherRandomShelves.length < numShelves && attempts < 50) {
+    const x = 80 + Math.random() * 520;
+    const y = 100 + Math.random() * 50;
+    const width = 20 + Math.random() * 60;
+    const height = 20;
+
+    // Check x distance from all existing shelves
+    let tooClose = higherRandomShelves.some(shelf => Math.abs(shelf.x - x) < minDistance);
+    if (!tooClose) {
+      higherRandomShelves.push({ x, y, width, height, color: "#7a5c3c" });
+    }
+    attempts++;
+  }
+}
+
+function update(delta = 0.016) {
+  // Update coffee cups
+  let cupsToRemove = [];
+  coffeeCups.forEach((cup, i) => {
+    if (cup.airborne) {
+      cup.x += cup.vx * delta * 60;
+      cup.y += cup.vy * delta * 60;
+      // Bounce coffee cups off canvas edges
+      const cupWidth = 20;
+      if (cup.x < 0) {
+        playSoundEffect({ type: "scrub", pitch: 554, duration: 0.2 });
+        cup.x = 0;
+        cup.vx *= -1;
+      } else if (cup.x > canvas.width - cupWidth) {
+        cup.x = canvas.width - cupWidth;
+        cup.vx *= -1;
+      }
+      cup.vy += 0.35 * delta * 60; // gravity
+      // Hands collision (only if hands are present and fully shown)
+      if ((stealthState === "hands" || stealthState === "handsChase") && handsProgress === 1) {
+        const handsX = handsChasePos.x;
+        const handsY = handsChasePos.y;
+        const handsWidth = 10; // adjust as needed
+        const handsHeight = 5; // adjust as needed
+        const cupLeft = cup.x;
+        const cupRight = cup.x + cupWidth;
+        const cupTop = cup.y;
+        const cupBottom = cup.y + 20;
+        const handsLeft = handsX;
+        const handsRight = handsX + handsWidth;
+        const handsTop = handsY;
+        const handsBottom = handsY + handsHeight;
+        if (cupRight > handsLeft && cupLeft < handsRight && cupBottom > handsTop && cupTop < handsBottom) {
+          cupsToRemove.push(i);
+          handsDisabledThisRound = true; // disable hands for rest of round
+          playSoundEffect({ type: "scrub", pitch: 554, duration: 0.2, volume: 0.25 });
+          // Optionally trigger animation or other game logic here
+        }
+      }
+      // Desk collision
+      if (cup.y + 20 > desk.y && cup.vy > 0) {
+        cup.y = desk.y - 20;
+        // Trigger spill and scrubStain at cup location
+        playSoundEffect({ type: "scrub", pitch: 554, duration: 0.2, volume: 0.15 });
+        if (!scrubStainActive) {
+          triggerScrubStain(cup.x + 10, desk.y - 10);
+        }
+        cup.vy *= -0.35;
+        cup.vx *= 0.6;
+        if (Math.abs(cup.vy) < 1.2) {
+          cup.vy = 0;
+          cup.airborne = false;
+          cupsToRemove.push(i); // Mark for removal
+        }
+      }
+      // Shelf collision
+      shelves.forEach((shelf) => {
+        if (
+          cup.x + 20 > shelf.x &&
+          cup.x < shelf.x + shelf.width &&
+          cup.y + 20 > shelf.y &&
+          cup.y < shelf.y + shelf.height &&
+          cup.vy > 0
+        ) {
+          playSoundEffect({ type: "scrub", pitch: 554, duration: 0.2, volume: 0.15 });
+          cup.y = shelf.y - 20;
+          cup.vy *= -0.35;
+          cup.vx *= 0.6;
+          if (Math.abs(cup.vy) < 1.2) {
+            cup.vy = 0;
+            cup.airborne = false;
+          }
+        }
+      });
+      // Shelf collision (random shelves)
+      randomShelves.forEach((shelf) => {
+        if (
+          cup.x + 20 > shelf.x &&
+          cup.x < shelf.x + shelf.width &&
+          cup.y + 20 > shelf.y &&
+          cup.y < shelf.y + shelf.height &&
+          cup.vy > 0
+        ) {
+          playSoundEffect({ type: "scrub", pitch: 554, duration: 0.2 });
+          cup.y = shelf.y - 20;
+          cup.vy *= -0.35;
+          cup.vx *= 0.6;
+          if (Math.abs(cup.vy) < 1.2) {
+            cup.vy = 0;
+            cup.airborne = false;
+          }
+        }
+      });
+      higherRandomShelves.forEach((shelf) => {
+              if (
+                cup.x + 20 > shelf.x &&
+                cup.x < shelf.x + shelf.width &&
+                cup.y + 20 > shelf.y &&
+                cup.y < shelf.y + shelf.height &&
+                cup.vy > 0
+              ) {
+                playSoundEffect({ type: "scrub", pitch: 554, duration: 0.2 });
+                cup.y = shelf.y - 20;
+                cup.vy *= -0.35;
+                cup.vx *= 0.6;
+                if (Math.abs(cup.vy) < 1.2) {
+                  cup.vy = 0;
+                  cup.airborne = false;
+                }
+              }
+            });
+
+
+    }
+  });
+  // Remove cups that landed
+  if (cupsToRemove.length > 0) {
+    // Remove from highest index to lowest to avoid index shift
+    cupsToRemove
+      .sort((a, b) => b - a)
+      .forEach((idx) => coffeeCups.splice(idx, 1));
+  }
+
+  if (!gameStarted) return;
+
+  // Scrub stain mechanic
+  if (stealthState === "scrubStain") {
+    scrubStainTimer++;
+    // Animate hands scrubbing for 2 seconds
+    if (scrubStainTimer < 120) {
+      scrubStainProgress = scrubStainTimer / 120;
+      // Fade out stain as hands scrub
+      scrubStainAlpha = 1 - scrubStainTimer / 120;
+    } else if (scrubStainTimer < 270) {
+      // footsteps phase unchanged
+      scrubStainProgress = 1;
+      scrubFootstepsProgress = (scrubStainTimer - 120) / 150;
+      scrubStainAlpha = 0; // keep stain gone
+    } else if (scrubStainTimer < 330) {
+      // smoother door closing (60 frames)
+      // Animate door closing
+      scrubStainAlpha = 0;
+    } else {
+      // Reset to idle
+      scrubStainActive = false;
+      scrubFootstepsProgress = 0;
+      stealthState = "idle";
+      nextStealthEvent = Date.now() + 3000 + Math.random() * 4000;
+    }
+    // Do NOT return here; allow rest of update to run so game continues
+  }
+
+  // Stealth mechanic timing
+  const now = Date.now();
+  if (stealthState === "handsChase") {
+    // --- Hands chase the cat ---
+    if (!handsChaseActive) {
+      // Initialize chasef
+      handsChaseActive = true;
+      handsChaseStart = now;
+      handsChaseTimer = 0;
+      if (tailColor == "#8b6f2cff") {  // checking tail color is emmie (only cat with fluffy tail)// could i check the checkbox state instead? yes but too long. 
+        playHighRankCelebration(); // Use high-rank sound to celebreate Emmies unique Fluffy tail!
+        tailWidth = 14; // Emmie's fluffy tail
+      }
+      // Start hands at monitor
+      handsChasePos.x = monitor.x + monitor.width / 2;
+      handsChasePos.y = monitor.y + monitor.height - 10;
+    }
+    // Move hands toward cat
+    const catCenterX = cat.x + cat.width / 2;
+    const catCenterY = cat.y + cat.height / 2;
+    const dx = catCenterX - handsChasePos.x;
+    const dy = catCenterY - handsChasePos.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist > 1) {
+      handsChasePos.x += (dx / dist) * handsChaseSpeed;
+      handsChasePos.y += (dy / dist) * handsChaseSpeed;
+    }
+    // Check collision with cat
+    if (
+      handsChasePos.x > cat.x - 18 &&
+      handsChasePos.x < cat.x + cat.width + 18 &&
+      handsChasePos.y > cat.y - 16 &&
+      handsChasePos.y < cat.y + cat.height + 16
+    ) {
+      endGame();
+      return;
+    }
+    // Timer for chase
+    handsChaseTimer = now - handsChaseStart;
+    if (handsChaseTimer > 7000) {
+      // Hands return to monitor, but count as a successful avoidance
+      handsChaseActive = false;
+      tailWidth = 4;  // reset tail width in case it was Emmie
+      chaseSuccessCount++;
+      meowCount = 0;
+      meowTarget = 0;
+      if (chaseSuccessCount >= chaseSuccessThreshold) {
+        // End hands/monitor and trigger walk back/door close
+        endHandsMonitorAndTriggerWalkBack();
+        chaseSuccessCount = 0;
+        // Re-randomize threshold for next event
+        chaseSuccessThreshold = 1 + Math.floor(Math.random() * 3);
+      } else if (!handsDisabledThisRound) {
+        // Resume hands at monitor
+        stealthState = "hands";
+        handsProgress = 1;
+      }
+    }
+  } else {
+    if (now > nextStealthEvent && stealthState === "idle") {
+      chaseSuccessCount = 0; // Reset for new event
+      chaseSuccessThreshold = 1 + Math.floor(Math.random() * 3); // Re-randomize for new event
+      stealthState = "doorOpening";
+      doorOpenProgress = 0;
+      footprintsProgress = 0;
+      handsProgress = 0;
+
+      footstepsBackProgress = 0;
+      doorCloseProgress = 0;
+    }
+    if (stealthState === "doorOpening") {
+      doorOpenProgress += 0.02;
+      if (doorOpenProgress >= 1) {
+        doorOpenProgress = 1;
+        stealthState = "footprints";
+      }
+    } else if (stealthState === "footprints") {
+      footprintsProgress += 0.008;
+      if (footprintsProgress >= 1 && !handsDisabledThisRound) {
+        footprintsProgress = 1;
+        stealthState = "hands";
+        handsHoldTimer = 0;
+        lastHandsSecond = null;
+      }
+    } else if (stealthState === "hands") {
+      if (handsProgress < 1) {
+        handsProgress += 0.02;
+        if (handsProgress > 1) handsProgress = 1;
+      } else {
+        handsHoldTimer += 16; // ~1 frame at 60fps
+        // --- Red deletions score: count up every second hands are in front of monitor ---
+        let handsSeconds = Math.floor(handsHoldTimer / 1000);
+        if (lastHandsSecond !== handsSeconds) {
+          lastHandsSecond = handsSeconds;
+          animateDeletionsScore(5);
+          playSoundEffect({
+            type: "alert",
+            pitch: 220 + Math.random() * 100,
+            duration: 0.12,
+            volume: 0.05,
+          });
+        }
+        // --- GAME OVER if cat is in front of monitor when hands are there ---
+        if (isCatNearMonitor()) {
+          endGame();
+          return;
+        }
+        if (handsHoldTimer >= 30000) {
+          // 30 seconds in ms
+          stealthState = "footstepsBack";
+          footstepsBackProgress = 0;
+          lastHandsSecond = null;
+        }
+      }
+    } else if (stealthState === "footstepsBack") {
+      footstepsBackProgress += 0.012; // a bit faster than forward
+      tailWidth = 4; // reset tail width in case it was Emmie
+      if (footstepsBackProgress >= 1) {
+        footstepsBackProgress = 1;
+        stealthState = "doorClosing";
+        doorCloseProgress = 0;
+      }
+    } else if (stealthState === "doorClosing") {
+      tailWidth = 4; // reset tail width in case it was Emmie
+      doorCloseProgress += 0.02;
+      if (doorCloseProgress >= 1) {
+        doorCloseProgress = 1;
+        stealthState = "idle";
+        nextStealthEvent = Date.now() + 4000 + Math.random() * 3000;
+      }
+    }
+  }
+
+  // Auto-activate code mode if cat is in front of monitor
+  if (isCatNearMonitor()) {
+    codeMode = true;
+  } else {
+    codeMode = false;
+  }
+
+  // Gravity
+  cat.velocityY += 0.5 * delta * 60; // scale gravity to match previous behavior
+  cat.y += cat.velocityY * delta * 60;
+
+  // Keep cat on the desk
+  let onGround = false;
+  if (cat.y + cat.height > desk.y) {
+    cat.y = desk.y - cat.height;
+    cat.velocityY = 0;
+    cat.isJumping = false;
+    onGround = true;
+  }
+
+  // Shelf collision detection
+  shelves.concat(randomShelves).forEach((shelf) => {
+    if (
+      cat.x < shelf.x + shelf.width &&
+      cat.x + cat.width > shelf.x &&
+      cat.y + cat.height > shelf.y &&
+      cat.y < shelf.y + shelf.height &&
+      cat.velocityY >= 0
+    ) {
+      cat.y = shelf.y - cat.height;
+      cat.velocityY = 0;
+      cat.isJumping = false;
+      onGround = true;
+    }
+  });
+
+    // Shelf collision detection
+    shelves.concat(higherRandomShelves).forEach((shelf) => {
+      if (
+        cat.x < shelf.x + shelf.width &&
+        cat.x + cat.width > shelf.x &&
+        cat.y + cat.height > shelf.y &&
+        cat.y < shelf.y + shelf.height &&
+        cat.velocityY >= 0
+      ) {
+        cat.y = shelf.y - cat.height;
+        cat.velocityY = 0;
+        cat.isJumping = false;
+        onGround = true;
+      }
+    });
+
+  // Movement
+  if (keys["ArrowLeft"]) {
+    cat.x -= cat.speed * delta * 60;
+  }
+  if (keys["ArrowRight"]) {
+    cat.x += cat.speed * delta * 60;
+  }
+
+  // Keep cat within bounds
+  if (cat.x < 0) {
+    cat.x = 0;
+  }
+  if (cat.x + cat.width > canvas.width) {
+    cat.x = canvas.width - cat.width;
+  }
+
+  // Update code particles and meow particles
+  codeParticles.forEach((particle, index) => {
+    particle.x += particle.speedX;
+    particle.y += particle.speedY;
+    // For 'meow' particles, float up and fade slower
+    if (particle.isMeow) {
+      // Move toward target, but mostly float up
+      const dx = (particle.targetX - particle.x) * 0.04;
+      const dy = (particle.targetY - particle.y) * 0.04;
+      particle.x += dx;
+      particle.y += dy;
+      particle.alpha -= 0.008;
+      if (particle.alpha <= 0.01) {
+        codeParticles.splice(index, 1);
+      }
+    } else {
+      const dx = particle.targetX - particle.x;
+      const dy = particle.targetY - particle.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      if (distance < 10) {
+        codeParticles.splice(index, 1);
+      }
+      particle.alpha -= 0.01;
+      if (particle.alpha <= 0) {
+        codeParticles.splice(index, 1);
+      }
+    }
+  });
+
+  // Track additions history for git graph
+  if (gameStarted && additionsHistory.length < 32) {
+    additionsHistory.push(score);
+  }
+
+  // Prevent hands from being drawn/updated if disabled
+  if (stealthState === "handsChase" && handsDisabledThisRound) {
+    handsChaseActive = false;
+    handsProgress = 0;
+    showHandsDisabledMessage();
+    addLogEntry('Social engineering IS the most common/successful hacking method, and apparently throwing scolding hot coffee directly on someones face is just as effective!!! Sure worked wonders for getting my pesky owner out of the house and into urgent care for a few hours!  He was in such a hurry he even forgot to lock his laptop! Ill try to make the most of the time I have with the computer while hes gone. You know what they say; When the owner is away the cat shall...grind leet code in hopes of achieving her dreams of becoming a master black hat hacker! I sure hope hes home soon though he needs to feed me and i need someones legs to sleep in between tonite... -Script M Kitty ');
+    logsCount++
+
+    endHandsMonitorAndTriggerWalkBack();
+
+
+
+    // Optionally, skip hands rendering logic here
+  }
+}
+
+function drawScrubStain() {
+   //tailWidth = 4; // reset tail width in case it was Emmie
+  // Draw coffee stain at the triggered location
+  if (scrubStainActive && scrubStainX !== null && scrubStainY !== null) {
+    const stainX = scrubStainX;
+    const stainY = scrubStainY;
+    ctx.save();
+    ctx.globalAlpha = scrubStainAlpha;
+    // Draw stain
+    ctx.shadowColor = "transparent";
+    ctx.shadowBlur = 0;
+    ctx.beginPath();
+    ctx.arc(
+      stainX,
+      stainY,
+      38 + Math.sin(scrubStainTimer / 6) * 2,
+      0,
+      2 * Math.PI
+    );
+    ctx.fillStyle = "#6b3e26";
+    ctx.fill();
+    ctx.globalAlpha = Math.min(1, scrubStainAlpha + 0.2);
+    ctx.beginPath();
+    ctx.arc(stainX + 10, stainY - 8, 12, 0, 2 * Math.PI);
+    ctx.arc(stainX - 14, stainY + 6, 8, 0, 2 * Math.PI);
+    ctx.fillStyle = "#8d5c3c";
+    ctx.fill();
+    ctx.restore();
+
+    // Draw two hands like monitor/chase hands, one doing a circular scrubbing motion
+    if (scrubStainTimer < 120) {
+      // Hand 1 (left) - static, like monitor hand
+      let hand1X = stainX - 28;
+      let hand1Y = stainY - 32;
+      drawGameHand(hand1X, hand1Y, 1, 0.9);
+      // Hand 2 (right) - circular scrubbing motion
+      let angle = (scrubStainTimer / 18) * 2 * Math.PI;
+      let radius = 22;
+      let hand2X = stainX + Math.cos(angle) * radius + 18;
+      let hand2Y = stainY + Math.sin(angle) * radius - 18;
+      drawGameHand(hand2X, hand2Y, 1, 1);
+    } else if (scrubStainTimer < 2440) {
+      // Animate footsteps walking back to door
+      let t = scrubFootstepsProgress;
+      let startX = stainX;
+      let startY = stainY + 18;
+      let endX = doorX + doorW / 2;
+      let endY = doorY + doorH - 18;
+      let footX = startX + (endX - startX) * t;
+      let footY = startY + (endY - startY) * t;
+      // Draw a series of footsteps along the path
+      let steps = 8;
+
+      for (let i = 0; i < steps; i++) {
+        let stepT = i / (steps - 1);
+        let sx = startX + (endX - startX) * stepT;
+        let sy = startY + (endY - startY) * stepT;
+        ctx.save();
+        ctx.shadowColor = "transparent";
+        ctx.shadowBlur = 0;
+        ctx.globalAlpha = Math.max(0, Math.min(1, (t - stepT) * 2));
+        ctx.beginPath();
+        ctx.ellipse(
+          sx,
+          sy,
+          8,
+          4,
+          i % 2 === 0 ? 0 : Math.PI / 8,
+          0,
+          2 * Math.PI
+        );
+        ctx.fillStyle = "#444";
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+  }
+}
+
+// Draw a hand similar to monitor/chase hands
+function drawGameHand(x, y, scale = 1, alpha = 1) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.translate(x, y);
+  ctx.scale(scale, scale);
+  // Remove any shadow for hands
+  ctx.shadowBlur = 0;
+  ctx.shadowColor = "transparent";
+  // Palm
+  ctx.beginPath();
+  ctx.ellipse(0, 0, 22, 16, Math.PI / 10, 0, 2 * Math.PI);
+  ctx.fillStyle = "#f3e2c7";
+  ctx.fill();
+  // Thumb
+  ctx.beginPath();
+  ctx.ellipse(-16, 2, 7, 12, -Math.PI / 3, 0, 2 * Math.PI);
+  ctx.fillStyle = "#e2c7a0";
+  ctx.fill();
+  // Fingers
+  for (let i = -1.2; i <= 1.2; i += 0.8) {
+    ctx.beginPath();
+    ctx.ellipse(10 + i * 7, -10, 6, 14, Math.PI / 8 + i * 0.1, 0, 2 * Math.PI);
+    ctx.fillStyle = "#f3e2c7";
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
+function draw() {
+  // Reset any unbalanced context states for MacOS Strict stack management
+  let resetCount = 0;
+  while (resetCount < 100) {
+    // Safety limit
+    try {
+      ctx.restore();
+      resetCount++;
+    } catch (e) {
+      // reset until stack is empty and throws stack underflow or empty the save stack by 100 per frame
+      break;
+    }
+  }
+
+  // Start with a fresh state
+  ctx.save();
+
+  // --- BACKGROUND LAYERS ---
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // Draw wall (upper background)
+  ctx.fillStyle = "#728C69";
+  // Lower the wall so it ends closer to the desk
+  const wallBottomY = desk.y - 60; // was desk.y - 241, now much closer
+  ctx.fillRect(0, 0, canvas.width, wallBottomY);
+
+  // Draw floor area (lower background, below floorboard)
+  const floorboardY = wallBottomY;
+  ctx.fillStyle = "#bcae99"; // lighter, warm floor color
+  ctx.fillRect(0, floorboardY, canvas.width, canvas.height - floorboardY);
+
+  // Draw floorboard (horizontal plank)
+  ctx.save();
+  ctx.shadowColor = "#222a"; // dark shadow color
+  ctx.shadowBlur = 20; // blur radius for soft shadow
+  ctx.fillStyle = "#6b4a2b";
+  ctx.fillRect(0, floorboardY - 8, canvas.width, 16);
+  ctx.restore();
+
+  // Update gitCube color live based on (additions - deletions)
+  updateGitCubeColor();
+  // --- BACKGROUND ELEMENTS ---
+
+  // (Removed blue ellipses/floor gradient)
+
+  // Draw scrub stain if active (should be above carpet)
+  if (scrubStainActive) {
+    drawScrubStain();
+  }
+
+  // Draw floorboard (a thin, dark ellipse at the back of the floor)
+  ctx.save();
+  ctx.globalAlpha = 0.85;
+  ctx.fillStyle = "#4b371c";
+  ctx.beginPath();
+  //ctx.ellipse(canvas.width / 2, desk.y + 8, canvas.width * 0.48 * 0.98, 13, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+
+  // Draw sky background and sun (moves diagonally behind the window)
+  const windowX = canvas.width / 2 - 70;
+  const windowY = 220;
+
+  // Sky color gradient based on sunProgress (0=day, 0.5=orange, 1=purple)
+  let windowSunProgress = 0;
+  if (gameStarted && baseTime > 0) {
+    windowSunProgress = 1 - currentTime / baseTime;
+    if (windowSunProgress < 0) windowSunProgress = 0;
+    if (windowSunProgress > 1) windowSunProgress = 1;
+  } else {
+    windowSunProgress = 0;
+  }
+  // Interpolate sky color: blue (#7ecfff) -> orange (#ffb347) -> purple (#6a3fa0)
+  function lerpColor(a, b, t) {
+    const ah = parseInt(a.replace("#", ""), 16),
+      bh = parseInt(b.replace("#", ""), 16);
+    const ar = (ah >> 16) & 0xff,
+      ag = (ah >> 8) & 0xff,
+      ab = ah & 0xff;
+    const br = (bh >> 16) & 0xff,
+      bg = (bh >> 8) & 0xff,
+      bb = bh & 0xff;
+    return (
+      "#" +
+      [
+        Math.round(ar + (br - ar) * t)
+          .toString(16)
+          .padStart(2, "0"),
+        Math.round(ag + (bg - ag) * t)
+          .toString(16)
+          .padStart(2, "0"),
+        Math.round(ab + (bb - ab) * t)
+          .toString(16)
+          .padStart(2, "0"),
+      ].join("")
+    );
+  }
+  let skyColor;
+  if (windowSunProgress < 0.5) {
+    // Blue to orange
+    skyColor = lerpColor("#7ecfff", "#ffb347", windowSunProgress * 2);
+  } else {
+    // Orange to purple
+    skyColor = lerpColor("#ffb347", "#6a3fa0", (windowSunProgress - 0.5) * 2);
+  }
+  // Draw sky background behind window
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(windowX, windowY, 140, 80);
+  ctx.closePath();
+  ctx.clip();
+  // Gradient sky
+  let windowGrad = ctx.createLinearGradient(
+    windowX,
+    windowY,
+    windowX,
+    windowY + 80
+  );
+  windowGrad.addColorStop(0, skyColor);
+  windowGrad.addColorStop(1, "#fff");
+  ctx.fillStyle = windowGrad;
+  ctx.fillRect(windowX, windowY, 140, 80);
+
+  // --- Clouds ---
+  if (!draw.clouds) {
+    draw.clouds = [];
+    for (let i = 0; i < 3; i++) {
+      draw.clouds.push({
+        x: windowX + Math.random() * 140,
+        y: windowY + 10 + Math.random() * 50,
+        speed: 0.15 + Math.random() * 0.12,
+        size: 18 + Math.random() * 12,
+        offset: Math.random() * 1000,
+      });
+    }
+  }
+  // Move and draw clouds
+  for (let i = 0; i < draw.clouds.length; i++) {
+    let c = draw.clouds[i];
+    // Clouds move only during game
+    if (gameStarted) {
+      c.x += c.speed;
+      if (c.x > windowX + 140 + 30) {
+        c.x = windowX - 40;
+        c.y = windowY + 10 + Math.random() * 50;
+        c.size = 18 + Math.random() * 12;
+        c.speed = 0.15 + Math.random() * 0.12;
+      }
+    }
+
+    // Draw cloud (simple ellipses)
+    ctx.save();
+    ctx.globalAlpha = 0.7;
+    ctx.fillStyle = "#fff";
+    ctx.beginPath();
+    ctx.ellipse(c.x, c.y, c.size, c.size * 0.6, 0, 0, Math.PI * 2);
+    ctx.ellipse(
+      c.x + 0.6 * c.size,
+      c.y + 2,
+      c.size * 0.7,
+      c.size * 0.4,
+      0,
+      0,
+      Math.PI * 2
+    );
+    ctx.ellipse(
+      c.x - 0.7 * c.size,
+      c.y + 3,
+      c.size * 0.5,
+      c.size * 0.3,
+      0,
+      0,
+      Math.PI * 2
+    );
+    ctx.fill();
+    ctx.restore();
+  }
+  ctx.restore();
+  // Sun animation: moves from top-left to bottom-right of window as time passes, tied to timer
+  let sunProgress = 0;
+  if (gameStarted && baseTime > 0) {
+    sunProgress = 1 - currentTime / baseTime;
+    if (sunProgress < 0) sunProgress = 0;
+    if (sunProgress > 1) sunProgress = 1;
+  } else {
+    sunProgress = 0;
+  }
+  // Sun path: from (windowX+20, windowY+20) to (windowX+120, windowY+70)
+  const sunStart = { x: windowX + 20, y: windowY + 20 };
+  const sunEnd = { x: windowX + 120, y: windowY + 70 };
+  const sunX = sunStart.x + (sunEnd.x - sunStart.x) * windowSunProgress;
+  const sunY = sunStart.y + (sunEnd.y - sunStart.y) * windowSunProgress;
+  // Draw sun behind window
+  ctx.save();
+  ctx.globalAlpha = 0.85;
+  ctx.beginPath();
+  ctx.arc(sunX, sunY, 18, 0, 2 * Math.PI);
+  ctx.fillStyle = "orange";
+  ctx.shadowColor = "yellow";
+  ctx.shadowBlur = 24;
+  ctx.fill();
+  ctx.restore();
+
+  // Draw window (centered, more transparent so sun is visible) with shadow
+  ctx.save();
+  ctx.shadowColor = "#2226";
+  ctx.shadowBlur = 8;
+  ctx.shadowOffsetX = 0;
+  ctx.shadowOffsetY = 4;
+  ctx.globalAlpha = 0.55;
+  ctx.fillStyle = "#e0f7fa";
+  ctx.fillRect(windowX, windowY, 140, 80);
+  ctx.globalAlpha = 1;
+  ctx.shadowBlur = 0;
+  ctx.shadowOffsetY = 0;
+  ctx.strokeStyle = "#b0c4de";
+  ctx.lineWidth = 6;
+  ctx.strokeRect(windowX, windowY, 140, 80);
+  // Window panes
+  ctx.strokeStyle = "#b0c4de";
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(windowX + 70, windowY);
+  ctx.lineTo(windowX + 70, windowY + 80);
+  ctx.moveTo(windowX, windowY + 40);
+  ctx.lineTo(windowX + 140, windowY + 40);
+  ctx.stroke();
+  ctx.restore();
+
+  // Draw door (closed, opening, open, closing) with shadow
+  ctx.save();
+  ctx.shadowColor = "#222a";
+  ctx.shadowBlur = 18;
+  ctx.shadowOffsetX = 0;
+  ctx.shadowOffsetY = 8;
+  let doorOpen = 0;
+  if (
+    stealthState === "doorOpening" ||
+    stealthState === "footprints" ||
+    stealthState === "hands" ||
+    stealthState === "handsWait" ||
+    stealthState === "footstepsBack" ||
+    (stealthState === "scrubStain" && scrubStainTimer < 270) // Door stays open during scrub and footsteps
+  ) {
+    doorOpen = doorOpenProgress;
+  } else if (
+    stealthState === "doorClosing" ||
+    (stealthState === "scrubStain" &&
+      scrubStainTimer >= 270 &&
+      scrubStainTimer < 330)
+  ) {
+    // Door closes after footsteps return, smoother (60 frames)
+    let t =
+      stealthState === "scrubStain"
+        ? (scrubStainTimer - 270) / 60
+        : doorCloseProgress;
+    doorOpen = 1 - t;
+  } else {
+    doorOpen = 0;
+  }
+  // params
+  const doorW = 60,
+    doorH = 135;
+  const hingeLeft = true; // set false for right hinge
+  const hingeX = hingeLeft ? doorX : doorX + doorW;
+  const hingeY = doorY + doorH / 2;
+  function easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 3);
+  }
+  const t = Math.max(0, Math.min(1, doorOpen)); // 0..1
+  const eased = easeOutCubic(t);
+  const maxAngle = (Math.PI / 2) * 0.98; // nearly 90°
+  const angle = (hingeLeft ? -1 : 1) * maxAngle * eased;
+
+  // door thickness and perspective factors
+  const thickness = 12; // visible edge thickness in px
+  const depthScale = 0.6; // how "thin" the face becomes at full open
+  const skew = 0.6; // skew factor for trapezoid edge
+
+  if (t > 0) {
+    // Draw black rectangle behind the open door to simulate a dark room
+    ctx.save();
+    ctx.fillStyle = "black";
+    // Cover the entire door frame area
+    ctx.fillRect(doorX, doorY, doorW, doorH);
+    ctx.restore();
+
+    ctx.save();
+    // move to hinge
+    ctx.translate(hingeX, hingeY);
+    //ctx.rotate(angle); // dont need this this is the bad rotation around the wrong axis
+
+    // Compute face transform: draw rect with hinge at x=0, y=-doorH/2
+    // To fake perspective, scale X slightly based on angle
+    const faceScaleX = 1 - Math.abs(Math.sin(angle)) * depthScale;
+    ctx.save();
+    ctx.scale(faceScaleX, 1);
+    ctx.fillStyle = "#5a3c1a";
+    ctx.fillRect(0, -doorH / 2, doorW, doorH);
+    ctx.strokeStyle = "#3a220a";
+    ctx.lineWidth = 5;
+    ctx.strokeRect(0, -doorH / 2, doorW, doorH);
+    // knob drawn in face local coords; adjust for scale
+    const knobLocalX = doorW - 8;
+    const knobLocalY = 0;
+    ctx.beginPath();
+    ctx.arc(knobLocalX, knobLocalY, 6, 0, Math.PI * 2);
+    ctx.fillStyle = "#eab676";
+    ctx.fill();
+    ctx.restore(); // restore from scale
+
+    // draw visible edge (the door thickness) as a trapezoid
+    // Edge direction depends on hinge side and sign of angle
+    //    const sign = hingeLeft ? 1 : -1;
+    //    const absAng = Math.abs(angle);
+    //    if (absAng > 0.01) {
+    //        // tip location at outer edge of face (in rotated space)
+    //        const tipX = Math.cos(0) * doorW; // before rotation; we're in rotated coords
+    //        const tipTopY = -doorH/4;
+    //        const tipBottomY = doorH/4;
+    //
+    //        // compute offset for thickness using angle
+    //        const edgeOffsetX = sign * thickness * Math.cos(absAng) ;
+    //        const edgeOffsetY = thickness * Math.sin(absAng) * skew;
+    //
+    //        ctx.beginPath();
+    //        // top outer corner
+    //        ctx.moveTo(doorW, -doorH/2);
+    //        // top outer + offset
+    //        ctx.lineTo(doorW + edgeOffsetX, -doorH/2 + edgeOffsetY);
+    //        // bottom outer + offset
+    //        ctx.lineTo(doorW + edgeOffsetX, doorH/2 + edgeOffsetY);
+    //        // bottom outer
+    //        ctx.lineTo(doorW, doorH/2);
+    //        ctx.closePath();
+    //        ctx.fillStyle = '#452a12';
+    //        ctx.fill();
+    //        ctx.strokeStyle = '#2c1907';
+    //        ctx.lineWidth = 2;
+    //        ctx.stroke();
+    //    }
+
+    ctx.restore();
+    ctx.save();
+    ctx.globalAlpha = 0.5 * eased;
+    ctx.beginPath();
+    ctx.moveTo(hingeX, hingeY);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  } else {
+    // closed door
+    ctx.save();
+    ctx.fillStyle = "#5a3c1a";
+    ctx.fillRect(doorX, doorY, doorW, doorH);
+    ctx.strokeStyle = "#3a220a";
+    ctx.lineWidth = 5;
+    ctx.strokeRect(doorX, doorY, doorW, doorH);
+    ctx.beginPath();
+    ctx.arc(doorX + doorW - 8, doorY + doorH / 2, 6, 0, Math.PI * 2);
+    ctx.fillStyle = "#eab676";
+    ctx.fill();
+    ctx.restore();
+  }
+
+  // --- END BACKGROUND ---
+
+  // Draw desk
+  ctx.save();
+  ctx.shadowBlur = 0;
+  ctx.shadowColor = "transparent";
+  ctx.fillStyle = desk.color;
+  ctx.fillRect(desk.x, desk.y, desk.width, desk.height);
+  ctx.restore();
+
+  // Draw stain above desk
+  drawScrubStain();
+
+  // Draw shelves
+  shelves.forEach((shelf) => {
+    ctx.fillStyle = shelf.color;
+    ctx.fillRect(shelf.x, shelf.y, shelf.width, shelf.height);
+  });
+  // Draw random shelves
+  randomShelves.forEach((shelf) => {
+    ctx.fillStyle = shelf.color;
+    ctx.fillRect(shelf.x, shelf.y, shelf.width, shelf.height);
+  });
+  higherRandomShelves.forEach((shelf) => {
+      ctx.fillStyle = shelf.color;
+      ctx.fillRect(shelf.x, shelf.y, shelf.width, shelf.height);
+    });
+  // Draw little black legs from the furthest right shelf to the desk
+  const rightShelf = shelves.reduce((a, b) => (a.x > b.x ? a : b));
+  const numLegs = 2;
+  const legSpacing = rightShelf.width / (numLegs + 1);
+  ctx.save();
+  ctx.strokeStyle = "black";
+  ctx.lineWidth = 4;
+  for (let i = 1; i <= numLegs; i++) {
+    const legX = rightShelf.x + i * legSpacing;
+    const legYStart = rightShelf.y + rightShelf.height;
+    const legYEnd = desk.y;
+    ctx.beginPath();
+    ctx.moveTo(legX, legYStart);
+    ctx.lineTo(legX, legYEnd);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // Draw coffee cups (AFTER desk and shelves, so cups are visible on top)
+  coffeeCups.forEach((cup) => {
+    ctx.save();
+    ctx.globalAlpha = cup.alpha;
+    ctx.font = "32px serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "bottom";
+    // Offset y so cup sits on surface
+    ctx.fillText(coffeeEmoji, cup.x + 16, cup.y + 28);
+    ctx.restore();
+  });
+
+  // --- STEALTH: CS footprints ---
+  const steps = 8;
+  if (stealthState === "footprints" || stealthState === "hands") {
+    // Animate footprints from door toward desk
+    for (let i = 0; i < steps; i++) {
+      const t = i / (steps - 1);
+      if (t > footprintsProgress) break;
+      // Path from door to desk
+      const fx = doorX + 60 + (canvas.width - (doorX + 60)) * t;
+      const fy = doorY + 140 + (desk.y - (doorY + 70)) * t * 0.8;
+      ctx.save();
+      ctx.globalAlpha = 0.5 + 0.5 * t;
+      ctx.fillStyle = "#222";
+      // Remove any shadow for footsteps
+      ctx.shadowBlur = 0;
+      ctx.shadowColor = "transparent";
+      ctx.beginPath();
+      ctx.ellipse(fx, fy, 10, 5, i % 2 === 0 ? 0.2 : -0.2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+  } else if (stealthState === "footstepsBack") {
+    // Animate footprints disappearing one by one back to the door
+    // Show only the first N footprints, where N decreases as footstepsBackProgress increases
+    const gone = Math.floor(steps * footstepsBackProgress + 0.001);
+    for (let i = 0; i < steps - gone; i++) {
+      const t = i / (steps - 1);
+      const fx = doorX + 60 + (canvas.width - (doorX + 60)) * t;
+      const fy = doorY + 140 + (desk.y - (doorY + 70)) * t * 0.8;
+      ctx.save();
+      ctx.globalAlpha = 0.5 + 0.5 * t;
+      ctx.fillStyle = "#222";
+      // Remove any shadow for footsteps
+      ctx.shadowBlur = 0;
+      ctx.shadowColor = "transparent";
+      ctx.beginPath();
+      ctx.ellipse(fx, fy, 10, 5, i % 2 === 0 ? 0.2 : -0.2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  // Draw monitor as emoji
+  ctx.font = `${monitor.width}px serif`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "top";
+  ctx.fillText('💻', monitor.x + monitor.width / 2, monitor.y);
+
+  // --- HANDS CHASE DRAW ---
+  if (stealthState === "handsChase" && handsChaseActive) {
+    // Draw hands at handsChasePos
+    ctx.save();
+    ctx.globalAlpha = 1;
+    // Remove any shadow for hands
+    ctx.shadowBlur = 0;
+    ctx.shadowColor = "transparent";
+    // Animate hands at handsChasePos
+    const handY = handsChasePos.y;
+    // Left hand
+    ctx.fillStyle = "#eab676";
+    ctx.beginPath();
+    ctx.ellipse(handsChasePos.x - 25, handY, 18, 16, -0.2, 0, Math.PI * 2);
+    ctx.fill();
+    // Fingers (left)
+    for (let f = 0; f < 4; f++) {
+      ctx.beginPath();
+      ctx.ellipse(
+        handsChasePos.x - 35 + f * 6,
+        handY + 12,
+        4,
+        10,
+        0,
+        0,
+        Math.PI * 2
+      );
+      ctx.fill();
+    }
+    // Right hand
+    ctx.beginPath();
+    ctx.ellipse(handsChasePos.x + 25, handY, 18, 16, 0.2, 0, Math.PI * 2);
+    ctx.fill();
+    // Fingers (right)
+    for (let f = 0; f < 4; f++) {
+      ctx.beginPath();
+      ctx.ellipse(
+        handsChasePos.x + 15 + f * 6,
+        handY + 12,
+        4,
+        10,
+        0,
+        0,
+        Math.PI * 2
+      );
+      ctx.fill();
+    }
+    ctx.restore();
+    // Draw a timer bar above the cat
+    ctx.save();
+    ctx.globalAlpha = 0.7;
+    ctx.fillStyle = "#f85149";
+    let chaseBarW = 120;
+    let chaseBarH = 10;
+    let chaseBarX = cat.x + cat.width / 2 - chaseBarW / 2;
+    let chaseBarY = cat.y - 24;
+    let chaseElapsed = Math.min(1, handsChaseTimer / 7000);
+    ctx.fillRect(
+      chaseBarX,
+      chaseBarY,
+      chaseBarW * (1 - chaseElapsed),
+      chaseBarH
+    );
+    ctx.strokeStyle = "#fff";
+    ctx.strokeRect(chaseBarX, chaseBarY, chaseBarW, chaseBarH);
+    ctx.restore();
+  }
+  // --- STEALTH: hands in front of monitor ---
+  if (stealthState === "hands") {
+    // Animate hands rising up in front of monitor
+    const handY = monitor.y + monitor.height - 10 + 40 * (1 - handsProgress);
+    ctx.save();
+    ctx.globalAlpha = handsProgress;
+    // Remove any shadow for hands
+    ctx.shadowBlur = 0;
+    ctx.shadowColor = "transparent";
+    ctx.fillStyle = "#eab676";
+    // Left hand
+    ctx.beginPath();
+    ctx.ellipse(monitor.x + 25, handY, 18, 16, -0.2, 0, Math.PI * 2);
+    ctx.fill();
+    // Fingers (left)
+    for (let f = 0; f < 4; f++) {
+      ctx.beginPath();
+      ctx.ellipse(monitor.x + 15 + f * 6, handY + 12, 4, 10, 0, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    // Right hand
+    ctx.beginPath();
+    ctx.ellipse(
+      monitor.x + monitor.width - 25,
+      handY,
+      18,
+      16,
+      0.2,
+      0, Math.PI * 2
+    );
+    ctx.fill();
+    // Fingers (right)
+    for (let f = 0; f < 4; f++) {
+      ctx.beginPath();
+      ctx.ellipse(
+        monitor.x + monitor.width - 35 + f * 6,
+        handY + 12,
+        4, 10, 0, 0, Math.PI * 2
+      );
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  // Draw cat: sideways or back view
+  ctx.save();
+  ctx.translate(cat.x + cat.width / 2, cat.y + cat.height / 2);
+  // Track last direction
+  if (typeof cat.lastFacing === "undefined") cat.lastFacing = 1;
+  if (keys["ArrowLeft"] && !keys["ArrowRight"]) cat.lastFacing = -1;
+  else if (keys["ArrowRight"] && !keys["ArrowLeft"]) cat.lastFacing = 1;
+  ctx.scale(cat.lastFacing, 1);
+  let walkCycle = 0;
+  if (cat.isJumping) {
+    walkCycle = Math.sin(Date.now() / 120) * 2;
+  } else if (keys["ArrowLeft"] || keys["ArrowRight"]) {
+    walkCycle = Math.sin(Date.now() / 120) * 4;
+  }
+
+  // If in code mode, show back view with tip-tapping paws
+  if (codeMode) {
+    // --- BACK VIEW ---
+    // Body (back, rounder)
+    ctx.fillStyle = cat.color;
+    ctx.beginPath();
+    ctx.ellipse(0, 8, 13, 11, 0, 0, Math.PI * 2);
+    ctx.fill();
+    // Head (back, round)
+    ctx.beginPath();
+    ctx.arc(0, -6, 9, 0, Math.PI * 2);
+    ctx.fill();
+    // Ears (back, on head)
+    ctx.beginPath();
+    ctx.moveTo(-6, -14);
+    ctx.lineTo(-3, -22);
+    ctx.lineTo(0, -10);
+    ctx.moveTo(6, -14);
+    ctx.lineTo(3, -22);
+    ctx.lineTo(0, -10);
+    ctx.strokeStyle = cat.color;
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    // Fedora (black hat)
+    if (catWearsFedora) {
+      ctx.save();
+      // Brim
+      ctx.beginPath();
+      ctx.ellipse(0, -15, 14, 5, 0, 0, Math.PI * 2);
+      ctx.fillStyle = "#111";
+      ctx.globalAlpha = 0.95;
+      ctx.fill();
+
+      // Crown - more fedora-like with tapered shape and pinch
+      ctx.beginPath();
+      // Left side of crown
+      ctx.moveTo(-7, -15);
+      ctx.lineTo(-6, -25);
+      // Top with pinch/dent
+      ctx.lineTo(-2, -27);
+      ctx.lineTo(0, -26);
+      ctx.lineTo(2, -27);
+      // Right side
+      ctx.lineTo(6, -25);
+      ctx.lineTo(7, -15);
+      ctx.closePath();
+      ctx.fillStyle = "#111";
+      ctx.fill();
+
+      // Hat band
+      ctx.beginPath();
+      ctx.rect(-7, -21, 14, 3);
+      ctx.fillStyle = "#444";
+      ctx.fill();
+
+      // Hat band decoration (small accent)
+      ctx.beginPath();
+      ctx.moveTo(5, -19.5);
+      ctx.lineTo(7, -19.5);
+      ctx.lineTo(6, -21);
+      ctx.closePath();
+      ctx.fillStyle = "#777";
+      ctx.fill();
+
+      ctx.restore();
+    }
+    // Tail (back, up)
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(0, 18);
+    ctx.bezierCurveTo(0, 32, 8, 38 + walkCycle, 0, 48 + walkCycle);
+    ctx.strokeStyle = tailColor;
+    ctx.lineWidth = tailWidth;
+    ctx.stroke();
+    ctx.restore();
+    // Paws (tip-tapping)
+    let tap = Math.abs(Math.sin(Date.now() / 80));
+    let tap2 = Math.abs(Math.sin(Date.now() / 80 + 1));
+    // Left paw
+    ctx.save();
+    ctx.translate(-6, 18 + tap * 3);
+    ctx.rotate(-0.2 + tap * 0.2);
+    ctx.fillStyle = cat.color;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 3, 5, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+    // Right paw
+    ctx.save();
+    ctx.translate(6, 18 + tap2 * 3);
+    ctx.rotate(0.2 - tap2 * 0.2);
+    ctx.fillStyle = cat.color;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 3, 5, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+    ctx.restore(); // Restore main cat transform after back view
+  } else {
+    // --- SIDEWAYS VIEW ---
+    // Body (sideways oval)
+    ctx.fillStyle = cat.color;
+    ctx.beginPath();
+    ctx.ellipse(2, 6, 14, 7, Math.PI / 12, 0, Math.PI * 2);
+    ctx.fill();
+    // Head (sideways circle, slightly forward)
+    ctx.beginPath();
+    ctx.ellipse(16, -2, 7, 8, Math.PI / 16, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Ears (sideways, lowered to sit on head)
+    ctx.beginPath();
+    ctx.moveTo(21, -4);
+    ctx.lineTo(19, -12);
+    ctx.lineTo(16, 2);
+    ctx.moveTo(11, -4);
+    ctx.lineTo(13, -12);
+    ctx.lineTo(16, 2);
+    ctx.strokeStyle = cat.color;
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    // --- Fedora (sideways hat, match back view style, lowered to cover ears) ---
+    if (catWearsFedora) {
+      ctx.save();
+      // Flip hat for left/right facing
+      let hatOffsetX = cat.lastFacing === 1 ? 16 : 16;
+      let hatOffsetY = -4; // Lowered from -10 to -4 to cover ears
+      ctx.translate(hatOffsetX, hatOffsetY);
+      ctx.scale(cat.lastFacing, 1);
+
+      // Brim (sideways, match back view)
+      ctx.beginPath();
+      ctx.ellipse(0, -7, 14, 5, Math.PI / 16, 0, Math.PI * 2);
+      ctx.fillStyle = "#111";
+      ctx.globalAlpha = 0.95;
+      ctx.fill();
+
+      // Crown - more fedora-like with tapered shape and pinch
+      ctx.beginPath();
+      // Create crown with pinch (from side view)
+      ctx.moveTo(-7, -9); // Bottom left
+      ctx.lineTo(-6, -17); // Top left, tapered in
+      ctx.lineTo(-2, -19); // First pinch point
+      ctx.lineTo(0, -18); // Center dip
+      ctx.lineTo(2, -19); // Second pinch point
+      ctx.lineTo(6, -17); // Top right, tapered in
+      ctx.lineTo(7, -9); // Bottom right
+      ctx.closePath();
+      ctx.fillStyle = "#111";
+      ctx.fill();
+
+      // Hat band (sideways, thin rectangle)
+      ctx.beginPath();
+      ctx.rect(-7, -13, 14, 3);
+      ctx.fillStyle = "#444";
+      ctx.fill();
+
+      // Hat band decoration (small accent)
+      ctx.beginPath();
+      ctx.moveTo(5, -11.5);
+      ctx.lineTo(7, -11.5);
+      ctx.lineTo(6, -13);
+      ctx.closePath();
+      ctx.fillStyle = "#777";
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    // Eye (single, side profile)
+    ctx.beginPath();
+    ctx.ellipse(19, -4, 1.5, 2, 0, 0, Math.PI * 2);
+    ctx.fillStyle = "yellow";
+    ctx.fill();
+    ctx.beginPath();
+    ctx.ellipse(19, -4, 0.7, 1, 0, 0, Math.PI * 2);
+    ctx.fillStyle = "black";
+    ctx.fill();
+    // Nose (side, pink)
+    ctx.beginPath();
+    ctx.ellipse(23, -1, 0.7, 1, 0, 0, Math.PI * 2);
+    ctx.fillStyle = "#eab";
+    ctx.fill();
+    // Tail (points up, cleanly attached to body)
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(-10, 0);
+    ctx.bezierCurveTo(
+      -18,
+      -18 - walkCycle,
+      -6,
+      -38 - walkCycle,
+      0,
+      -32 - walkCycle
+    );
+    ctx.strokeStyle = tailColor;
+    ctx.lineWidth = tailWidth;
+    ctx.stroke();
+    ctx.restore();
+    // Legs (sideways, move when walking)
+    ctx.strokeStyle = cat.color;
+    ctx.lineWidth = 4;
+    // Back leg
+    ctx.beginPath();
+    ctx.moveTo(-2, 13);
+    ctx.lineTo(-2 + walkCycle, 22 - walkCycle);
+    ctx.stroke();
+    // Front leg
+    ctx.beginPath();
+    ctx.moveTo(8, 13);
+    ctx.lineTo(8 - walkCycle, 22 + walkCycle);
+    ctx.stroke();
+  }
+  ctx.shadowBlur = 0;
+  ctx.shadowOffsetY = 0;
+  ctx.restore();
+
+  // Draw code particles and meow particles (no shadow)
+  codeParticles.forEach((particle) => {
+    ctx.save();
+    ctx.shadowBlur = 0;
+    ctx.shadowColor = "transparent";
+    ctx.globalAlpha = particle.alpha;
+    if (particle.isMeow) {
+      ctx.font = `bold ${particle.size}px monospace`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "bottom";
+      ctx.strokeStyle = "#fff";
+      ctx.lineWidth = 1;
+      ctx.strokeText(particle.text, particle.x, particle.y);
+      ctx.fillStyle = "#4ec9f0";
+      ctx.fillText(particle.text, particle.x, particle.y);
+    } else {
+      ctx.font = `${particle.size}px monospace`;
+      // Use regex to split and keep delimiters, including whitespace
+      const words =
+        particle.text.match(/(\s+|[a-zA-Z_][a-zA-Z0-9_]*|\d+|[^\s\w])/g) || [];
+      let xOffset = 10;
+      const letterSpacing = particle.size;
+      words.forEach((word) => {
+        let color = "white";
+        if (word === "console") color = "lightgreen";
+        else if (word === "log") color = particle.logColor;
+        else if (
+          word === "meow" ||
+          word === "tuna" ||
+          word === "yarn" ||
+          word === "purr"
+        )
+          color = "magenta";
+        else if (
+          word === "cat" ||
+          word === "Food" ||
+          word === "wakeUp" ||
+          word === "debug" ||
+          word === "function" ||
+          word === "return" ||
+          word === "if" ||
+          word === "let" ||
+          word === "new"
+        )
+          color = "lightblue";
+        else if (["Slep"].includes(word)) color = "orange";
+        else if (word === "error") color = "red";
+        ctx.fillStyle = color;
+        ctx.fillText(word, Math.round(particle.x + xOffset), particle.y);
+        let width = ctx.measureText(word).width;
+        // Always add spacing after each token
+        xOffset += width + letterSpacing;
+      });
+    }
+    ctx.globalAlpha = 1;
+    ctx.restore();
+  });
+}
+
+// For tip-tapping animation, track if user is typing
+let tipTapping = false;
+let tipTapTimeout;
+document.addEventListener("keydown", (e) => {
+  // --- Coffee cup push mechanic ---
+  if (e.code === "Space") {
+    for (let cup of coffeeCups) {
+      if (isCatNearCup(cup) && !cup.airborne) {
+        pushCoffeeCup(cup);
+        break;
+      }
+    }
+  }
+  keys[e.key] = true;
+  if (e.key === "ArrowUp" && !cat.isJumping) {
+    cat.velocityY = -10;
+    cat.isJumping = true;
+  }
+  if (codeMode && e.key.match(/^[a-z]$/)) {
+    generateCodeParticle();
+    if (stealthState == "handsChase") {
+      animateScore(10);
+      codeParticles.push({
+        x: cat.x + cat.width / 2,
+        y: cat.y,
+        text: "10x",
+        size: 22,
+        speedX: (Math.random() - 0.5) * 1.2,
+        speedY: -2.5 - Math.random() * 1.5,
+        targetX: cat.x + cat.width / 2 + (Math.random() - 0.5) * 40,
+        targetY: cat.y - 60 - Math.random() * 30,
+        alpha: 1,
+        isMeow: true,
+      });
+    } else {
+      animateScore(1);
+    }
+    tipTapping = true;
+    clearTimeout(tipTapTimeout);
+    tipTapTimeout = setTimeout(() => {
+      tipTapping = false;
+    }, 120);
+  }
+  if (stealthState === "hands" && handsProgress === 1 && e.code === "Space") {
+    if (!meowTarget) {
+      meowTarget = 1;
+      meowCount = 0;
+    }
+    meowCount++;
+    if (meowCount >= meowTarget) {
+      stealthState = "handsChase";
+      handsChaseActive = false;
+    }
+
+    playBootupSound();
+
+    codeParticles.push({
+      x: cat.x + cat.width / 2,
+      y: cat.y,
+      text: "Aw lawd he commin!",
+      size: 22,
+      speedX: (Math.random() - 0.5) * 1.2,
+      speedY: -2.5 - Math.random() * 1.5,
+      targetX: cat.x + cat.width / 2 + (Math.random() - 0.5) * 40,
+      targetY: cat.y - 60 - Math.random() * 30,
+      alpha: 1,
+      isMeow: true,
+    });
+  } else if (e.code === "Space") {
+    playSoundEffect({
+      type: "meow",
+      pitch: bassMeowNotes[bassMeowIndex],
+      duration: 0.18,
+      volume: 0.18,
+      randomize: false,
+      scale: null,
+    });
+    bassMeowIndex = (bassMeowIndex + 1) % bassMeowNotes.length;
+
+    codeParticles.push({
+      x: cat.x + cat.width / 2,
+      y: cat.y,
+      text: "meow",
+      size: 22,
+      speedX: (Math.random() - 0.5) * 1.2,
+      speedY: -2.5 - Math.random() * 1.5,
+      targetX: cat.x + cat.width / 2 + (Math.random() - 0.5) * 40,
+      targetY: cat.y - 60 - Math.random() * 30,
+      alpha: 1,
+      isMeow: true,
+    });
+    if (!meowTarget) {
+      meowTarget = 1 + Math.floor(Math.random() * 4);
+      meowCount = 0;
+    }
+    meowCount++;
+    if (meowCount >= meowTarget) {
+      nextStealthEvent = Date.now();
+    }
+  }
+});
+// Add at the top
+//const codeParticleChords = [392, 294, 220, 261.63]; // G, D, Am, C
+const codeParticleChords = [349.23, 392.00, 329.63, 220.00]; // F, G, Em, Am
+let codeParticleChordIndex = 0;
+
+const bassMeowNotes = [
+  98.0 * 2, // E string, fret 3 (G)
+  196.0 * 2, // D string, fret 5 (G)
+  110.0 * 2, // A string, fret 0 (A)
+  196.0 * 2, // D string, fret 5 (G)
+  123.47 * 2, // A string, fret 2 (B)
+  196.0 * 2, // D string, fret 5 (G)
+  130.81 * 2, // A string, fret 3 (C)
+  196.0 * 2, // D string, fret 5 (G)
+
+  146.83 * 2, // D string, fret 0 (D)
+  196.0 * 2, // G string, fret 0 (G)
+  164.81 * 2, // D string, fret 2 (E)
+  196.0 * 2, // G string, fret 0 (G)
+  184.99 * 2, // D string, fret 4 (F#)
+  196.0 * 2, // G string, fret 0 (G)
+  196.0 * 2, // D string, fret 5 (G)
+  196.0 * 2, // G string, fret 0 (G)
+];
+let bassMeowIndex = 0;
+
+function animateScore(points) {
+  let startScore = score;
+  let endScore = score + points;
+  playSoundEffect({
+    type: "score",
+    pitch: codeParticleChords[codeParticleChordIndex],
+    duration: 1.2,
+    volume: 0.0,
+  });
+  codeParticleChordIndex =
+    (codeParticleChordIndex + 1) % codeParticleChords.length;
+
+  const animationDuration = 1.2;
+  const startTime = performance.now();
+
+  function updateScore(currentTime) {
+    const elapsedTime = currentTime - startTime;
+    const progress = Math.min(elapsedTime / animationDuration, 1);
+    const animatedScore = Math.floor(
+      startScore + (endScore - startScore) * progress
+    );
+    gitAdditions.textContent = animatedScore;
+    updateGitCubeColor(animatedScore);
+    if (progress < 1) {
+      requestAnimationFrame(updateScore);
+    } else {
+      score = endScore;
+      gitAdditions.textContent = score;
+      updateGitCubeColor(score);
+    }
+  }
+
+  requestAnimationFrame(updateScore);
+  // Track for git graph
+  if (gameStarted && additionsHistory.length < 32) {
+    additionsHistory.push(score + points);
+  }
+}
+
+function endGame() {
+  stopBackgroundMusic();
+ // playSoundEffect({ type: "gameOver", volume: 0.3 });
+
+  playGameOverProgression();
+  gameStarted = false;
+  clearInterval(timerInterval);
+  showTimer(false);
+  gameOverScreen.style.display = "flex";
+  gameOverScreen.setAttribute("data-reason", "petted");
+  document.getElementById("gameOverMessage").innerHTML =
+    "<span style='color:#f85149; font-family:Cinzel, serif; font-size:1.2em; letter-spacing:2px;'>You were petted.</span>";
+  document.getElementById("restartButton").innerHTML = "We Continue";
+  finalScores.innerHTML = `<span style='color:#2ea043;'>+${score} additions</span> &nbsp; <span style='color:#f85149;'>-${deletionsScore} deletions</span>`;
+  drawGitGraph();
+  // --- Store result and update grid ---
+  if (gitGraphResults.length < maxGames) {
+    gitGraphResults.push({ score, deletions: deletionsScore });
+  }
+  updateGitGraphGrid();
+  // --- If 7 games played, show report ---
+  if (gitGraphResults.length === maxGames) {
+    setTimeout(showReport, 1500); // Give a moment for last game over
+  }
+}
+
+function showReport() {
+  // Hide start button, show report
+  startButton.style.display = "none";
+  tutorialButton.style.display = "none";
+  logsButton.style.display = "none";
+  reportScreen.style.display = "block";
+  scoreboard.style.display = "none"; // Hide scoreboard on report screen
+  // Calculate total additions
+  let total = gitGraphResults.reduce(
+    (sum, g) => sum + Math.max(0, g.score - g.deletions),
+    0
+  );
+  let rank = getRank(total);
+  const fedoraOption = document.getElementById("fedoraOption");
+  if (rank === "Master B|ackc4t_h@cker" || rank === "Grey Cat Hacker") {
+    fedoraOption.style.display = "flex";
+    addLogEntry("LFG GALS! IM THE BEST HACKER OF ALL TIIIIMMMEEEE :],  They make it too easy now a days i tell ya, I cant believe how many people blindly download NPM packages  and  dont even know what they do!! And don't EVEN get me started on unneeded  dependencies!... hehe get PEWNED losers learn a real language like python!! I must be a real hacker now! Maybe i should buy a fedora on my owners amazon to go with my new hacking skills... now everyone will know the name SCRIPT M KITTY, THE GREATEST HACKER WHO EVER LIVVVVEEED!- Script M. Kitty \n  ");
+    logsCount++
+    //catWearsFedora = true;
+  } else if (rank === "Dumber than my cat Emmie") {
+    addLogEntry("Gosh I was sure NPM packages were a lot easier to hack than this! Im so bad at hacking! :[  What made it even worse is my complete dumbo of a sister Emmie saw  how much i was struggling and asked if i wanted her to learn with me!!! HER! She doesnt know the differents between a binary tree and a christmas tree! ... Although it would be nice to have a hacking buddy... and who knows maybe shell learn something and not be as dumb anymore.... hah doubt it! - Script M. Kitty \n  ");
+    document.getElementById("whiteScriptOption").style.display = "block";
+    logsCount++
+    //fedoraOption.style.display = 'none'; // i think if i remove this is will prevent the ehcm box from going away if the player does worse the next round
+  } else {
+   addLogEntry("Ehh I got some decent hacking done I guess... but I know I can do better! Maybe if I  just practiced more... thats it just need practice.... and to use less reddit... srsly whys everyone so mean? im just asking a question! Why are tabs so much freakin better than spaces, i dont get it!! I guess Im making enough progress that i should  probably consider making up a super cool hacker handle for my github and dischord... hmmm i think i have a pretty original one let me try it on and see how i feel- @8====>ScriptKitty69420 \n  ");
+  //fedoraOption.style.display = 'none'; // i think if i remove this is will prevent the ehcm box from going away if the player does worse the next round
+   logsCount++
+  }
+
+  let rankColor =
+    {
+      "Dumber than my cat Emmie": "#888",
+      "Copy-pawsta Cat": "#1e90ff",
+      "Script Kitty": "#f7c325",
+      "Pawthonista": "#a259e6",
+      "Grey Cat Hacker": "#2ea043",
+      "Master B|ackc4t_h@cker": "#2ea043",
+    }[rank] || "#fff";
+  let rankText = `<span style='font-size:2em; color:${rankColor}; font-weight:bold;'>${rank.replace(
+    /\b\w/g,
+    (l) => l.toUpperCase()
+  )}</span>`;
+  let details = gitGraphResults
+    .map(
+      (g, i) =>
+        `<div style='font-size:1.1em; margin:4px 0;'>Game ${
+          i + 1
+        }: <span style='color:#2ea043;'>+${
+          g.score
+        }</span> <span style='color:#f85149;'>-${
+          g.deletions
+        }</span> = <b>${Math.max(0, g.score - g.deletions)}</b></div>`
+    )
+    .join("");
+  reportScreen.innerHTML = `<h2>7 Games Complete!</h2><div style='margin:12px 0 18px 0;'>Total Additions: <span style='color:#2ea043; font-size:1.3em;'>${total}</span></div>${details}<div style='margin:18px 0 8px 0;'>Rank:</div>${rankText}<div style='margin-top:18px;'><button id='resetSeriesBtn' style='font-size:1em; padding:8px 24px; border-radius:8px; border:none; background:#2ea043; color:white; cursor:pointer;'>Play Again</button></div>`;
+  // Reset button
+  setTimeout(() => {
+    document.getElementById("resetSeriesBtn").onclick = () => {
+      playFFMenuChime();
+      gitGraphResults = [];
+      updateGitGraphGrid();
+      reportScreen.style.display = "none";
+      startButton.style.display = "inline-block";
+      tutorialButton.style.display = "inline-block";
+      logsButton.style.display = "inline-block";
+      if (rank === "Master B|ackc4t_h@cker" || rank === "Grey Cat Hacker"  || rank === "Dumber than my cat Emmie") {
+        //localStorage.setItem('catWearsFedora', 'true');
+        playHighRankCelebration();
+      }
+    };
+  }, 100);
+}
+
+function drawGitGraph() {
+  const ctx = gitGraph.getContext("2d");
+  ctx.clearRect(0, 0, gitGraph.width, gitGraph.height);
+  // Color the square by (additions - deletions)
+  const net = Math.max(0, score - deletionsScore);
+  const maxScore = 1000;
+  const percent = Math.min(net / maxScore, 1);
+  // interpolate from grey (#888) to green (#2ea043)
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+  function hexToRgb(hex) {
+    hex = hex.replace("#", "");
+    if (hex.length === 3)
+      hex = hex
+        .split("")
+        .map((x) => x + x)
+        .join("");
+    const num = parseInt(hex, 16);
+    return [num >> 16, (num >> 8) & 0xff, num & 0xff];
+  }
+  function rgbToHex([r, g, b]) {
+    return "#" + [r, g, b].map((x) => x.toString(16).padStart(2, "0")).join("");
+  }
+  const grey = hexToRgb("#888");
+  const green = hexToRgb("#2ea043");
+  const color = [
+    Math.round(lerp(grey[0], green[0], percent)),
+    Math.round(lerp(grey[1], green[1], percent)),
+    Math.round(lerp(grey[2], green[2], percent)),
+  ];
+  ctx.fillStyle = rgbToHex(color);
+  ctx.fillRect(0, 0, gitGraph.width, gitGraph.height);
+  ctx.strokeStyle = "#2ea043";
+  ctx.lineWidth = 2;
+  ctx.strokeRect(1, 1, gitGraph.width - 2, gitGraph.height - 2);
+}
+
+function updateGitCubeColor() {
+  // Color by (additions - deletions)
+  const net = Math.max(0, score - deletionsScore);
+  const maxScore = 1000;
+  const percent = Math.min(net / maxScore, 1);
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+  function hexToRgb(hex) {
+    hex = hex.replace("#", "");
+    if (hex.length === 3)
+      hex = hex
+        .split("")
+        .map((x) => x + x)
+        .join("");
+    const num = parseInt(hex, 16);
+    return [num >> 16, (num >> 8) & 0xff, num & 0xff];
+  }
+  function rgbToHex([r, g, b]) {
+    return "#" + [r, g, b].map((x) => x.toString(16).padStart(2, "0")).join("");
+  }
+  const grey = hexToRgb("#888");
+  const green = hexToRgb("#2ea043");
+  const color = [
+    Math.round(lerp(grey[0], green[0], percent)),
+    Math.round(lerp(grey[1], green[1], percent)),
+    Math.round(lerp(grey[2], green[2], percent)),
+  ];
+  gitCube.style.background = rgbToHex(color);
+}
+
+document.addEventListener("keyup", (e) => {
+  keys[e.key] = false;
+});
+
+// --- Prevent multiple game loops from stacking ---
+let gameLoopRunning = false;
+let lastFrameTime = performance.now(); // Track last frame time
+function gameLoop() {
+  if (!gameLoopRunning) return;
+  // --- Multi-key scoring logic with combo ---
+  const now = performance.now();
+  let delta = (now - lastFrameTime) / 1000; // delta time in seconds
+  // Clamp delta to avoid huge jumps if tab is inactive
+  if (delta > 0.1) delta = 0.016;
+  lastFrameTime = now;
+
+  update(delta);
+  draw();
+  requestAnimationFrame(gameLoop);
+}
+
+startButton.addEventListener("click", () => {
+
+  mobileControls.style.display = window.innerWidth <= 900 ? 'flex' : 'none';
+  document.getElementById("gameCanvas").style.display = 'block';
+  // Spawn coffee cups for this round
+  spawnRandomShelves(); // Spawn random shelves each round
+  // Only spawn higher shelves if at least one random shelf exists
+  if (randomShelves.length > 0) {
+    spawnHigherRandomShelves();
+  }
+  spawnCoffeeCups();
+  if (gitGraphResults.length === maxGames) return; // Don't start if series complete
+  // --- FULL GAME RESET ---
+  chaseSuccessCount = 0;
+  gameStarted = true; 
+     // Randomly select background music style
+  if (Math.random() < 0.5) {
+    startBackgroundMusic();
+  } else {
+    startLaidBackMusic();
+  }
+
+  startScreen.style.display = "none";
+  gameOverScreen.style.display = "none";
+  scoreboard.style.display = "block";
+
+  score = 0;
+  deletionsScore = 0;
+  gitAdditions.textContent = 0;
+  gitDeletions.textContent = 0;
+  additionsHistory = [];
+  codeParticles = [];
+  stealthState = "idle";
+  stealthTimer = 0;
+  nextStealthEvent = Date.now() + 3000 + Math.random() * 5000;
+  doorOpenProgress = 0;
+  footprintsProgress = 0;
+  handsProgress = 0;
+  handsHoldTimer = 0;
+  footstepsBackProgress = 0;
+  doorCloseProgress = 0;
+  lastStealthFrame = Date.now();
+  lastHandsSecond = null;
+  // Reset scrub stain
+  scrubStainActive = false;
+  scrubStainTimer = 0;
+  scrubStainProgress = 0;
+  scrubStainAlpha = 0;
+  scrubStainX = null;
+  scrubStainY = null;
+  // Reset cat position and state
+  cat.x = 50;
+  cat.y = 500;
+  cat.velocityY = 0;
+  cat.isJumping = false;
+  codeMode = false;
+  // Clear keys
+  keys = {};
+  //comboPoints = 0;
+  // --- Reset and start timer for the round ---
+  round = 1;
+  currentTime = baseTime;
+  playBootupSound();
+  startTimer();
+  // --- Start game loop only if not already running ---
+  if (!gameLoopRunning) {
+    gameLoopRunning = true;
+    requestAnimationFrame(gameLoop);
+  }
+});
+
+restartButton.addEventListener("click", () => {
+
+  if(logsCount >= 4){
+          addLogEntry("The more I hack the more I realize that I have good days i have okay days and sometimes just flat out bad days... but the bad days dont make me a bad hacker anymore then the good days make me a master... being a hacker seems to be a lifelong  journey and not a destination to reach... maybe i should just focus on enjoying doing what i love and stop listening to people on the internet telling me what i need to do to be valid.. the goal should never have been to be seen as a  master it should just be to get a little bit better than i was yesterday and enjoy the process  ... after all no one can tell me who i am,  i  already know it! Im Script! I love puzzles and solving hard problems, I love working with computers and im a HACKER!  and as long as i know that, its enough. <3   - Script M. Kitty BLACKCATHACKER \n  ");
+          addLogEntry("THANK YA AH SO MUCCCH FOR A PLAYING MY GAME WHAOOOOOOO - Zach End \n")
+          addLogEntry("You can now play as legally distinct Louiegy.")
+        }
+  stopBackgroundMusic();
+  handsDisabledThisRound = false;
+  startScreen.style.display = "flex";
+  gameOverScreen.style.display = "none";
+  scoreboard.style.display = "none";
+  document.getElementById("gameCanvas").style.display = 'none';
+  mobileControls.style.display = 'none';
+  updateGitGraphGrid();
+  gameLoopRunning = false;
+});
+
+tutorialButton.addEventListener("click", () => {
+  playFFMenuChime();
+
+  tutorialScreen.style.display = "flex";
+  reportScreen.style.display = "block";
+  document.getElementById("startButton").style.display = "none";
+  document.getElementById("logsButton").style.display = "none";
+  document.getElementById("gameCanvas").style.display = 'none';
+  document.getElementById("tutorialButton").style.display = "none";
+  document.getElementById("gitGraphGrid").style.display = "none";
+  mobileControls.style.display = 'none';
+  let tutorialText = `<span style='font-size:1em; color:white; font-weight:bold;'> Press SPACE to meow and push coffee cups <p> press -> <- to move left and right and ^ to jump </p> Spam any letter key when infront of the computer to code! <p>Your goal is to help Script commit 1000 lines or more a day without being pet by your vibe coding owner!</p><p>Commit malicious code and help Script earn her master hacker fedora!</p></span>`;
+  reportScreen.innerHTML = `<h2>cat -s tutorial.txt</h2><div>${tutorialText}</div><div style='margin-top:18px;'><button id='resetSeriesBtn' style='font-size:1em; padding:8px 24px; border-radius:8px; border:none; background:#2ea043; color:white; cursor:pointer;'>Clear GitGraph</button></div><div><p><button id='closeBtn' style='font-size:1em; padding:8px 24px; border-radius:8px; border:none; background:#2ea043; color:white; cursor:pointer;'>Close</button></div>`;
+
+  setTimeout(() => {
+    document.getElementById("resetSeriesBtn").onclick = () => {
+      gitGraphResults = [];
+      updateGitGraphGrid();
+      reportScreen.style.display = "none";
+        document.getElementById("logsButton").style.display = "inline-block";
+        startButton.style.display = "inline-block";
+       document.getElementById("tutorialButton").style.display = "inline-block";
+       document.getElementById("gitGraphGrid").style.display = "grid";
+      playFFMenuChime();
+
+    };
+  }, 100);
+  setTimeout(() => {
+    document.getElementById("closeBtn").onclick = () => {
+      document.getElementById("startButton").style.display = "inline-block";
+      document.getElementById("logsButton").style.display = "inline-block";
+      document.getElementById("tutorialButton").style.display = "inline-block";
+        document.getElementById("gitGraphGrid").style.display = "grid";
+      reportScreen.style.display = "none";
+      startButton.style.display = "inline-block";
+      playFFMenuChime();
+    };
+  }, 100);
+});
+
+
+// Mobile controls setup
+const leftBtn = document.getElementById('leftBtn');
+const rightBtn = document.getElementById('rightBtn');
+const jumpBtn = document.getElementById('jumpBtn');
+const meowBtn = document.getElementById('meowBtn');
+const typeBtn = document.getElementById('typeBtn');
+
+function setupMobileControls() {
+  leftBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    keys['ArrowLeft'] = true;
+  });
+  leftBtn.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    keys['ArrowLeft'] = false;
+  });
+  rightBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    keys['ArrowRight'] = true;
+  });
+  rightBtn.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    keys['ArrowRight'] = false;
+  });
+  jumpBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    if (!cat.isJumping) {
+      cat.velocityY = -10;
+      cat.isJumping = true;
+    }
+  });
+  meowBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    const event = new KeyboardEvent('keydown', { key: ' ', code: 'Space' });
+    document.dispatchEvent(event);
+  });
+  typeBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    const event = new KeyboardEvent('keydown', { key: 'z', code: 'KeyZ' });
+
+    document.dispatchEvent(event);
+  });
+  let lastSwipeX = null;
+  let swipeAccum = 0;
+  const swipeThreshold = 30; // px per key press
+
+  function handleSwipe(e) {
+    const touch = e.touches[0];
+    if (lastSwipeX !== null) {
+      const dx = touch.clientX - lastSwipeX;
+      swipeAccum += Math.abs(dx);
+      while (swipeAccum >= swipeThreshold) {
+        const event = new KeyboardEvent('keydown', { key: 'e', code: 'KeyE' });
+        document.dispatchEvent(event);
+        swipeAccum -= swipeThreshold;
+      }
+    }
+    lastSwipeX = touch.clientX;
+  }
+
+  function resetSwipe() {
+    lastSwipeX = null;
+    swipeAccum = 0;
+  }
+
+  const swipeArea = document.getElementById('mobileControls');
+  swipeArea.addEventListener('touchstart', (e) => {
+    lastSwipeX = e.touches[0].clientX;
+    swipeAccum = 0;
+  });
+
+  const swipeArea2 = document.getElementById('gameCanvas');
+    swipeArea2.addEventListener('touchstart', (e) => {
+      lastSwipeX = e.touches[0].clientX;
+      swipeAccum = 0;
+    });
+
+  swipeArea.addEventListener('touchmove', handleSwipe);
+  swipeArea.addEventListener('touchend', resetSwipe);
+  swipeArea2.addEventListener('touchmove', handleSwipe);
+  swipeArea2.addEventListener('touchend', resetSwipe); // full screen? maybe feels better?
+
+  // Prevent default behavior for all mobile buttons
+  const allMobileButtons = document.querySelectorAll('.mobile-btn');
+  allMobileButtons.forEach(btn => {
+    btn.addEventListener('touchstart', e => e.preventDefault());
+    btn.addEventListener('touchmove', e => e.preventDefault());
+//    btn.addEventListener('touchend', e => e.preventDefault());
+  });
+}
+setupMobileControls();
+
+
+
+// function scaleCanvasForScreen() {
+//   const canvas = document.getElementById("gameCanvas");
+//   if (window.innerWidth > 1200) {
+//     // Desktop: scale up visually
+//     canvas.style.transform = "scale(1.5)";
+//     canvas.style.transformOrigin = "center top";
+//   } else {
+//     // Mobile: normal scale
+//     canvas.style.transform = "scale(1)";
+//     canvas.style.transformOrigin = "top left";
+//   }
+// }
+
+// // Run on load and resize
+// window.addEventListener('DOMContentLoaded', scaleCanvasForScreen);
+// window.addEventListener('resize', scaleCanvasForScreen);
+
+  // Optionally, update desk/monitor positions if needed
+
+
+// // Run on load and resize
+// window.addEventListener('DOMContentLoaded', scaleCanvasForScreen);
+// window.addEventListener('resize', scaleCanvasForScreen);
+
+// Place this in your main JS file
+function updateTutorialButtonText() {
+  const tutorialBtn = document.getElementById('tutorialButton');
+  if (window.innerWidth <= 900) {
+    tutorialBtn.textContent = 'Mobile Tutorial';
+  } else {
+    tutorialBtn.textContent = 'Tutorial';
+  }
+}
+function getTutorialText() {
+  if (window.innerWidth <= 900) {
+    return `<span style='font-size:1em; color:white; font-weight:bold;'>Mobile controls: Tap ↑ to jump, ← → to move, M to meow, T or Swipe anywhere to code .<br>Help Script commit 1000+ lines a day! Tip: when in front of the computer swiping your finger in little cirlces on the screen is the fastest way to code!</span>`;
+  } else {
+    return `<span style='font-size:1em; color:white; font-weight:bold;'>Press SPACE to meow and push coffee cups.<br>Use arrow keys to move and jump.<br>Spam any letter key in front of the computer to code!<br>Your goal: Help Script commit 1000+ lines a day!</span>`;
+  }
+}
+
+tutorialButton.addEventListener("click", () => {
+  tutorialScreen.style.display = "flex";
+  reportScreen.style.display = "block";
+  document.getElementById("gameCanvas").style.display = 'none';
+  mobileControls.style.display = 'none';
+  let tutorialText = getTutorialText();
+  reportScreen.innerHTML = `
+    <div style="position:relative;">
+      <button id='closeBtn' style="position:absolute; top:-30px; left:0px; font-size:1em; background:#2ea043; color:#fff; border:none; border-radius:8px; padding:8px 12px;">X</button>
+      <h2 style="margin-left:0px;">cat -s tutorial.txt</h2>
+      <div>${tutorialText}</div>
+      <div style='margin-top:18px;'>
+        <button id='resetSeriesBtn' style='font-size:1em; padding:8px 24px; border-radius:8px; border:none; background:#2ea043; color:white; cursor:pointer;'>Clear GitGraph</button>
+      </div>
+      <div><p></div>
+    </div>
+  `;
+});
+
+// Run on load and on resize
+window.addEventListener('DOMContentLoaded', updateTutorialButtonText);
+window.addEventListener('resize', updateTutorialButtonText);
+
+// Scripts Logs panel logic
+const logsButton = document.getElementById("logsButton");
+const logsPanel = document.getElementById("logsPanel");
+const closeLogsPanel = document.getElementById("closeLogsPanel");
+const logsList = document.getElementById("logsList");
+
+logsButton.addEventListener("click", () => {
+  logsPanel.style.display = "block";
+  playFFMenuChime();
+  document.getElementById("tutorialButton").style.display = 'none';
+  document.getElementById("startButton").style.display = 'none';
+  document.getElementById("logsButton").style.display = 'none';
+  document.getElementById("gitGraphGrid").style.display = 'none';
+});
+closeLogsPanel.addEventListener("click", () => {
+  logsPanel.style.display = "none";
+  document.getElementById("tutorialButton").style.display = 'block';
+    document.getElementById("startButton").style.display = 'block';
+    document.getElementById("logsButton").style.display = 'block';
+    document.getElementById("gitGraphGrid").style.display = 'grid';
+    playFFMenuChime();
+});
+
+// Add a log entry to the logs panel
+function addLogEntry(text) {
+  const entry = document.createElement("div");
+  entry.textContent = text;
+  entry.style.marginBottom = "8px";
+  logsList.appendChild(entry);
+  logsList.scrollTop = logsList.scrollHeight;
+}
+const fedoraCheckbox = document.getElementById('fedoraCheckbox');
+    fedoraCheckbox.addEventListener('change', (event) => {
+        catWearsFedora = event.target.checked;
+    });
+document.getElementById("whiteScriptCheckbox").addEventListener("change", function(e) {
+  if (e.target.checked) {
+
+    // Set script color to white to make Emmie
+    
+    cat.color = "#f7f4edff";
+    tailColor = "#8b6f2cff"; // emmies light brown tail
+  } else {
+    // Reset to default (black)
+
+    cat.color = "#222";
+    tailColor = "#222"; // default tail color
+    tailWidth = 4; // reset tail widtth back to Script default
+  }
+});
+
+
+
+if (logsList) {
+  const defaultEntry = document.createElement("div");
+  defaultEntry.textContent = "Hello World! I'm Script M. Kitty, the Master Blackcat Hacker! 🐱💻 ...well future master... i dont really know how to hack yet and i have the small extra hurdle of being a cat and not owning a computer :p HOWEVER, i have a master plan...ive noticed my dunce of an owner NEVER locks his computer so, starting from this day on I will try to sneak in as much hacking practice as i can while hes not looking! My goal is to commit 1000 lines of malicious  code to NPM package repositories a day. If I can do that for a week straight maybe, just maybe, the world will recognize me as the great hacker i know im destined to be. I need to be carful as to  not get petted by my owner ... he gets cuteness aggression HARD and once he starts petting me he cant stop! I mean i understand why, im ADORABLE!! :b Definitely cuter than my sister Emmie by a long shot- ... anyways i digress the point is if he pets me i wont be able to get any more practice that day so i need to plan my practice strategically to keep his grubby little paws OFF me! This is the first day of the rest of my hacker life im so excited! ALRIGHT, LETS DO THIS... LEROOOOOOOYYYY JEEEEEEENKIIIIINNNNNNSSSSS - Script M. Kitty \n";
+  defaultEntry.style.marginBottom = "8px";
+  logsList.appendChild(defaultEntry);
+}
+
+updateGitGraphGrid();
+scoreboard.style.display = "none";
+gameLoopRunning = false;
+

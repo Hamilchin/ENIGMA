@@ -1,0 +1,55 @@
+{
+  "id": "2025-infinite-hunger",
+  "slug": "infinite-hunger",
+  "title": "Infinite Hunger",
+  "year": 2025,
+  "rank": 38,
+  "overall_score": 19.94,
+  "criteria": {
+    "theme": {
+      "rank": 131,
+      "score": 2.6,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 105,
+      "score": 2.57,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 17,
+      "score": 3.63,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 6,
+      "score": 4.4,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 63,
+      "score": 3.03,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 21,
+      "score": 3.71,
+      "top": 4.45
+    }
+  },
+  "author": "Jani Nykänen",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "Infinite Hunger …is a simple endless arcade platformer action thingy. You control a black cat who has to keep eating otherwise a single hit by a red-nosed slime can kill you. Game mechanics explained The goal is to get as many points as possible. The following actions give you points: Stomping an enemy. This also gives you an additional score multiplier as long as you stay in the air. Eating an enemy. Catch an enemy with your tongue and eat it. This gives you fewer points than stomping, but it will also refill your hunger bar. Collecting a coin. This gives the least points, but it increases the score multiplier (under “BONUS” text). Controls: (Note: Z and X can be different on non-qwerty keyboards, but they are always the keys you can find above your left alt) Arrow keys: Move Space or Z: Jump Left Ctrl or X: Launch your tongue. This is used to eat enemies. Escape or Enter: Pause game.",
+  "description": "Infinite Hunger …is a simple endless arcade platformer action thingy. You control a black cat who has to keep eating otherwise a single hit by a red-nosed slime can kill you. Game mechanics explained The goal is to get as many points as possible. The following actions give you points: Stomping an enemy. This also gives you an additional score multiplier as long as you stay in the air. Eating an enemy. Catch an enemy with your tongue and eat it. This gives you fewer points than stomping, but it will also refill your hunger bar. Collecting a coin. This gives the least points, but it increases the score multiplier (under “BONUS” text).",
+  "controls": ": (Note: Z and X can be different on non-qwerty keyboards, but they are always the keys you can find above your left alt) Arrow keys: Move Space or Z: Jump Left Ctrl or X: Launch your tongue. This is used to eat enemies. Escape or Enter: Pause game.",
+  "github_url": "https://github.com/js13kGames/infinite-hunger",
+  "play_url": "https://js13kgames.com/2025/games/infinite-hunger",
+  "play_zip": "https://play.js13kgames.com/infinite-hunger.zip",
+  "thumb_url": "https://play.js13kgames.com/infinite-hunger/.ts.png",
+  "local_path": "games/2025-infinite-hunger",
+  "entry": "index.html",
+  "commit_sha": "107dcb9251dc451f9e2c57afe48cc970d5db0bad",
+  "build_status": "prebuilt"
+}

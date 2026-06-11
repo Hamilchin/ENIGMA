@@ -1,0 +1,56 @@
+{
+  "id": "2025-wash-the-cat",
+  "slug": "wash-the-cat",
+  "title": "Wash the cat",
+  "year": 2025,
+  "rank": 18,
+  "overall_score": 21.5,
+  "criteria": {
+    "theme": {
+      "rank": 19,
+      "score": 3.72,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 1,
+      "score": 4.03,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 42,
+      "score": 3.28,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 73,
+      "score": 3.23,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 25,
+      "score": 3.56,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 24,
+      "score": 3.68,
+      "top": 4.45
+    }
+  },
+  "author": "Homer Dilpleu",
+  "devices": [
+    "Desktop",
+    "Mobile"
+  ],
+  "desc_full": "“Wash the Cat” is a puzzle game where you must manipulate a hydraulic system to clean a dirty black cat! How to Play Click or tap the faucets to open and close them. Guide the water from the tanks to the shower to wash the cat. Find the right sequence and timing to solve each puzzle. With simple controls but increasingly tricky levels, can you master the flow and leave the cat sparkling clean? Features Intuitive one-tap mechanics. A mix of logic and timing challenges. Dive in and see if you have what it takes to wash this cat!",
+  "description": "“Wash the Cat” is a puzzle game where you must manipulate a hydraulic system to clean a dirty black cat! How to Play Click or tap the faucets to open and close them. Guide the water from the tanks to the shower to wash the cat. Find the right sequence and timing to solve each puzzle. With simple controls but increasingly tricky levels, can you master the flow and leave the cat sparkling clean? Features Intuitive one-tap mechanics. A mix of logic and timing challenges. Dive in and see if you have what it takes to wash this cat!",
+  "controls": "",
+  "github_url": "https://github.com/js13kGames/wash-the-cat",
+  "play_url": "https://js13kgames.com/2025/games/wash-the-cat",
+  "play_zip": "https://play.js13kgames.com/wash-the-cat.zip",
+  "thumb_url": "https://play.js13kgames.com/wash-the-cat/.ts.png",
+  "local_path": "games/2025-wash-the-cat",
+  "entry": "index.html",
+  "commit_sha": "9ca8f4085121af73fb1984b874938a81090edcf9",
+  "build_status": "prebuilt"
+}

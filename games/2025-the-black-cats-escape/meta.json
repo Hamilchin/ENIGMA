@@ -1,0 +1,55 @@
+{
+  "id": "2025-the-black-cats-escape",
+  "slug": "the-black-cats-escape",
+  "title": "The Black Cat's Escape",
+  "year": 2025,
+  "rank": 39,
+  "overall_score": 19.82,
+  "criteria": {
+    "theme": {
+      "rank": 29,
+      "score": 3.61,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 15,
+      "score": 3.64,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 15,
+      "score": 3.64,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 116,
+      "score": 2.71,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 85,
+      "score": 2.79,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 51,
+      "score": 3.43,
+      "top": 4.45
+    }
+  },
+  "author": "Zang0l0tino",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "I am a sixteen-year-old student, and I decided to participate in the game jam without any prior preparations on August 13th. Here is the goal and description of my game: Help the black cat escape safely by guiding it to the flag. To achieve this, you must place items on its path. There are four items available to assist the cat: Food: If it is in a straight line and there are no obstacles, the black cat will move towards it. Mouse: The mouse will try to escape from the black cat, while the cat attempts to catch it. Box: The box functions like a wall; it blocks the cat and can alter the mouse’s path. Ball: The cat will always jump to a ball if it is two tiles away, regardless of walls or boxes, except when the flag is one tile away.",
+  "description": "I am a sixteen-year-old student, and I decided to participate in the game jam without any prior preparations on August 13th. Here is the goal and description of my game: Help the black cat escape safely by guiding it to the flag. To achieve this, you must place items on its path. There are four items available to assist the cat: Food: If it is in a straight line and there are no obstacles, the black cat will move towards it. Mouse: The mouse will try to escape from the black cat, while the cat attempts to catch it. Box: The box functions like a wall; it blocks the cat and can alter the mouse’s path. Ball: The cat will always jump to a ball if it is two tiles away, regardless of walls or boxes, except when the flag is one tile away.",
+  "controls": "",
+  "github_url": "https://github.com/js13kGames/the-black-cats-escape",
+  "play_url": "https://js13kgames.com/2025/games/the-black-cats-escape",
+  "play_zip": "https://play.js13kgames.com/the-black-cats-escape.zip",
+  "thumb_url": "https://play.js13kgames.com/the-black-cats-escape/.ts.png",
+  "local_path": "games/2025-the-black-cats-escape",
+  "entry": "Js13k2025/index.html",
+  "commit_sha": "d83363c2b95a774cab4079d41b15004f03671820",
+  "build_status": "prebuilt"
+}

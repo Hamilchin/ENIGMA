@@ -1,0 +1,47 @@
+{
+  "type": "module",
+  "name": "biralo",
+  "version": "1.0.0",
+  "description": "My entry for js13Kgames 2025",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npm run assets && npm run serve",
+    "serve": "node cli/esbuild.serve.js",
+    "build:low": "npm run assets && node cli/esbuild.build.js",
+    "build:max": "npm run assets && node cli/roller.build.js",
+    "assets": "npm run ogmo && npm run images",
+    "ogmo": "node cli/ogmo.build.js",
+    "debug-ogmo": "node --inspect-brk cli/ogmo.build.js",
+    "images": "node cli/images.build.js",
+    "debug-images": "node --inspect-brk ./cli/images.build.js",
+    "lint": "npx eslint --fix 'src/**/*.js' 'media/**/*.js' 'cli/**/*.js' 'lib/**/*.js'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smiley405/biralo.git"
+  },
+  "author": "smiley405",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smiley405/biralo/issues"
+  },
+  "homepage": "https://github.com/smiley405/biralo#readme",
+  "devDependencies": {
+    "esbuild": "^0.23.1",
+    "eslint": "^8.57.0",
+    "eslint-import-resolver-node": "^0.3.9",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsdoc": "^50.2.2",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-unused-imports": "^4.1.3",
+    "zip-a-folder": "^3.1.7"
+  },
+  "dependencies": {
+    "fs-extra": "^11.2.0",
+    "glob": "^11.0.0",
+    "html-minifier-terser": "^7.2.0",
+    "jimp": "^1.6.0",
+    "roadroller": "^2.1.0",
+    "shelljs": "^0.8.5"
+  }
+}

@@ -1,0 +1,15 @@
+export const IS_POKI_ENABLED = import.meta.env.POKI_ENABLED === "true";
+export const IS_DEV = import.meta.env.DEV;
+const IS_JS13K = import.meta.env.IS_JS13K === "true";
+export const HAS_VISUAL_NICE_TO_HAVES = !IS_JS13K;
+export const HAS_GAMEPLAY_NICE_TO_HAVES = !IS_JS13K;
+export const HAS_ADVANCED_DEBUGGING = !IS_JS13K;
+export const HAS_SHORT_TEXTS = IS_JS13K;
+export const HAS_MUTE_BUTTON = true;
+export const HAS_SIMPLE_SOUND_EFFECTS = true;
+export const HAS_SPOKEN_MEOW = false;
+export const HAS_RECORDED_SOUND_EFFECTS = !IS_JS13K;
+export const HAS_LOCATION_SERIALIZATION = !IS_JS13K;
+export const HAS_MEOW = HAS_SPOKEN_MEOW || HAS_RECORDED_SOUND_EFFECTS;
+export const HAS_KITTEN_MEOWS = false;
+export const GAME_TITLE = "Kittens United";

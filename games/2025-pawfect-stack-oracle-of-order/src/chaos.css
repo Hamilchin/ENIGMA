@@ -1,0 +1,69 @@
+[data-current-section="home"] main {
+  background-image: conic-gradient(from 45deg, #66bfc3 0 50%, #205d61 0 100%);
+}
+
+div.Pushtoright,
+div.Move,
+div.Pushtoright:before {
+  transform: scaleX(-1);
+}
+
+div.Pushtoright,
+div.Pushtoleft {
+  --bx: -144px;
+  --by: -240px;
+}
+
+div.Move {
+  --bx: -144px;
+  --by: -576px;
+}
+
+.catRunning #actionsMenu .s:not(:first-of-type) {
+  pointer-events: none;
+  border: 0;
+}
+
+.catRunning #shop canvas {
+  display: none;
+}
+
+.catRunning #shop:before,
+.catRunning #actionsMenu .s:not(:first-of-type):before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  background-image: url("./images/sprites.png");
+  background-size: calc(var(--sw) * 3) calc(var(--sh) * 3);
+  background-position: 0 -96px;
+  background-color: #331c1a;
+}
+
+.catRunning #shop:before {
+  background-color: #000;
+}
+
+.r #actionsMenu > div:after,
+.l #actionsMenu > div:after {
+  display: none;
+}
+
+.r #actionsMenu > div.s:not(.casting),
+.l #actionsMenu > div.s:not(.casting) {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.r #walls canvas,
+.l #walls canvas {
+  cursor: pointer;
+}
+
+.r #walls .cat,
+.l #walls .cat,
+.l #walls .not-to-left,
+.r #walls .not-to-right {
+  pointer-events: none;
+}

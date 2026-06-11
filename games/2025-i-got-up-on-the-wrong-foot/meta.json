@@ -1,0 +1,56 @@
+{
+  "id": "2025-i-got-up-on-the-wrong-foot",
+  "slug": "i-got-up-on-the-wrong-foot",
+  "title": "I got up on the wrong foot",
+  "year": 2025,
+  "rank": 17,
+  "overall_score": 21.52,
+  "criteria": {
+    "theme": {
+      "rank": 71,
+      "score": 3.26,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 2,
+      "score": 3.94,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 34,
+      "score": 3.35,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 26,
+      "score": 3.95,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 44,
+      "score": 3.23,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 16,
+      "score": 3.78,
+      "top": 4.45
+    }
+  },
+  "author": "xem",
+  "devices": [
+    "Desktop",
+    "Mobile"
+  ],
+  "desc_full": "Due to an SVG bug in Firefox, this game currently looks better in Webkit browsers (Chrome, Edge, Safari) It’s your (unlucky) day! You got up on the wrong foot. Make 26 superstitions come true before midnight to be as unlucky as possible. The game features weather events and events that happen at specific times of the day… keep your eyes and your ears open! Thanks to Séverine, Adrien and Maurice for their invaluable help. Making-of: https://xem.github.io/articles/js13k25.html",
+  "description": "Due to an SVG bug in Firefox, this game currently looks better in Webkit browsers (Chrome, Edge, Safari) It’s your (unlucky) day! You got up on the wrong foot. Make 26 superstitions come true before midnight to be as unlucky as possible. The game features weather events and events that happen at specific times of the day… keep your eyes and your ears open! Thanks to Séverine, Adrien and Maurice for their invaluable help. Making-of: https://xem.github.io/articles/js13k25.html",
+  "controls": "",
+  "github_url": "https://github.com/js13kGames/i-got-up-on-the-wrong-foot",
+  "play_url": "https://js13kgames.com/2025/games/i-got-up-on-the-wrong-foot",
+  "play_zip": "https://play.js13kgames.com/i-got-up-on-the-wrong-foot.zip",
+  "thumb_url": "https://play.js13kgames.com/i-got-up-on-the-wrong-foot/.ts.png",
+  "local_path": "games/2025-i-got-up-on-the-wrong-foot",
+  "entry": "index.html",
+  "commit_sha": "bd443f167c0f1c471c7963a932d2b714acabf9a9",
+  "build_status": "prebuilt"
+}

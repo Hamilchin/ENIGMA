@@ -1,0 +1,29 @@
+{
+  "name": "enigma",
+  "version": "1.0.0",
+  "description": "Evaluating Novel Interactive Generality in Machine Agents: a diverse, large-scale public puzzle-based benchmark.",
+  "main": "index.js",
+  "scripts": {
+    "build": "node env/clock/build-shim.mjs",
+    "postinstall": "node env/clock/build-shim.mjs",
+    "serve": "node env/serve.mjs",
+    "spike": "node env/clock-spike.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hamilchin/ENIGMA.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Hamilchin/ENIGMA/issues"
+  },
+  "homepage": "https://github.com/Hamilchin/ENIGMA#readme",
+  "devDependencies": {
+    "@sinonjs/fake-timers": "^15.4.0",
+    "esbuild": "^0.28.0",
+    "playwright": "^1.60.0"
+  }
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pawfect Stack</title>
+    <link href="./style.css" rel="stylesheet" />
+    <link href="./chaos.css" rel="stylesheet" />
+    <link href="./order.css" rel="stylesheet" />
+    <link id="favIcon" rel="icon" />
+  </head>
+  <body>
+    <main>
+      <section id="home">
+        <div class="logos">
+          <h1>Pawfect Stack</h1>
+
+          <h2>Oracle of Chaos</h2>
+        </div>
+
+        <p class="p">
+          <a href="#scenarioSection">Click to start</a>
+        </p>
+      </section>
+
+      <section id="scenarioSection" class="scenario">
+        <div id="scenarioScene"></div>
+        <div class="scenarioDialog"></div>
+        <a id="skipLink" class="skip" href="#mainGame">Skip</a>
+      </section>
+
+      <section id="mainGame">
+        <div id="gameStats">
+          <div id="levelGoals">
+            <span>Goals</span>
+            <dl>
+              <dt>Items</dt>
+              <dd>
+                <span id="itemScore">0</span>/<span id="itemGoal">10</span>
+              </dd>
+              <dt>Magic</dt>
+              <dd>
+                <span id="magicScore">0</span>/<span id="magicGoal">100</span>
+              </dd>
+            </dl>
+          </div>
+          <div class="c scenarioMelusine"></div>
+        </div>
+        <div id="walls">
+          <div id="levelDisplay">
+            <b>Level <span id="levelDisplayIndex"></span>/3</b>
+          </div>
+          <canvas id="wallsCanvas" width="576" height="576"></canvas>
+          <div id="gameTable"></div>
+        </div>
+        <div id="actionsMenu"></div>
+        <div class="scenarioDialog">
+          <div id="helpContainer"></div>
+          <div id="shop"></div>
+        </div>
+
+        <aside id="gameEnd">
+          <div>
+            <h2 id="endTitle"></h2>
+            <p id="endDescription"></p>
+            <button id="endButtonNext"></button>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <p class="p" id="gameOptions">
+      <label><input id="soundsCheckbox" type="checkbox" /> Enable sounds</label>
+      <br />
+      <a id="resetSave" href="#">Reset save</a>
+    </p>
+
+    <script>
+      window.process = {
+        env: {
+          GAME_TYPE: "chaos",
+        },
+      };
+    </script>
+    <script type="module" src="scripts/index.js"></script>
+  </body>
+</html>

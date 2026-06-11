@@ -1,0 +1,55 @@
+{
+  "id": "2025-witchcat",
+  "slug": "witchcat",
+  "title": "Witchcat",
+  "year": 2025,
+  "rank": 3,
+  "overall_score": 23.97,
+  "criteria": {
+    "theme": {
+      "rank": 20,
+      "score": 3.71,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 9,
+      "score": 3.71,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 6,
+      "score": 4.06,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 4,
+      "score": 4.51,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 9,
+      "score": 4,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 7,
+      "score": 3.97,
+      "top": 4.45
+    }
+  },
+  "author": "Jonathan Vallet and Lylouf",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "Witchcat is a short adventure game. The seasons are in chaos and your black cats have disappeared. 🌒🐈‍⬛ Uncover the power of the Seasons and bring your cats back! 🎮 Controls Move: ↑ ← ↓ → or W A S D or Z Q S D Cast a fireball to burn bushes and defeat enemies: Space 🍂 Seasons change the world ❄️ Winter: snow covers the land, but frozen water becomes walkable. 🌞 Summer: roots and vines grow, letting you climb. 🍄 Fall: mushrooms appear, and leaves fill the holes. 🌸 Spring: stone flowers bloom and can be destroyed. ✨ Hope you’ll enjoy this adventure! Developed by Satanimax Pixel art assets by Lylouf",
+  "description": "Witchcat is a short adventure game. The seasons are in chaos and your black cats have disappeared. 🌒🐈‍⬛ Uncover the power of the Seasons and bring your cats back! 🎮",
+  "controls": "Move: ↑ ← ↓ → or W A S D or Z Q S D Cast a fireball to burn bushes and defeat enemies: Space 🍂 Seasons change the world ❄️ Winter: snow covers the land, but frozen water becomes walkable. 🌞 Summer: roots and vines grow, letting you climb. 🍄 Fall: mushrooms appear, and leaves fill the holes. 🌸 Spring: stone flowers bloom and can be destroyed. ✨ Hope you’ll enjoy this adventure! Developed by Satanimax Pixel art assets by Lylouf",
+  "github_url": "https://github.com/js13kGames/witchcat",
+  "play_url": "https://js13kgames.com/2025/games/witchcat",
+  "play_zip": "https://play.js13kgames.com/witchcat.zip",
+  "thumb_url": "https://play.js13kgames.com/witchcat/.ts.png",
+  "local_path": "games/2025-witchcat",
+  "entry": "index.html",
+  "commit_sha": "65e6753508b66cc7249f27022b1ca7111b492fd7",
+  "build_status": "prebuilt"
+}

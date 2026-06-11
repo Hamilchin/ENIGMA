@@ -1,0 +1,105 @@
+.game-over-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0, 0, 0, 0.5);
+	color: #fff;
+	font-size: 4rem;
+	visibility: hidden;
+	opacity: 0;
+	transition: all 250ms ease-in-out;
+	z-index: 50;
+}
+
+.game-over-container.active {
+	visibility: visible;
+	opacity: 1;
+}
+
+.game-over-container h1 {
+	margin-bottom: 2rem;
+}
+
+.game-over-container .final-score {
+	font-size: 3rem;
+	margin-bottom: 0;
+}
+
+.game-over-container .subtitle {
+	font-size: 1.2rem;
+	color: #ccc;
+	font-style: italic;
+	margin-bottom: 2rem;
+}
+
+.game-over-container .instruction {
+	font-size: 1rem;
+	color: #ccc;
+	font-style: italic;
+	margin-bottom: 2rem;
+	display: none;
+}
+
+.difficulty-button {
+	margin: 0 0.5rem;
+	border: none;
+	background: var(--difficulty-color, #8b9dc3);
+	padding: 12px 24px;
+	font-size: 18px;
+	font-weight: bold;
+	border-radius: 8px;
+	color: #fff;
+	cursor: pointer;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+	transition: all 0.3s ease;
+	position: relative;
+	overflow: hidden;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	animation: difficultyPulse 2s ease-in-out infinite;
+}
+
+.difficulty-button::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: rgba(255, 255, 255, 0.1);
+	transition: left 0.5s;
+}
+
+.difficulty-button:hover {
+	transform: scale(1.05) translateY(-2px);
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.difficulty-button:hover::before {
+	left: 100%;
+}
+
+.difficulty-button:active {
+	transform: scale(0.98) translateY(0px);
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes difficultyPulse {
+	0%,
+	100% {
+		box-shadow:
+			0 4px 15px rgba(0, 0, 0, 0.3),
+			0 0 0 0 var(--difficulty-color, rgba(139, 157, 195, 0.4));
+	}
+	50% {
+		box-shadow:
+			0 4px 15px rgba(0, 0, 0, 0.3),
+			0 0 0 8px transparent;
+	}
+}

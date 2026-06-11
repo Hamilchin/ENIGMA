@@ -1,0 +1,155 @@
+.title-screen {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	color: #fff;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	z-index: 50;
+}
+
+.game-title {
+	font-size: 2.5rem;
+	margin-bottom: 1rem;
+	color: #e67b7b;
+	text-shadow:
+		2px 2px 8px rgba(196, 90, 90, 0.5),
+		0 0 15px rgba(230, 123, 123, 0.3);
+	font-weight: bold;
+	letter-spacing: 2px;
+	animation:
+		titleGlow 3s ease-in-out infinite,
+		titleBounce 4s ease-out infinite;
+	transform: scale(1);
+	transition: transform 0.3s ease;
+	white-space: nowrap;
+	padding: 0.5rem 0;
+}
+
+.game-title:hover {
+	transform: scale(1.05);
+}
+
+@keyframes titleGlow {
+	0%,
+	100% {
+		color: #e67b7b;
+		filter: drop-shadow(0 0 15px rgba(196, 90, 90, 0.7));
+	}
+	50% {
+		color: #ffa8a8;
+		filter: drop-shadow(0 0 25px rgba(255, 168, 168, 0.9));
+	}
+}
+
+@keyframes titleBounce {
+	0%,
+	100% {
+		transform: translateY(4px) rotate(0deg) scale(0.95);
+	}
+	25% {
+		transform: translateY(-8px) rotate(-3deg) scale(1.05);
+	}
+	50% {
+		transform: translateY(0) rotate(0deg) scale(1);
+	}
+	75% {
+		transform: translateY(-12px) rotate(3deg) scale(1.05);
+	}
+}
+
+.game-subtitle {
+	font-size: 1.2rem;
+	margin-bottom: 2rem;
+	color: #aaa;
+	font-style: italic;
+}
+
+.leaderboard {
+	margin-bottom: 2rem;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	min-height: 200px;
+	justify-content: flex-start;
+	opacity: 0.9;
+}
+
+.leaderboard-title {
+	font-size: 1.2rem;
+	margin-bottom: 1rem;
+	color: #bbb;
+}
+
+.leaderboard-list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	align-items: center;
+}
+
+.leaderboard-item {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0.3rem 0.8rem;
+	border-radius: 4px;
+	min-width: 150px;
+	font-size: 0.9rem;
+}
+
+.leaderboard-item .score {
+	font-weight: bold;
+}
+
+/* First place - Gold */
+.leaderboard-item.rank-1 {
+	background: rgba(255, 215, 0, 0.1);
+	font-size: 1.1em;
+}
+.leaderboard-item.rank-1 .score {
+	color: #ffd700;
+}
+
+/* Second place - Silver */
+.leaderboard-item.rank-2 {
+	background: rgba(192, 192, 192, 0.1);
+	font-size: 1.05em;
+}
+.leaderboard-item.rank-2 .score {
+	color: #c0c0c0;
+}
+
+/* Third place - Bronze */
+.leaderboard-item.rank-3 {
+	background: rgba(205, 127, 50, 0.1);
+	font-size: 1em;
+}
+.leaderboard-item.rank-3 .score {
+	color: #cd7f32;
+}
+
+/* Lower ranks - Grey and smaller */
+.leaderboard-item.rank-lower {
+	background: rgba(128, 128, 128, 0.05);
+	font-size: 0.8em;
+	padding: 0.2rem 0.6rem;
+}
+.leaderboard-item.rank-lower .score {
+	color: #aaa;
+}
+
+.leaderboard-empty {
+	color: #aaa;
+	font-style: italic;
+}
+
+.game-title-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 130px;
+}

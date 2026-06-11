@@ -1,0 +1,49 @@
+{
+  "name": "catapoolt",
+  "version": "1.0.0",
+  "description": "js13kGames 2025 competition entry",
+  "private": true,
+  "scripts": {
+    "prepare": "node scripts/generate-tunes.js && husky",
+    "generate-tunes": "node scripts/generate-tunes.js",
+    "increment-version": "node scripts/increment-version.js",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --open --host",
+    "dev": "vite --open --host",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "predeploy": "npm run increment-version",
+    "deploy": "npm run build && firebase deploy"
+  },
+  "author": "glebv",
+  "license": "MIT",
+  "dependencies": {
+    "dat.gui": "^0.7.9"
+  },
+  "devDependencies": {
+    "@stylistic/eslint-plugin": "^5.2.3",
+    "@types/dat.gui": "^0.7.13",
+    "@types/node": "^24.3.0",
+    "eslint": "^9.33.0",
+    "globals": "^16.3.0",
+    "husky": "^9.1.7",
+    "js13k-vite-plugins": "^0.4.0",
+    "lint-staged": "^16.1.5",
+    "prettier": "^3.6.2",
+    "prettier-plugin-organize-imports": "^4.2.0",
+    "roadroller": "^2.1.0",
+    "terser": "^5.44.0",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.39.1",
+    "vite": "^7.1.2",
+    "vite-plugin-html": "^3.2.2",
+    "vite-plugin-singlefile": "^2.3.0"
+  },
+  "lint-staged": {
+    "*.{js,ts}": "eslint --fix",
+    "*": "prettier --write -u"
+  },
+  "type": "module"
+}

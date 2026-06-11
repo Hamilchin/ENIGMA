@@ -1,0 +1,56 @@
+{
+  "id": "2025-kleptokitty",
+  "slug": "kleptokitty",
+  "title": "KleptoKitty",
+  "year": 2025,
+  "rank": 23,
+  "overall_score": 21.12,
+  "criteria": {
+    "theme": {
+      "rank": 70,
+      "score": 3.29,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 79,
+      "score": 2.86,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 11,
+      "score": 3.71,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 42,
+      "score": 3.71,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 23,
+      "score": 3.57,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 6,
+      "score": 3.98,
+      "top": 4.45
+    }
+  },
+  "author": "Eoin McGrath",
+  "devices": [
+    "Desktop",
+    "Mobile"
+  ],
+  "desc_full": "About “If a black cat crosses your path, count your diamonds, for they may vanish by dawn” You are Kleptokitty - whisker-twitching, tail-flicking, diamond-snatching master of meow-heist mischief. The mansion is full of riches, traps, and clueless guards… but none of them stand a chance against the purrfect crime. How To Play Swipe / Arrow keys / WASD to move Find keys Collect loot Escape …and don’t get caught [M] to mute. Made with LittleJS",
+  "description": "About “If a black cat crosses your path, count your diamonds, for they may vanish by dawn” You are Kleptokitty - whisker-twitching, tail-flicking, diamond-snatching master of meow-heist mischief. The mansion is full of riches, traps, and clueless guards… but none of them stand a chance against the purrfect crime. How To Play Swipe / Arrow keys / WASD to move Find keys Collect loot Escape …and don’t get caught [M] to mute. Made with LittleJS",
+  "controls": "",
+  "github_url": "https://github.com/js13kGames/kleptokitty",
+  "play_url": "https://js13kgames.com/2025/games/kleptokitty",
+  "play_zip": "https://play.js13kgames.com/kleptokitty.zip",
+  "thumb_url": "https://play.js13kgames.com/kleptokitty/.ts.png",
+  "local_path": "games/2025-kleptokitty",
+  "entry": "index.html",
+  "commit_sha": "f9b0012169a5333ec315c664b22fbb0dc6f196cc",
+  "build_status": "prebuilt"
+}

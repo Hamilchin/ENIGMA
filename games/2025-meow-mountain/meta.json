@@ -1,0 +1,55 @@
+{
+  "id": "2025-meow-mountain",
+  "slug": "meow-mountain",
+  "title": "Meow Mountain",
+  "year": 2025,
+  "rank": 16,
+  "overall_score": 21.65,
+  "criteria": {
+    "theme": {
+      "rank": 7,
+      "score": 3.86,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 38,
+      "score": 3.3,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 22,
+      "score": 3.54,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 38,
+      "score": 3.76,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 24,
+      "score": 3.57,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 28,
+      "score": 3.62,
+      "top": 4.45
+    }
+  },
+  "author": "João Lopes",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "The spirit cat, protector of the valley and guardian of Meow Mountain, took a slightly too long nap. In that time, the valley fell into disarray - the protective barrier keeping evil spirits at bay has collapsed, and the weary villagers have stopped worshiping their feline protector. Can you restore peace to Whisker’s Valley? Controls Move: ↑ ← ↓ → or W A S D or Z Q S D Attack/activate: Space Game features Music and sound effects (please play with sound! 🎵) Progressively increasing difficulty Attack boost when surrounded by 3+ spirits (cornered cat bonus) Keyboard-only controls Game tips (spoilers ahead) The game is not about killing spirits; running away is often the best strategy Use the cornered cat bonus strategically by letting 3+ spirits surround you Sleep in the first house to heal and you can teleport from each alter to your home altar Repairing statues naturally increases difficulty, but high superstition accelerates it even faster",
+  "description": "The spirit cat, protector of the valley and guardian of Meow Mountain, took a slightly too long nap. In that time, the valley fell into disarray - the protective barrier keeping evil spirits at bay has collapsed, and the weary villagers have stopped worshiping their feline protector. Can you restore peace to Whisker’s Valley?",
+  "controls": "Move: ↑ ← ↓ → or W A S D or Z Q S D Attack/activate: Space Game features Music and sound effects (please play with sound! 🎵) Progressively increasing difficulty Attack boost when surrounded by 3+ spirits (cornered cat bonus) Keyboard-only controls Game tips (spoilers ahead) The game is not about killing spirits; running away is often the best strategy Use the cornered cat bonus strategically by letting 3+ spirits surround you Sleep in the first house to heal and you can teleport from each alter to your home altar Repairing statues naturally increases difficulty, but high superstition accelerates it even faster",
+  "github_url": "https://github.com/js13kGames/meow-mountain",
+  "play_url": "https://js13kgames.com/2025/games/meow-mountain",
+  "play_zip": "https://play.js13kgames.com/meow-mountain.zip",
+  "thumb_url": "https://play.js13kgames.com/meow-mountain/.ts.png",
+  "local_path": "games/2025-meow-mountain",
+  "entry": "index.html",
+  "commit_sha": "dd7188edc5fc0f329bb47f8956d256e80769e9ca",
+  "build_status": "prebuilt"
+}

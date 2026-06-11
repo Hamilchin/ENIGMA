@@ -1,0 +1,17 @@
+* {
+  box-sizing: border-box;
+}
+
+#c2d {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  margin: auto;
+  display: block;
+}
+
+html,
+body {
+  margin: 0;
+  background: #050011;
+  height: 100%;
+}

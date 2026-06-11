@@ -1,0 +1,14 @@
+.p-le {
+  background: #fff;
+  border-radius: 10px;
+  /* TODO: ver si se repite esta sombra */
+  box-shadow: 0 2px 4px #0006, 0 7px 13px -3px #0000004d, inset 0 -3px 0 #0003;
+  color: black;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 7px;
+  position: absolute;
+  text-align: center;
+  top: 27px;
+  width: 80px;
+}

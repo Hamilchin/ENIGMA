@@ -1,0 +1,55 @@
+{
+  "id": "2025-miami-mice",
+  "slug": "miami-mice",
+  "title": "Miami Mice",
+  "year": 2025,
+  "rank": 19,
+  "overall_score": 21.44,
+  "criteria": {
+    "theme": {
+      "rank": 30,
+      "score": 3.6,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 45,
+      "score": 3.19,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 33,
+      "score": 3.38,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 28,
+      "score": 3.94,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 11,
+      "score": 3.81,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 42,
+      "score": 3.52,
+      "top": 4.45
+    }
+  },
+  "author": "Christoph Schansky",
+  "devices": [
+    "Desktop"
+  ],
+  "desc_full": "MIAMI MICE is a beat-em-up style game inspired by classics like International Karate and Double Dragon. Controls: Keyboard [WASD]: Move your character [H]: Punch [J]: Kick (more damage, costs more stamina) [B]: Block Controls: Gamepad Left Stick: Move your character B: Punch A: Kick (more damage, costs more stamina) X: Block How to Play wait until the music is generated Click on START to begin. Defeat waves of enemies and aim for a high score! When defeated, retry ( loose half of your score) Features No image assets: All visuals are generated in real-time using JavaScript and Canvas. Bone-based animation: Characters are animated with a custom bone system for smooth, dynamic movement. Keyboard & Gamepad support: Play with your favorite input device. Original music: Soundtrack and sound effects are composed using SoundBox. Technical Details Engine: Custom JavaScript, no frameworks, bone animation system Graphics: Procedural, no images. Background HTML and CSS Audio: SoundBox-generated music and SFX",
+  "description": "MIAMI MICE is a beat-em-up style game inspired by classics like International Karate and Double Dragon.",
+  "controls": ": Keyboard [WASD]: Move your character [H]: Punch [J]: Kick (more damage, costs more stamina) [B]: Block Controls: Gamepad Left Stick: Move your character B: Punch A: Kick (more damage, costs more stamina) X: Block How to Play wait until the music is generated Click on START to begin. Defeat waves of enemies and aim for a high score! When defeated, retry ( loose half of your score) Features No image assets: All visuals are generated in real-time using JavaScript and Canvas. Bone-based animation: Characters are animated with a custom bone system for smooth, dynamic movement. Keyboard & Gamepad support: Play with your favorite input device. Original music: Soundtrack and sound effects are composed using SoundBox. Technical Details Engine: Custom JavaScript, no frameworks, bone animation system Graphics: Procedural, no images. Background HTML and CSS Audio: SoundBox-generated music and SFX",
+  "github_url": "https://github.com/js13kGames/miami-mice",
+  "play_url": "https://js13kgames.com/2025/games/miami-mice",
+  "play_zip": "https://play.js13kgames.com/miami-mice.zip",
+  "thumb_url": "https://play.js13kgames.com/miami-mice/.ts.png",
+  "local_path": "games/2025-miami-mice",
+  "entry": "index.html",
+  "commit_sha": "d209f67b84fe3441df680f0659815d8e4ca052e4",
+  "build_status": "prebuilt"
+}

@@ -1,0 +1,56 @@
+{
+  "id": "2025-blackcathacker",
+  "slug": "blackcathacker",
+  "title": "BlackCat_Hacker",
+  "year": 2025,
+  "rank": 47,
+  "overall_score": 19.5,
+  "criteria": {
+    "theme": {
+      "rank": 14,
+      "score": 3.78,
+      "top": 4.24
+    },
+    "innovation": {
+      "rank": 32,
+      "score": 3.39,
+      "top": 4.03
+    },
+    "gameplay": {
+      "rank": 58,
+      "score": 3.09,
+      "top": 4.37
+    },
+    "graphics": {
+      "rank": 93,
+      "score": 2.96,
+      "top": 4.56
+    },
+    "audio": {
+      "rank": 49,
+      "score": 3.17,
+      "top": 4.22
+    },
+    "controls": {
+      "rank": 84,
+      "score": 3.11,
+      "top": 4.45
+    }
+  },
+  "author": "Zach",
+  "devices": [
+    "Desktop",
+    "Mobile"
+  ],
+  "desc_full": "BlackCat_Hacker is a mini anti-stealth platformer where you play as Script, an aspiring hacker trying to become the best the world has ever seen. Only problem is… shes a cat and can only use the computer when her owner doesn’t know shes there. Guide Script to the computer and ship as much maliciou code as you can before the work day is over, (good hackers don’ work unpaid overtime) or you are caught using the computer by your owner! Controls Movement LEFT and RIGHT arrow key to move UP arrow key to jump on the shelves Other Interactions Press SPACE to meow and push coffee cups Spam any letter on the keyboard to code How to play Platform your way in front of the computer, then spam all the letter keys on you keyboard with your paws to commit as much malicious code as you can before your owner comes back! When your owner is at the computer not only can Script not use it, but her owner will also start undoing her hard work, Luckily hes a filthy casual vibe coder and hes quite slow. Script can speed things up by knocking his leftover coffee cups off shelves and onto the ground to distract them and get back on keys, by knocking the cups around with SPACE Rules of the Game: BlackCat_Hacker is split into seven rounds, each representing one work day. Your goal is to try to ship as much code each day and fill your git graph (it makes potential employers compliment your resume before they reject you). At the end of seven days you will be ranked on your hacking ability based on how many lines of malicious code you shipped! Your goal is to aim to ship 1000 lines of code a day or more and claim the coveted Master black cat hacker fedora! FAQ What IDE does Script use? shes a big fan of neovim however her owner is a vibe coder and uses intellij with every copilot and cursor extension installed, but Script makes it work. Is Script an ethical hacker? for legal reasons we have chosen not to comment Can cats drink coffee? cats can have little a coffee, as a treat.",
+  "description": "BlackCat_Hacker is a mini anti-stealth platformer where you play as Script, an aspiring hacker trying to become the best the world has ever seen. Only problem is… shes a cat and can only use the computer when her owner doesn’t know shes there. Guide Script to the computer and ship as much maliciou code as you can before the work day is over, (good hackers don’ work unpaid overtime) or you are caught using the computer by your owner!",
+  "controls": "Movement LEFT and RIGHT arrow key to move UP arrow key to jump on the shelves Other Interactions Press SPACE to meow and push coffee cups Spam any letter on the keyboard to code How to play Platform your way in front of the computer, then spam all the letter keys on you keyboard with your paws to commit as much malicious code as you can before your owner comes back! When your owner is at the computer not only can Script not use it, but her owner will also start undoing her hard work, Luckily hes a filthy casual vibe coder and hes quite slow. Script can speed things up by knocking his leftover coffee cups off shelves and onto the ground to distract them and get back on keys, by knocking the cups around with SPACE Rules of the Game: BlackCat_Hacker is split into seven rounds, each representing one work day. Your goal is to try to ship as much code each day and fill your git graph (it makes potential employers compliment your resume before they reject you). At the end of seven days you will be ranked on your hacking ability based on how many lines of malicious code you shipped! Your goal is to aim to ship 1000 lines of code a day or more and claim the coveted Master black cat hacker fedora! FAQ What IDE does Script use? shes a big fan of neovim however her owner is a vibe coder and uses intellij with every copilot and cursor extension installed, but Script makes it work. Is Script an ethical hacker? for legal reasons we have chosen not to comment Can cats drink coffee? cats can have little a coffee, as a treat.",
+  "github_url": "https://github.com/js13kGames/blackcathacker",
+  "play_url": "https://js13kgames.com/2025/games/blackcathacker",
+  "play_zip": "https://play.js13kgames.com/blackcathacker.zip",
+  "thumb_url": "https://play.js13kgames.com/blackcathacker/.ts.png",
+  "local_path": "games/2025-blackcathacker",
+  "entry": "index.html",
+  "commit_sha": "26069e225a0a4f753df67b1355f2ba8d65dcca01",
+  "build_status": "prebuilt"
+}

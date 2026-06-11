@@ -1,0 +1,231 @@
+import { loopLength } from '../AudioEngine';
+
+const sub = [['D2:64'], ['C2:64']];
+
+const bass = [
+  ['D3:12', 'F3:2', 'D3:14', 'G3:2', 'F3:2', 'D3:12', 'F3:2', 'D3:18'],
+  ['C3:12', 'D3:2', 'C3:14', 'F3:2', 'G3:2', 'A3:12', 'F3:2', 'G3:18'],
+];
+
+const supBass = [
+  ['D4:2', '-:10', 'F4:2', 'D4:2', '-:12', 'G4:2', 'F4:2', 'D4:2', '-:10', 'F4:2', 'D4:2'],
+  ['C4:2', '-:10', 'D4:2', 'C4:2', '-:12', 'F4:2', 'G4:2', 'A4:2', '-:10', 'F4:2', 'G4:2'],
+];
+
+const kickRythm = [
+  'X',
+  '-:3',
+  'X',
+  '-:3',
+  'X',
+  '-',
+  'X',
+  '-',
+  'X',
+  '-:3',
+  'X',
+  '-:3',
+  'X',
+  '-:2',
+  'X',
+  'X',
+  '-',
+  'X',
+  '-',
+  'X',
+  '-:3',
+];
+
+const kick = [kickRythm.concat(kickRythm), kickRythm.concat(kickRythm)];
+
+const snareRythm = [
+  '-:4',
+  'X',
+  '-:7',
+  'X',
+  '-:7',
+  'X',
+  '-:7',
+  'X',
+  '-:7',
+  'X',
+  '-:7',
+  'X',
+  '-:7',
+  'X',
+  '-:7',
+  'X',
+  '-',
+  'X',
+];
+
+const snare = [snareRythm, snareRythm];
+
+const lead = [
+  [
+    'D4',
+    '-',
+    'D4',
+    'F4',
+    '-',
+    'F4',
+    'D4',
+    '-:9',
+    'D4',
+    '-',
+    'D4',
+    'F4',
+    '-',
+    'F4',
+    'D4',
+    '-:3',
+    'F4',
+    '-',
+    'C4',
+    '-',
+    'E4',
+    '-',
+    'D4',
+    '-',
+    'D4',
+    'F4',
+    '-',
+    'F4',
+    'D4',
+    '-:9',
+    'D4',
+    '-',
+    'D4',
+    'F4',
+    '-',
+    'F4',
+    'D4',
+    '-:3',
+    'G4',
+    '-',
+    'E4',
+    '-',
+    'F4',
+  ],
+  [
+    'C4',
+    '-',
+    'C4',
+    'E4',
+    '-',
+    'E4',
+    'C4',
+    '-:9',
+    'C4',
+    '-',
+    'C4',
+    'E4',
+    '-',
+    'E4',
+    'C4',
+    '-:3',
+    'C4',
+    '-',
+    'E4',
+    '-',
+    'G4',
+    '-',
+    'E4',
+    '-',
+    'E4',
+    'F4',
+    '-',
+    'F4',
+    'E4',
+    '-:9',
+    'E4',
+    '-',
+    'E4',
+    'F4',
+    '-',
+    'F4',
+    'E4',
+    '-:3',
+    'G4',
+    '-',
+    'F4',
+    '-',
+    'E4',
+  ],
+];
+
+const highHatRythm = [
+  '-:2',
+  'X',
+  '-:3',
+  'X',
+  'X',
+  '-:2',
+  'X',
+  '-:3',
+  'X',
+  '-:4',
+  'X',
+  '-:4',
+  'X',
+  '-',
+  'X',
+  '-',
+  'X',
+  '-',
+  'X',
+  '-:3',
+  'X',
+  '-:3',
+  'X',
+  'X',
+  '-:2',
+  'X',
+  '-:3',
+  'X',
+  '-:4',
+  'X',
+  '-:4',
+  'X',
+  'X',
+  'X',
+  '-',
+  'X',
+  '-',
+  'X',
+];
+
+const highHat = [highHatRythm, highHatRythm];
+
+const empty = [[], []];
+
+const loop: { [name: string]: string[][] } = {
+  sub: [sub, sub, sub, sub, sub, sub, sub].flat(),
+  bass: [bass, bass, bass, bass, bass, bass, bass].flat(),
+  supBass: [supBass, supBass, supBass, supBass, supBass, supBass, supBass].flat(),
+  kick: [empty, kick, kick, empty, kick, kick, kick].flat(),
+  snare: [snare, snare, snare, empty, snare, snare, snare].flat(),
+  highHat: [highHat, highHat, highHat, empty, highHat, empty, highHat].flat(),
+  lead: [empty, empty, lead, lead, lead, lead, empty].flat(),
+};
+
+export const gameMelody = {
+  loop,
+  loopLength: 14,
+};
+
+const endMel = ['C3,E3,G3:16', 'B2,D3,G3:16', 'D3,F#3,A3:32'];
+const mel = [
+  ['D3,F#3,A3:16', 'E3,G3,C4:16', 'D3,F#3,A3:32'],
+  endMel,
+  ['D3,F#3,A3:16', 'G3,B3,E4:16', 'F#3,A3,D4:32'],
+  endMel,
+];
+
+export const transitionMelody = {
+  loop: {
+    lead: mel,
+    supBass: mel,
+  },
+  loopLength: 4,
+};

@@ -1,0 +1,23 @@
+{
+  "name": "Miami Mice",
+  "version": "1.0.0",
+  "description": "js13kgames 2025 jam entry",
+  "main": "index.html",
+  "scripts": {
+    "build": "gulp"
+  },
+  "author": "Christoph DerBenniBanni Schansky",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "gulp": "^5.0.0",
+    "gulp-check-filesize": "^2.0.1",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-delete-files": "^0.0.1",
+    "gulp-html-replace": "^1.6.2",
+    "gulp-terser": "^2.1.0",
+    "gulp-zip": "^6.1.0",
+    "roadroller": "^2.1.0",
+    "webpack-stream": "^7.0.0"
+  }
+}
