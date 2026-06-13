@@ -12,9 +12,9 @@ async function applyAction(session, a, framesPerDecision) {
     case 'move': await session.move(a.x, a.y); break;
     case 'drag': await session.drag(a.x1, a.y1, a.x2, a.y2); break;
     case 'key': {
-      const hold = Math.max(1, a.hold || 1);
+      const hold = Math.min(framesPerDecision, Math.max(1, a.hold || 1)); // hold ≤ this turn's frames
       await session.keyDown(a.key); await session.step(hold); await session.keyUp(a.key);
-      await session.step(Math.max(0, framesPerDecision - hold));
+      await session.step(framesPerDecision - hold);   // total advanced == framesPerDecision
       return;
     }
     case 'key_down': await session.keyDown(a.key); break;

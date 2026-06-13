@@ -62,12 +62,6 @@
         "action",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "terminal-win",
-      "objective": "Cut through waves of enemies and clear every level to beat the game",
-      "win_signal": "game-complete / '9 Lives Mode unlocked' screen",
-      "progress_signal": "level number",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -85,7 +79,6 @@
           "bytes": 191157
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -149,12 +142,6 @@
         "mouse",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "survival-time",
-      "objective": "Survive waves of enemies, collect upgrades, last as long as possible",
-      "win_signal": "survival / boss-clear screen",
-      "progress_signal": "elapsed time / level",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -172,7 +159,6 @@
           "bytes": 214244
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -235,12 +221,6 @@
         "pixelated",
         "keyboard"
       ],
-      "audio_role": "none",
-      "interaction_time": "realtime",
-      "success_type": "terminal-win",
-      "objective": "Use the powers of the seasons to bring your lost cats back",
-      "win_signal": "ending screen (all cats recovered)",
-      "progress_signal": "cats found / area",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -258,7 +238,6 @@
           "bytes": 114422
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -322,12 +301,6 @@
         "mouse",
         "pointer-precision"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "level-count",
-      "objective": "Swing from red dots, collect 3 clovers, reach the goal each stage",
-      "win_signal": "final stage cleared",
-      "progress_signal": "stage number / clovers",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -345,7 +318,6 @@
           "bytes": 217578
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -408,12 +380,6 @@
         "3d",
         "mouse"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "survival-time",
-      "objective": "Survive and sink enemy ships in this one-button flight shooter",
-      "win_signal": "mission-complete screen",
-      "progress_signal": "score / ships sunk",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -431,7 +397,6 @@
           "bytes": 474239
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -493,12 +458,6 @@
         "puzzle",
         "mouse"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "turn-based",
-      "success_type": "score-threshold",
-      "objective": "Pick number tiles that sum to the target without going over",
-      "win_signal": "target reached",
-      "progress_signal": "score",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -516,7 +475,6 @@
           "bytes": 552528
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -578,12 +536,6 @@
         "pixelated",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "turn-based",
-      "success_type": "level-count",
-      "objective": "Solve physics puzzles as a fluid cat; reach the goal each level",
-      "win_signal": "all levels solved",
-      "progress_signal": "level number",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -601,7 +553,6 @@
           "bytes": 159905
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -663,12 +614,6 @@
         "3d",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "level-count",
-      "objective": "3D action platformer: free the witches trapped in magical bubbles",
-      "win_signal": "all witches freed / ending",
-      "progress_signal": "witches freed",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -686,7 +631,6 @@
           "bytes": 160638
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -749,12 +693,6 @@
         "mouse",
         "text-important"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "score-threshold",
-      "objective": "Weigh fish, compute the price, print and stick labels on the conveyor",
-      "win_signal": "shift complete / target score",
-      "progress_signal": "score / shift timer",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -772,7 +710,6 @@
           "bytes": 149984
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -834,12 +771,6 @@
         "pixelated",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "terminal-win",
-      "objective": "Explore Ulthar and exert your influence as otherworldly ashes fall",
-      "win_signal": "story ending",
-      "progress_signal": "area",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -857,7 +788,6 @@
           "bytes": 170293
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -920,12 +850,6 @@
         "pixelated",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "level-count",
-      "objective": "Puzzle-platform as Nyx the cat while the sun rises",
-      "win_signal": "final level cleared",
-      "progress_signal": "level",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -943,7 +867,6 @@
           "bytes": 103503
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -1006,12 +929,6 @@
         "3d",
         "mouse"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "turn-based",
-      "success_type": "level-count",
-      "objective": "Place one cat next to each glowing charm to solve each puzzle",
-      "win_signal": "all puzzles solved / ending",
-      "progress_signal": "puzzle number",
       "screening": {
         "clock_compat": "nondeterministic",
         "reproducible": false,
@@ -1029,7 +946,6 @@
           "bytes": 140651
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -1093,12 +1009,6 @@
         "keyboard",
         "mouse"
       ],
-      "audio_role": "none",
-      "interaction_time": "realtime",
-      "success_type": "terminal-win",
-      "objective": "Reunite mother cat Amara with her three kittens",
-      "win_signal": "all kittens reunited",
-      "progress_signal": "kittens found",
       "screening": {
         "clock_compat": "nondeterministic",
         "reproducible": false,
@@ -1116,7 +1026,6 @@
           "bytes": 169891
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -1178,12 +1087,6 @@
         "physics",
         "mouse"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "survival-time",
-      "objective": "Slingshot the cat and eat mice to keep stamina, travel as far as possible",
-      "win_signal": "distance / score milestone",
-      "progress_signal": "distance / stamina",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -1201,7 +1104,6 @@
           "bytes": 169304
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -1262,12 +1164,6 @@
         "puzzle",
         "keyboard"
       ],
-      "audio_role": "none",
-      "interaction_time": "turn-based",
-      "success_type": "level-count",
-      "objective": "Rotate gravity to collect all gems on each level",
-      "win_signal": "all levels solved",
-      "progress_signal": "level",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -1285,7 +1181,6 @@
           "bytes": 0
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -1347,12 +1242,6 @@
         "pixelated",
         "keyboard"
       ],
-      "audio_role": "music",
-      "interaction_time": "realtime",
-      "success_type": "terminal-win",
-      "objective": "Top-down adventure: restore the valley and Meow Mountain",
-      "win_signal": "ending",
-      "progress_signal": "area",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -1370,7 +1259,6 @@
           "bytes": 179396
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -1432,12 +1320,6 @@
         "mouse",
         "text-important"
       ],
-      "audio_role": "none",
-      "interaction_time": "realtime",
-      "success_type": "score-threshold",
-      "objective": "Trigger 26 superstitions before midnight to be as unlucky as possible",
-      "win_signal": "all 26 triggered / midnight",
-      "progress_signal": "superstitions triggered / time",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -1455,7 +1337,6 @@
           "bytes": 0
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -1517,12 +1398,6 @@
         "puzzle",
         "mouse"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "turn-based",
-      "success_type": "level-count",
-      "objective": "Route water through faucets to wash the cat on each level",
-      "win_signal": "all levels solved",
-      "progress_signal": "level",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -1540,7 +1415,6 @@
           "bytes": 171992
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -1601,12 +1475,6 @@
         "fighting",
         "keyboard"
       ],
-      "audio_role": "none",
-      "interaction_time": "realtime",
-      "success_type": "survival-time",
-      "objective": "Beat-em-up: punch, kick and block through enemies",
-      "win_signal": "final stage cleared",
-      "progress_signal": "stage / health",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -1624,7 +1492,6 @@
           "bytes": 117432
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -1685,12 +1552,6 @@
         "platformer",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "level-count",
-      "objective": "Platform through rooms via windows, avoid the broom, progress",
-      "win_signal": "final room reached",
-      "progress_signal": "room",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -1708,7 +1569,6 @@
           "bytes": 450903
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -1771,12 +1631,6 @@
         "pixelated",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "survival-time",
-      "objective": "Roll and climb up the Cybertower gathering food packs, survive",
-      "win_signal": "reach the top",
-      "progress_signal": "height",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -1794,7 +1648,6 @@
           "bytes": 42802
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -1859,12 +1712,6 @@
         "pixelated",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "level-count",
-      "objective": "Stealth-steal diamonds through a trapped mansion",
-      "win_signal": "heist complete",
-      "progress_signal": "loot / level",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -1882,7 +1729,6 @@
           "bytes": 600156
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -1945,12 +1791,6 @@
         "3d",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "survival-time",
-      "objective": "Run across the burning roof within one minute and catch Black Bird",
-      "win_signal": "reach the end / catch the bird",
-      "progress_signal": "distance / timer",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -1968,7 +1808,6 @@
           "bytes": 127823
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -2029,12 +1868,6 @@
         "arcade",
         "mouse"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "survival-time",
-      "objective": "Drag chicks to keep them alive as long as possible against the cats",
-      "win_signal": "high score before game over",
-      "progress_signal": "score / timer",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -2052,7 +1885,6 @@
           "bytes": 123357
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -2115,12 +1947,6 @@
         "keyboard",
         "mouse"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "turn-based",
-      "success_type": "level-count",
-      "objective": "Move the cats to collect all coins across 40 levels avoiding hazards",
-      "win_signal": "all 40 levels complete",
-      "progress_signal": "level",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -2138,7 +1964,6 @@
           "bytes": 43688
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -2201,12 +2026,6 @@
         "3d",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "terminal-win",
-      "objective": "Elevator-Action style: search the HQ, fight thieves, find Manny",
-      "win_signal": "Manny rescued / ending",
-      "progress_signal": "floor",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -2224,7 +2043,6 @@
           "bytes": 111098
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -2287,12 +2105,6 @@
         "pixelated",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "level-count",
-      "objective": "Jump and perform acrobatics to reach the Torii gates and finish missions",
-      "win_signal": "all missions complete",
-      "progress_signal": "mission / gate",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -2310,7 +2122,6 @@
           "bytes": 129114
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -2372,12 +2183,6 @@
         "mouse",
         "text-important"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "turn-based",
-      "success_type": "terminal-win",
-      "objective": "Detective game: catch the dogs committing crimes",
-      "win_signal": "case solved",
-      "progress_signal": "clues / case",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -2395,7 +2200,6 @@
           "bytes": 226482
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -2457,12 +2261,6 @@
         "3d",
         "mouse"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "survival-time",
-      "objective": "WWII night flying-boat: use radar to find and sink enemy ships",
-      "win_signal": "mission complete",
-      "progress_signal": "score / ships",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -2480,7 +2278,6 @@
           "bytes": 77136
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -2542,12 +2339,6 @@
         "pixelated",
         "mouse"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "turn-based",
-      "success_type": "level-count",
-      "objective": "Stacking puzzle (chaos variant): arrange pieces to clear each level",
-      "win_signal": "level solved",
-      "progress_signal": "level",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -2565,7 +2356,6 @@
           "bytes": 141138
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -2628,12 +2418,6 @@
         "mouse",
         "text-important"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "score-threshold",
-      "objective": "Brew potions to fulfil incoming orders without too many mistakes",
-      "win_signal": "target orders filled",
-      "progress_signal": "orders / mistakes",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -2651,7 +2435,6 @@
           "bytes": 105461
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -2714,12 +2497,6 @@
         "pixelated",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "terminal-win",
-      "objective": "Top-down adventure: outsmart nine cats to rescue your beloved",
-      "win_signal": "ninth cat beaten / ending",
-      "progress_signal": "felines beaten",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -2737,7 +2514,6 @@
           "bytes": 134392
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -2799,12 +2575,6 @@
         "pixelated",
         "mouse"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "turn-based",
-      "success_type": "level-count",
-      "objective": "Stacking puzzle (order variant): tidy the cellar efficiently",
-      "win_signal": "level solved",
-      "progress_signal": "level",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -2822,7 +2592,6 @@
           "bytes": 141138
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -2884,12 +2653,6 @@
         "fighting",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "survival-time",
-      "objective": "Karate beat-em-up brawler",
-      "win_signal": "all enemies / final stage cleared",
-      "progress_signal": "stage / health",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -2907,7 +2670,6 @@
           "bytes": 123009
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -2969,12 +2731,6 @@
         "runner",
         "keyboard"
       ],
-      "audio_role": "none",
-      "interaction_time": "realtime",
-      "success_type": "survival-time",
-      "objective": "Endless arcade platformer: keep eating, avoid one-hit slimes, max score",
-      "win_signal": "high score before death",
-      "progress_signal": "score",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -2992,7 +2748,6 @@
           "bytes": 0
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -3054,12 +2809,6 @@
         "platformer",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "turn-based",
-      "success_type": "level-count",
-      "objective": "Guide the black cat to the flag on each level",
-      "win_signal": "final level / flag reached",
-      "progress_signal": "level",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -3077,7 +2826,6 @@
           "bytes": 35795
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -3140,12 +2888,6 @@
         "mouse",
         "text-important"
       ],
-      "audio_role": "none",
-      "interaction_time": "turn-based",
-      "success_type": "level-count",
-      "objective": "Deduce and arrange cats by their likes/dislikes to complete the album",
-      "win_signal": "album page complete / level solved",
-      "progress_signal": "level",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -3163,7 +2905,6 @@
           "bytes": 122571
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -3226,12 +2967,6 @@
         "pixelated",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "level-count",
-      "objective": "Reach the goal; lay eggs as platforms for your next life",
-      "win_signal": "goal reached / final level",
-      "progress_signal": "level",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -3249,7 +2984,6 @@
           "bytes": 14516
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -3313,12 +3047,6 @@
         "pixelated",
         "mouse"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "survival-time",
-      "objective": "Use the wand and fly-swatter to keep your guest calm while setting the table",
-      "win_signal": "table set / survived",
-      "progress_signal": "time / table progress",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -3336,7 +3064,6 @@
           "bytes": 124921
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -3398,12 +3125,6 @@
         "pixelated",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "survival-time",
-      "objective": "Arcade jam game — score as high as you can",
-      "win_signal": "high score",
-      "progress_signal": "score",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -3421,7 +3142,6 @@
           "bytes": 54827
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -3483,12 +3203,6 @@
         "pixelated",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "survival-time",
-      "objective": "Clear the house of pests before your owner returns",
-      "win_signal": "all pests cleared / survived",
-      "progress_signal": "pests / timer",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -3506,7 +3220,6 @@
           "bytes": 57512
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -3567,12 +3280,6 @@
         "stealth",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "terminal-win",
-      "objective": "Sneak between backyards via mouse holes, hide in bushes, avoid the black cat",
-      "win_signal": "reach the final backyard",
-      "progress_signal": "backyard / detection",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -3590,7 +3297,6 @@
           "bytes": 235695
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -3653,12 +3359,6 @@
         "stealth",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "level-count",
-      "objective": "Anti-stealth platformer: avoid detection, push cups, reach the computer",
-      "win_signal": "level / mission complete",
-      "progress_signal": "level",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -3676,7 +3376,6 @@
           "bytes": 266295
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -3740,12 +3439,6 @@
         "mouse",
         "text-important"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "score-threshold",
-      "objective": "Brew and sell potions to pay rent and feed your familiar",
-      "win_signal": "rent paid / target reached",
-      "progress_signal": "money / day",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -3763,7 +3456,6 @@
           "bytes": 106270
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -3827,12 +3519,6 @@
         "mouse",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "turn-based",
-      "success_type": "score-threshold",
-      "objective": "Over 13 days, roll the magic dice to score as many points as possible",
-      "win_signal": "high score after 13 days",
-      "progress_signal": "day / score",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -3850,7 +3536,6 @@
           "bytes": 69154
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -3911,12 +3596,6 @@
         "pixelated",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "survival-time",
-      "objective": "Cat arcade game",
-      "win_signal": "high score / objective reached",
-      "progress_signal": "score",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -3934,7 +3613,6 @@
           "bytes": 692312
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -3996,12 +3674,6 @@
         "3d",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "survival-time",
-      "objective": "Operator Black-Cat: fight through the Pyrasian system",
-      "win_signal": "mission complete",
-      "progress_signal": "score / zone",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -4019,7 +3691,6 @@
           "bytes": 1758702
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -4082,12 +3753,6 @@
         "mouse",
         "text-important"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "turn-based",
-      "success_type": "level-count",
-      "objective": "Grid-based strategy with light deckbuilding: help the void cat",
-      "win_signal": "story / levels complete",
-      "progress_signal": "level",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -4105,7 +3770,6 @@
           "bytes": 80190
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -4167,12 +3831,6 @@
         "pixelated",
         "mouse"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "survival-time",
-      "objective": "Tower defense: stop waves of cat enemies overwhelming the field",
-      "win_signal": "survive all waves",
-      "progress_signal": "wave",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -4190,7 +3848,6 @@
           "bytes": 60320
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -4252,12 +3909,6 @@
         "platformer",
         "keyboard"
       ],
-      "audio_role": "none",
-      "interaction_time": "realtime",
-      "success_type": "survival-time",
-      "objective": "Climb the building, dodge tenants, reach the penthouse using nine lives",
-      "win_signal": "reach the penthouse",
-      "progress_signal": "height / lives",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -4275,7 +3926,6 @@
           "bytes": 51445
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -4339,12 +3989,6 @@
         "mouse",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "survival-time",
-      "objective": "Jump and dive to pop all the balloons without hitting the ground",
-      "win_signal": "all balloons popped",
-      "progress_signal": "balloons / cupcakes",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -4362,7 +4006,6 @@
           "bytes": 66818
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -4426,12 +4069,6 @@
         "pixelated",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "terminal-win",
-      "objective": "Hunt rodents before night falls, then topple their leader",
-      "win_signal": "leader toppled / ending",
-      "progress_signal": "time / area",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -4449,7 +4086,6 @@
           "bytes": 139601
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -4511,12 +4147,6 @@
         "arcade",
         "mouse"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "survival-time",
-      "objective": "Scream into the mic to scare off black cats and earn lucky points",
-      "win_signal": "high score",
-      "progress_signal": "score",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -4534,7 +4164,6 @@
           "bytes": 28681
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -4597,12 +4226,6 @@
         "pixelated",
         "mouse"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "level-count",
-      "objective": "Tower defense: distract cats, catch critters; earn 3 stars on 7 waves",
-      "win_signal": "all 7 waves cleared / 3 stars",
-      "progress_signal": "wave / stars",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -4620,7 +4243,6 @@
           "bytes": 124895
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -4684,12 +4306,6 @@
         "mouse",
         "text-important"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "turn-based",
-      "success_type": "terminal-win",
-      "objective": "Roguelike deckbuilder: build an emoji deck of posts to cancel Elon",
-      "win_signal": "Elon canceled / run won",
-      "progress_signal": "deck / progress",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -4707,7 +4323,6 @@
           "bytes": 64097
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -4768,12 +4383,6 @@
         "platformer",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "level-count",
-      "objective": "Platformer with a partial-contact control twist",
-      "win_signal": "final level cleared",
-      "progress_signal": "level",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -4791,7 +4400,6 @@
           "bytes": 194782
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -4853,12 +4461,6 @@
         "cards",
         "mouse"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "turn-based",
-      "success_type": "score-threshold",
-      "objective": "Neon-noir poker against a card-dealing black cat",
-      "win_signal": "win the hand / reach target chips",
-      "progress_signal": "chips / round",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -4876,7 +4478,6 @@
           "bytes": 94318
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -4940,12 +4541,6 @@
         "keyboard",
         "mouse"
       ],
-      "audio_role": "none",
-      "interaction_time": "realtime",
-      "success_type": "terminal-win",
-      "objective": "Use your nine lives and a drawing mechanic to break out of the loop",
-      "win_signal": "escape the loop",
-      "progress_signal": "lives / loop",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -4963,7 +4558,6 @@
           "bytes": 79596
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -5024,12 +4618,6 @@
         "stealth",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "level-count",
-      "objective": "Stealth: collect all fish and reach the door avoiding lamps and dogs",
-      "win_signal": "final alley cleared",
-      "progress_signal": "level / fish",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -5047,7 +4635,6 @@
           "bytes": 125511
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -5110,12 +4697,6 @@
         "mouse",
         "pointer-precision"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "survival-time",
-      "objective": "Guide the laser pointer to lead the chasing kitten without getting caught",
-      "win_signal": "high score / objective",
-      "progress_signal": "score / time",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -5133,7 +4714,6 @@
           "bytes": 247856
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -5195,12 +4775,6 @@
         "pixelated",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "terminal-win",
-      "objective": "Explore rooms, find the fish, exit via the random exit room uncaught",
-      "win_signal": "exit reached",
-      "progress_signal": "rooms",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -5218,7 +4792,6 @@
           "bytes": 46333
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -5275,12 +4848,6 @@
         "pixelated",
         "keyboard"
       ],
-      "audio_role": "none",
-      "interaction_time": "realtime",
-      "success_type": "level-count",
-      "objective": "Escape areas under darkness; control electricity via levers, avoid hazards",
-      "win_signal": "all areas escaped",
-      "progress_signal": "area",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -5298,7 +4865,6 @@
           "bytes": 85766
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -5361,12 +4927,6 @@
         "pixelated",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "survival-time",
-      "objective": "Survive the chaos of your witch master's duels (fireballs, lightning)",
-      "win_signal": "survive / high score",
-      "progress_signal": "time / score",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -5384,7 +4944,6 @@
           "bytes": 415177
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -5448,12 +5007,6 @@
         "mouse",
         "pointer-precision"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "survival-time",
-      "objective": "Draw trampolines to bounce yarn balls into the baskets",
-      "win_signal": "score reached / avoid dropping three",
-      "progress_signal": "score / yarn lost",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -5471,7 +5024,6 @@
           "bytes": 112789
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -5534,12 +5086,6 @@
         "pixelated",
         "keyboard"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "survival-time",
-      "objective": "Shmup: fight waves, upgrade your ship, defeat the boss",
-      "win_signal": "boss defeated",
-      "progress_signal": "zone / score",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -5557,7 +5103,6 @@
           "bytes": 286126
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     },
@@ -5619,12 +5164,6 @@
         "arcade",
         "mouse"
       ],
-      "audio_role": "sfx",
-      "interaction_time": "realtime",
-      "success_type": "survival-time",
-      "objective": "Whack-a-mole: pet as many good cats as possible, avoid the scratchy ones",
-      "win_signal": "high score",
-      "progress_signal": "score",
       "screening": {
         "clock_compat": "ok",
         "reproducible": true,
@@ -5642,7 +5181,6 @@
           "bytes": 92445
         }
       },
-      "realtime_only": false,
       "included": true,
       "exclude_reason": null
     }

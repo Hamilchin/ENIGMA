@@ -1,4 +1,4 @@
-// Stage B — scrape per-game detail pages, in rank order, excluding ineligible
+// Scrape per-game detail pages, in rank order, excluding ineligible
 // categories (online/webxr/decentralized/unfinished), until we have the target count
 // of eligible games (top 33% by rank). Writes corpus/games_<year>.json + appends drops.
 //

@@ -1,4 +1,4 @@
-// Stage D — acquire each eligible game:
+// Acquire each game:
 //   - canonical built bytes  -> games/<id>/dist/   (from play.js13kgames.com/<slug>.zip)
 //   - source for analysis     -> games/<id>/src/    (shallow clone of github.com/js13kGames/<slug>)
 //   - per-game record         -> games/<id>/meta.json

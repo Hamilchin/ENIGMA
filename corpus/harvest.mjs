@@ -1,4 +1,4 @@
-// Stage A — harvest the full ranked entry list for a year.
+// Harvest the full ranked entry list for a year.
 // Output: corpus/entries_<year>.json  (DOM order on the default "Overall" sort = rank)
 //
 // Usage: node corpus/harvest.mjs [year]   (default 2025)

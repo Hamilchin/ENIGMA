@@ -1,4 +1,4 @@
-// Judge a logged trajectory: sample keyframes, pass game objective + win_signal to the
+// Judge a logged trajectory: sample keyframes, pass the game description to the
 // frozen VLM judge, print the verdict. Requires ANTHROPIC_API_KEY.
 // Usage: node judge/run-judge.mjs <runs/episodes/DIR>
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
@@ -22,11 +22,11 @@ let frames = frameFiles.map(f => readFileSync(join(framesDir, f)));
 if (existsSync(join(dir, 'final.png'))) frames.push(readFileSync(join(dir, 'final.png')));
 frames = sampleKeyframes(frames, 8);
 
+const objective = rec.description || rec.title || traj.objective;
 console.log(`[judge] ${traj.id} | agent=${traj.agent} | ${frames.length} keyframes`);
-console.log(`[judge] objective: ${rec.objective || traj.objective}`);
-console.log(`[judge] win_signal: ${rec.win_signal || '(none)'}`);
+console.log(`[judge] objective (game description): ${objective}`);
 try {
-  const v = await judge({ objective: rec.objective || traj.objective, win_signal: rec.win_signal, frames });
+  const v = await judge({ objective, frames });
   console.log(`[judge] VERDICT: beaten=${v.beaten} progress=${v.progress} confidence=${v.confidence}`);
   console.log(`[judge] rationale: ${v.rationale}`);
   console.log(`[judge] model: ${v.model}`);

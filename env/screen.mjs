@@ -1,4 +1,4 @@
-// Stage E+F — screen every game and gather evidence for classification.
+// Screen every game and gather evidence for classification.
 // Static scan (priors only) + runtime probes via the harness:
 //   - readiness + shim install
 //   - clock_compat: delay-invariance (same schedule, with/without real think-time)

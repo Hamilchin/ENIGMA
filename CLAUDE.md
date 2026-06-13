@@ -9,13 +9,13 @@ freezes/steps time, feeds an agent, logs the result).
 
 ## Layout
 ```
-corpus/   build the game corpus. Committed: games_<y>.json (the corpus), tags_<y>.json
-          (hand-authored labels). build/ holds regenerable intermediates (gitignored).
+corpus/   build the game corpus. Committed: games_<y>.json (the corpus — single source of
+          truth, incl. hand-authored tags). build/ holds regenerable intermediates (gitignored).
 games/    <id>/dist = built game bytes (served to play); <id>/src = source; meta.json.
 env/      harness.mjs (GameSession), serve.mjs (static server), clock/ (the time shim),
           screen.mjs (corpus screening), episode.mjs (the eval loop).
 agents/   act(obs)->action interface + random/noop baselines. Real CUAs plug in here.
-judge/    frozen VLM-as-judge: objective + win_signal + keyframes -> {beaten, progress}.
+judge/    frozen VLM-as-judge: game description + keyframes -> {beaten, progress}.
 runs/     screenshots + trajectories (gitignored).
 ```
 
@@ -41,9 +41,20 @@ What it still can't control: GPU float and async/microtask *ordering*. 2 of 66 g
 
 ## Pipeline (only run to rebuild/extend the corpus)
 `harvest` (rank list) → `detail` (scrape + filter) → `acquire` (download games) →
-`screen` (run each, tag clock-compat + screenshots) → `author_tags.py` (human labels) →
-`finalize` (merge → `corpus/games_<y>.json`). Intermediates go to `corpus/build/`.
-`screen.mjs` accepts game ids to re-screen a subset (merges into the existing file).
+`screen` (run each, clock-compat + screenshots) → `finalize` (merge → `corpus/games_<y>.json`).
+Intermediates go to `corpus/build/`. **`tags` are hand-authored directly in
+`games_<y>.json`**; `finalize` preserves them across re-runs. `screen.mjs` accepts game ids
+to re-screen a subset (merges into the existing file).
+
+## Data sources (the js13kGames site is a client-rendered SPA — scrape with Playwright)
+- **ranked list + slugs:** `js13kgames.com/<year>/games` — default sort is Overall, so DOM
+  order = rank.
+- **per-game metadata:** `js13kgames.com/<year>/games/<slug>` — devices, description,
+  controls, Source link, six-criteria scores.
+- **exclusions:** the site's own categories tag `online/webxr/decentralized/unfinished`
+  (filtered out in `detail.mjs`).
+- **source:** `github.com/js13kGames/<slug>` — uniform org-mirror fork, cloned for analysis.
+- **built bytes:** `play.js13kgames.com/<slug>.zip` — canonical, no per-repo build needed.
 
 ## Conventions / gotchas
 - ESM everywhere (`"type": "module"`); run scripts with `node path/to/x.mjs [year]`.
@@ -52,4 +63,4 @@ What it still can't control: GPU float and async/microtask *ordering*. 2 of 66 g
 - Don't commit `games/<id>/src` deletions casually — `src` is kept for re-screening; only
   `dist`+`meta.json` are strictly needed to *run*.
 - The judge needs `ANTHROPIC_API_KEY` in `.env`. Keys never enter the browser context.
-- Validate the clock after shim changes: `npm run spike` (must stay 5/5).
+- Validate the clock after shim changes: `npm run spike` (must pass).

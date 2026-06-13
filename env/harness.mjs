@@ -12,7 +12,7 @@ const __dir = dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = join(__dir, '..');
 
 // The zip's index.html may be nested (dist/, compo/, build/, ...). The canonical entry
-// path is recorded in the game's meta.json by Stage D; resolve it so we never 404.
+// path is recorded in the game's meta.json; resolve it so we never 404.
 function resolveEntry(rec) {
   if (rec.entry) return rec.entry;
   const mp = join(PROJECT_ROOT, rec.local_path || `games/${rec.id}`, 'meta.json');

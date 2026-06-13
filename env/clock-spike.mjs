@@ -1,5 +1,4 @@
-// Clock spike — the riskiest component, de-risked first.
-// For each test game, verify:
+// Clock determinism check. For each test game, verify:
 //   1. shim installed (window.__clock.frozen)
 //   2. virtual time advances on step() and the game loop is alive (pending() > 0)
 //   3. frame advances (animation progresses) across steps
