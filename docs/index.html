@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENIGMA — Evaluating Novel Interactive Generality in Machine Agents</title>
+<meta name="description" content="A computer-use benchmark of open-source js13kGames with verifiable rewards: screenshots in, mouse and keyboard out.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 11'><g fill='%2314140F'><rect x='1' y='0' width='1' height='1'/><rect x='11' y='0' width='1' height='1'/><rect x='1' y='1' width='2' height='1'/><rect x='10' y='1' width='2' height='1'/><rect x='1' y='2' width='3' height='1'/><rect x='9' y='2' width='3' height='1'/><rect x='1' y='3' width='11' height='2'/><rect x='0' y='5' width='13' height='3'/><rect x='1' y='8' width='11' height='1'/><rect x='2' y='9' width='9' height='1'/><rect x='3' y='10' width='7' height='1'/></g><rect x='3' y='6' width='1' height='1' fill='%230F7A56'/><rect x='9' y='6' width='1' height='1' fill='%230F7A56'/></svg>">
+<style>body{margin:0;background:#FAFAF7;}</style>
+</head>
+<body>
+<style>
+  .pg { --paper:#FAFAF7; --ink:#14140F; --muted:#6B695E; --hair:#E4E2D8; --green:#0F7A56;
+    background:var(--paper); color:var(--ink);
+    font-family: Georgia, 'Times New Roman', serif;
+    line-height:1.65; font-size:16.5px;
+    max-width:780px; margin:0 auto; padding:56px 24px 72px;
+  }
+  .pg header { text-align:center; margin-bottom:40px; }
+  .pg .eyebrow { font-family: ui-monospace, Menlo, monospace; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--muted); margin:18px 0 10px; }
+  .pg h1 { font-size:46px; font-weight:600; letter-spacing:.14em; margin:0 0 6px; text-wrap:balance; }
+  .pg .subtitle { font-size:19px; font-style:italic; color:var(--muted); margin:0; text-wrap:balance; }
+  .pg .memo { white-space:pre-wrap; max-width:70ch; }
+  .pg .idea, .pg .plist { margin:0; padding:0 0 0 1.2em; max-width:70ch; }
+  .pg .idea li, .pg .plist li { margin:0 0 10px; }
+  .pg .plist .venue { font-family: ui-monospace, Menlo, monospace; font-size:11.5px; color:var(--muted); }
+  .pg a { color:var(--green); }
+  .pg h2 { font-family: ui-monospace, Menlo, monospace; font-size:12px; font-weight:600; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--muted); border-top:1px solid var(--hair); padding-top:22px; margin:44px 0 14px; }
+  .pg p { margin:0 0 14px; max-width:68ch; }
+  @media (max-width:560px){ .pg h1{font-size:34px;} .pg .subtitle{font-size:17px;} }
+</style>
+
+<div class="pg">
+<header>
+  <svg width="78" height="72" viewBox="0 0 78 72" role="img" aria-label="Pixel-art black cat with green eyes, 13 by 13 pixels — the js13kGames 2025 theme" style="margin:0 auto;">
+    <g fill="#14140F">
+      <rect x="6"  y="0"  width="6"  height="6"/><rect x="66" y="0"  width="6" height="6"/>
+      <rect x="6"  y="6"  width="12" height="6"/><rect x="60" y="6"  width="12" height="6"/>
+      <rect x="6"  y="12" width="18" height="6"/><rect x="54" y="12" width="18" height="6"/>
+      <rect x="6"  y="18" width="66" height="6"/>
+      <rect x="6"  y="24" width="66" height="6"/>
+      <rect x="0"  y="30" width="78" height="6"/>
+      <rect x="0"  y="36" width="78" height="6"/>
+      <rect x="0"  y="42" width="78" height="6"/>
+      <rect x="6"  y="48" width="66" height="6"/>
+      <rect x="12" y="54" width="54" height="6"/>
+      <rect x="18" y="60" width="42" height="6"/>
+    </g>
+    <rect x="18" y="36" width="6" height="6" fill="#0F7A56"/>
+    <rect x="54" y="36" width="6" height="6" fill="#0F7A56"/>
+  </svg>
+  <div class="eyebrow">Benchmark &amp; RL environment · 2026</div>
+  <h1>ENIGMA</h1>
+  <p class="subtitle">Evaluating Novel Interactive Generality in Machine Agents</p>
+</header>
+
+<h2>The idea</h2>
+<ul class="idea">
+  <li>There is a large corpus of open-source games: js13kGames, an annual jam running since 2012 — every entry's source fits in 13 KB and is published on GitHub. Roughly 300 games across the past decade clear a quality bar for benchmarking.</li>
+  <li>Games are historically a good metric for intelligence — most recently shown by ARC-AGI-3, whose interactive game-like environments humans solve at 100% while frontier models score ~0.5%.</li>
+  <li>The sheer number and diversity of these games lets us test the generality of machine agents — no single game can be memorized or overfit.</li>
+  <li>Because the games are open source, we can add verifiable rewards — hook each game's code for exact, per-frame ground truth — and use the corpus as a benchmark (and RL environment) at the raw computer interface: screenshots in, mouse and keyboard out.</li>
+</ul>
+
+<h2>Precedents</h2>
+<ul class="plist">
+  <li><a href="https://arcprize.org/arc-agi/3">ARC-AGI-3</a> — interactive game-like environments with no instructions or stated goals; humans 100%, frontier models ~0.5%. Purpose-built abstract worlds with a bespoke API, stripped of human context — ENIGMA is the complement: real games, real computer interface, human context required, real-time pressure. <span class="venue">ARC Prize Foundation, 2026 (benchmark + competition)</span></li>
+  <li><a href="https://arxiv.org/abs/2505.18134">VideoGameBench</a> — 10 famous 1990s games, pixels-only, real-time vs paused "Lite" mode; best models complete 0.48%. Direct precedent for the two-clock design, but wall-clock timing and maximally contaminated games. <span class="venue">arXiv preprint, 2025</span></li>
+  <li><a href="https://arxiv.org/abs/2505.15146">lmgame-Bench</a> — 6 games via a Gym-style API with a modular perception/memory/reasoning harness; source of the selective-memory scaffold ENIGMA uses. <span class="venue">ICLR 2026</span></li>
+  <li><a href="https://os-world.github.io">OSWorld</a> — 369 real-desktop tasks with execution-based verification; the flagship computer-use benchmark, but sparse binary scoring and scripted productivity tasks. <span class="venue">NeurIPS 2024, Datasets &amp; Benchmarks</span></li>
+</ul>
+
+<h2>Notes</h2>
+<div class="memo">Computer use models must be generally intelligent, since computer use is such a general task.
+
+Any financially viable general intellgence must be a few things: First, it needs to be fast! Second, it needs to be competent. Third, it needs to generalize.
+
+Our benchmark is supposed to be very difficult, and measure the capacity of agents to universally adapt to new environments.
+
+A good measure of "general intelligence" is performance in new unseen games. Games are fun in part because they are difficult; they require real-time reasoning, they require critical thinking, etc etc etc. Games are also designed to be learnable: hard, but built to be figured out. Last but not least, they measure some form of abstract intelligence that is not well-captured in other domains, including language: the ability to learn how to adapt in-context to new visual environments. It's a great way to tell if a machine will think like a human does; whether it will pick up environmental cues, whether or not it can rapidly adapt like humans do.
+
+But to measure this we need a few things. First we need large task diversity. Ideally, we want games that the model has not seen before. Mastering atari or go is not a measure of "general intelligence."
+
+Second, we need an interface that is pretty general; for instance, the computer-use realm.
+
+Third, we need a way to verify game correctess! We need to know how well the players are doing
+
+Luckily, there are huge datasets of small games out there that test different skills. Unfortunately, it isn't super easy to use them as evaluation harnesses. Many of them are obscured, like flash games.
+
+But there are game jams where people spend a week or so making small games that are interesting and challenging in different ways! A huge amount of task diversity there. One is a notable open source game jam called js13k. Your source code has to fit within 13 kilobytes. All game source is also available on github. This means that not only can we do VLM rewards, we can do verifiable rewards by editing, inspecting, and adding hooks to the game code itself!
+
+There are around 300 games over the past 10 years that are of high enough quality for us to use as a benchmark. This is way larger than the second place (insert other benchmark here.)
+
+Here are some main facets of a possible benchmark based on these games:
+
+1. Verifiable reward (as opposed to VLM)
+2. Huge corpus
+3. Data that does not have a lot of video data/demonstration data (these games are very niche)
+4. Like ARC-AGI, but using a human interface (the computer) and WITH human context knowledge (context clues, no explicit instructions, stuff a computer "should know").
+5. Real time - one of the biggest constraints and roads to "cost effectiveness"
+
+Some steps that need to be done:
+
+Clone a bunch of games. (done)
+1. Make infrastructure:
+        human play harness (done)
+        agent play harness (done)
+        try using LLM to create verifiable reward (need to confirm it's good!)
+2. Evaluate different agents (need API credits)
+3. Get humans to play games (around 300 hours, maybe more if we want multiple trials?)
+4. Data analysis - separating between real time, strategy, other genres
+5. Publish?
+6. Write paper?</div>
+
+<h2>Abstract</h2>
+<p>
+Computer-use agents are typically evaluated with sparse end-state checks or subjective
+VLM judges, on tasks whose solutions saturate their training corpora. We present
+<b>ENIGMA</b> (Evaluating Novel Interactive Generality in Machine Agents), a benchmark of
+66 browser games — scaling to 300+ — from the annual js13kGames competition, played
+through a raw screenshots-in, mouse-and-keyboard-out interface. ENIGMA couples five
+properties: <i>verifiable rewards</i> — dense, per-frame progress read from each game's
+internal state, replacing VLM judgment and enabling reinforcement learning; a large,
+annually renewing corpus; niche game worlds with effectively no demonstration or video
+data in training corpora; ARC-style novelty posed through the human interface, demanding
+human context knowledge in place of explicit instructions; and a deterministic virtual
+clock whose token-time mode prices reasoning in game time at each model's measured
+throughput, making competence under real-time constraint a reproducible quantity.
+Episodes are hermetic and bit-reproducible, and humans play through the identical
+recorded interface, yielding directly comparable baselines. ENIGMA measures not just
+whether an agent can figure out a world it has never seen — but whether it can do so
+fast enough to afford.
+</p>
+</div>
+
+</body>
+</html>
